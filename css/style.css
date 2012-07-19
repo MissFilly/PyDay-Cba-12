@@ -82,7 +82,7 @@ li {
 
 #user a {
 	color: #FFF;
-	background-color: #555555;
+	background-color: #585858;
     border-radius: 0 0 7px 7px;
     font-size: 14px;
     padding: 7px;
@@ -171,6 +171,16 @@ li {
 
 .menu a:hover, .active, #relevant a:hover {
 	background-color: #FFC836;
+}
+
+#sponsors h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 13% 0 7%;
+}
+
+#sponsors a:hover {
+	background-color: transparent;
 }
 
 #footer {
