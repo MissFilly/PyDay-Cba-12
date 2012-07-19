@@ -1,0 +1,146 @@
+/* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+body {
+	color: #1A1A1A;
+	background-color: #F9F9F9;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 18px;
+	margin: 0;
+}
+
+.strong {
+	font-weight: bold;
+}
+
+::selection {
+	background: #FFC836;
+	}
+::-moz-selection {
+	background: #FFC836;
+}
+
+a {
+	text-decoration: none;
+	color: #366B97;
+}
+
+a:hover {
+	background-color: #366B97;
+	color: #FFF;
+}
+
+h2 {
+	font-family: 'Helvetica', sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+    margin-bottom: 10px;
+    color: #464646;
+}
+
+li {
+	list-style: none outside none;
+}
+
+#header {
+	height: 120px;
+	background-color: #464646;
+	margin-bottom: 35px;
+}
+
+#header-wrapper, #page, #footer-wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#nav ul {
+    display: inline-block;
+}
+
+#nav li {
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: 14px;
+}
+
+#nav a {
+    color: #FFFFFF;
+}
+
+.relevant {
+	position: fixed;
+}
+
+.relevant a {
+    background-color: #EA7949;
+    border-radius: 0 0 10px 10px;
+    font-family: 'Helvetica',sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 14px;
+}
+
+#frame {
+	background-color: #FFF;
+	border: 1px solid #E0DFDF;
+	width: 650px;
+	float: left;
+}
+
+#logo {
+	text-align: center;
+	padding: 9%;
+}
+
+#content {
+	margin: 0 4%;
+}
+
+#content p {
+	border-left: 1px solid #E0DFDF;
+    line-height: 30px;
+    margin-left: 90px;
+    padding-left: 15px;
+    margin-bottom: 9%;
+}
+
+#sidebar {
+	float: right;
+	width: 280px;
+}
+
+#sidebar li {
+	margin-bottom: 20px;
+}
+
+#sidebar h2 {
+	font-size: 30px;
+    margin: 17% 0 12%;
+}
+
+.menu a {
+	background-color: #366B97;
+	text-decoration: none;
+	color: #FFF;
+	border-radius: 7px;
+	display: block;
+	max-width: 150px;
+	text-align: center;
+	padding: 10px;
+	text-transform: uppercase;
+	font-size: 93%;
+	font-weight: bold;
+}
+
+.menu a:hover, .active, .relevant a:hover {
+	background-color: #FFC836;
+}
+
+#footer {
+	background-color: #464646;
+    clear: both;
+    float: left;
+    height: 45px;
+    margin-top: 35px;
+    width: 100%;
+}
