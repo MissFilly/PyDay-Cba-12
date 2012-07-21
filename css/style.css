@@ -124,6 +124,16 @@ li {
 	float: left;
 }
 
+.backtohome p {
+	display: inline;
+	margin-left: 10px;
+}
+
+.backtohome {
+	float: right;
+	margin: 3%;
+}
+
 #logo {
 	text-align: center;
 	padding: 9% 9% 1%;
