@@ -5,7 +5,7 @@ var daysLeft = Math.ceil((pyday.getTime() - today.getTime())/day);
 var wordLeft = "Faltan ";
 var wordDay = " días";
 
-if (daysLeft == 1) {
+if (daysLeft === 1) {
 	wordDay = " día";
 	wordLeft = "Falta ";
 }

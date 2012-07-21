@@ -84,7 +84,7 @@ li {
 	color: #FFF;
 	background-color: #585858;
     border-radius: 0 0 7px 7px;
-    font-size: 14px;
+    font-size: 16px;
     padding: 7px;
 }
 
@@ -126,19 +126,24 @@ li {
 
 #logo {
 	text-align: center;
-	padding: 9%;
+	padding: 9% 9% 1%;
 }
 
 #content {
-	margin: 0 4%;
+	margin: 8% 6% 8%;
 }
 
 #content p {
+    margin-bottom: 3%;
+}
+
+.text {
+	margin-bottom: 9%;
 	border-left: 1px solid #E0DFDF;
     line-height: 30px;
     margin-left: 90px;
     padding-left: 15px;
-    margin-bottom: 9%;
+	
 }
 
 #sidebar {
@@ -169,7 +174,7 @@ li {
 	font-weight: bold;
 }
 
-.menu a:hover, .active, #relevant a:hover {
+.menu a:hover, .active a, #relevant a:hover {
 	background-color: #FFC836;
 }
 
@@ -179,7 +184,7 @@ li {
     margin: 13% 0 7%;
 }
 
-#sponsors a:hover {
+.sponsor a:hover {
 	background-color: transparent;
 }
 
