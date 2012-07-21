@@ -1,5 +1,6 @@
 # -*- coding: utf-8 *-*
 import os
+import cgi
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -22,6 +23,11 @@ class Register(webapp.RequestHandler):
             self.response.out.write(template.render(path, {}))
         else:
             self.redirect(users.create_login_url(self.request.uri))
+
+    def post(self):
+        self.response.out.write('<html><body>You wrote:<pre>')
+        self.response.out.write(cgi.escape(self.request.get('cv')))
+        self.response.out.write('</pre></body></html>')
 
 
 class About(webapp.RequestHandler):
