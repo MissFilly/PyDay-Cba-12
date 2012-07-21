@@ -1,0 +1,28 @@
+{
+  "mainFile": "", 
+  "venv": "", 
+  "relatedProjects": [], 
+  "name": "PyDay-Cba-12", 
+  "license": "", 
+  "url": "", 
+  "pythonPath": "python", 
+  "preExecScript": "", 
+  "programParams": "", 
+  "PYTHONPATH": "", 
+  "supported-extensions": [
+    ".py", 
+    ".html", 
+    ".jpg", 
+    ".png", 
+    ".ui", 
+    ".css", 
+    ".json", 
+    ".js", 
+    ".ini", 
+    ".qss", 
+    ".*"
+  ], 
+  "project-type": "", 
+  "postExecScript": "", 
+  "description": ""
+}
