@@ -25,7 +25,7 @@ a {
 	color: #366B97;
 }
 
-a:hover, #user a:hover {
+a:hover, #user a:hover, .backtohome:hover {
 	background-color: #366B97;
 	color: #FFF;
 }
@@ -57,15 +57,6 @@ li {
 	position: relative;
 }
 
-#nav {
-	float: right;
-	margin-top: 49px;
-}
-
-#nav ul {
-	display: inline;
-}
-
 #nav li {
     display: inline;
 }
@@ -84,6 +75,8 @@ li {
 	color: #FFF;
 	background-color: #585858;
     border-radius: 0 0 7px 7px;
+    -moz-border-radius: 0 0 7px 7px;
+    -webkit-border-radius: 0 0 7px 7px;
     font-size: 16px;
     padding: 7px;
 }
@@ -96,9 +89,18 @@ li {
 	margin-right: 20px;
 }
 
+#relevant {
+    display: inline;
+    float: right;
+    margin-right: 90px;
+    margin-top: 49px;
+}
+
 #relevant a {
     background-color: #EA7949;
     border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
     font-family: 'Helvetica',sans-serif;
     font-size: 22px;
     font-weight: bold;
@@ -124,14 +126,11 @@ li {
 	float: left;
 }
 
-.backtohome p {
-	display: inline;
-	margin-left: 10px;
-}
-
 .backtohome {
-	float: right;
-	margin: 3%;
+	background: url("../img/home-icon.png") no-repeat scroll left center transparent;
+    float: right;
+    margin: 3%;
+    padding-left: 22px;
 }
 
 #logo {
@@ -170,11 +169,13 @@ li {
     margin: 17% 0 12%;
 }
 
-.menu a {
+.menu {
 	background-color: #366B97;
 	text-decoration: none;
 	color: #FFF;
 	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
 	display: block;
 	max-width: 150px;
 	text-align: center;
@@ -184,7 +185,7 @@ li {
 	font-weight: bold;
 }
 
-.menu a:hover, .active a, #relevant a:hover {
+.menu:hover, .active, #relevant a:hover {
 	background-color: #FFC836;
 }
 
@@ -194,7 +195,7 @@ li {
     margin: 13% 0 7%;
 }
 
-.sponsor a:hover {
+.sponsor:hover {
 	background-color: transparent;
 }
 
