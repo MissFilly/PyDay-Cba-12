@@ -35,24 +35,22 @@
           <div id="content">
             <h2>Participantes</h2>
             <div class="description">
-              <p>Hay <span class="attendees-total"></span> personas inscriptas a la conferencia.</p>
+              <p>Hay <span class="attendees-total">{{ len_attendees }}</span> personas inscriptas a la conferencia.</p>
               <p>A continuación, una lista parcial de los asistentes al PyDay, mostrando a todos aquellos que desearon hacer pública su participación.</p>
             </div>
-            
+
             <table class="attendees-table">
               <tbody>
                 <tr>
                   <th width="300px">Nombre</th>
                   <th>Entidad</th>
                 </tr>
-                <tr>
-                  <td>Fulano deTal</td>
-                  <td>PyAr</td>
-                </tr>
-                <tr>
-                  <td>Guybrush Threepwood</td>
-                  <td>Pirate Society</td>
-                </tr>
+                {% for attendee in attendees %}
+                    <tr>
+                      <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
+                      <td><a href="{{ attendee.company_page }}">{{ attendee.company }}</a></td>
+                    </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
