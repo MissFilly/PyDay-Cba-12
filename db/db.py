@@ -7,6 +7,12 @@ def add_attendee(user, name, surname, nick, email, level, country, state, tel,
     in_attendees, allow_contact, personal_page, company, company_page,
     biography, cv):
     """Register a new attendee in the database."""
+    # Check if this user is already registered
+    attendee = model.Attendee.all()
+    attendee.filter('userId =', user)
+    if attendee.count() != 0:
+        return False
+
     attendee = model.Attendee()
     attendee.userId = user
     attendee.name = name
@@ -30,9 +36,9 @@ def add_attendee(user, name, surname, nick, email, level, country, state, tel,
     attendee.cv = str(cv)
 
     attendee.put()
+    return True
 
 
 def get_attendees():
     attendees = model.Attendee.all()
-    attendees.filter('in_attendees =', True)
     return attendees

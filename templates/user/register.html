@@ -18,7 +18,12 @@
 
           <div id="nav">
             <ul id="user">
-              <li><a href="#">Iniciar sesión</a></li>
+              {% if username %}
+                  <li><a href="#">Perfil</a></li>
+                  <li><a href="{{ logout }}">Cerrar sesión</a></li>
+              {% else %}
+                  <li><a href="{{ login }}">Iniciar sesión</a></li>
+              {% endif %}
             </ul>
             <ul id="relevant">
               <li><a class="active" href="#">¡Inscribite!</a></li>
@@ -46,7 +51,7 @@
                 <label for="last-name">Apellido</label>
                 <input id="last-name" name="last-name" type="text" class="input-text" value="" />
               </p>
-              
+
               <p>
                 <label for="nick">Apodo</label>
                 <input id="nick" name="nick" type="text" class="input-text" value="" />
