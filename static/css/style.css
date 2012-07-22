@@ -205,8 +205,12 @@ li {
 	font-weight: bold;
 }
 
-.menu:hover, .active, #relevant a:hover {
+.menu:hover, #relevant a:hover {
 	background-color: #FFC836;
+}
+
+.active {
+	background-color: #FFC836 !important;
 }
 
 #sponsors h3 {
