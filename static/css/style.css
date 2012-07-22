@@ -9,11 +9,6 @@ body {
 	margin: 0;
 }
 
-.unavailable, .unavailable:hover {
-	background-color: #E0DFDF !important;
-	cursor: default !important;
-}
-
 .strong {
 	font-weight: bold;
 }
@@ -207,6 +202,10 @@ li {
 
 .menu:hover, #relevant a:hover {
 	background-color: #FFC836;
+}
+
+.unavailable {
+	background-color: #E0DFDF !important;
 }
 
 .active {
