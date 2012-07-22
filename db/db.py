@@ -3,7 +3,7 @@
 import model
 
 
-def add_attendee(user, name, surname, email, level, country, state, tel,
+def add_attendee(user, name, surname, nick, email, level, country, state, tel,
     in_attendees, allow_contact, personal_page, company, company_page,
     biography, cv):
     """Register a new attendee in the database."""
@@ -11,6 +11,7 @@ def add_attendee(user, name, surname, email, level, country, state, tel,
     attendee.userId = user
     attendee.name = name
     attendee.surname = surname
+    attendee.nick = nick
     attendee.email = email
     attendee.level = level
     attendee.country = country

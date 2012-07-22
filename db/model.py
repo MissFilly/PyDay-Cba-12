@@ -6,6 +6,7 @@ class Attendee(db.Model):
     userId = db.UserProperty()
     name = db.StringProperty()
     surname = db.StringProperty()
+    nick = db.StringProperty()
     email = db.StringProperty()
     level = db.StringProperty()
     country = db.StringProperty()

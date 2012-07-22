@@ -47,7 +47,11 @@
                 </tr>
                 {% for attendee in attendees %}
                     <tr>
-                      <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
+                      {% if attendee.nick %}
+                          <td><a href="{{ attendee.personal_page }}">{{ attendee.nick }}</a></td>
+                      {% else %}
+                          <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
+                      {% endif %}
                       <td><a href="{{ attendee.company_page }}">{{ attendee.company }}</a></td>
                     </tr>
                 {% endfor %}

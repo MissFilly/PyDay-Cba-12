@@ -32,6 +32,7 @@ class Register(webapp.RequestHandler):
             self.response.out.write('<html><body>You wrote:<pre>')
             name = cgi.escape(self.request.get('name'))
             surname = cgi.escape(self.request.get('last-name'))
+            nick = cgi.escape(self.request.get('nick'))
             email = cgi.escape(self.request.get('email'))
             level = cgi.escape(self.request.get('level'))
             country = cgi.escape(self.request.get('country'))
@@ -45,9 +46,9 @@ class Register(webapp.RequestHandler):
             biography = cgi.escape(self.request.get('biography'))
             cv = cgi.escape(self.request.get('cv'))
 
-            db.add_attendee(user, name, surname, email, level, country, state,
-                tel, in_attendees, allow_contact, personal_page, company,
-                company_page, biography, cv)
+            db.add_attendee(user, name, surname, nick, email, level, country,
+                state, tel, in_attendees, allow_contact, personal_page,
+                company, company_page, biography, cv)
             self.response.out.write(name + '\n')
             self.response.out.write(surname + '\n')
             self.response.out.write(email + '\n')
