@@ -200,7 +200,7 @@ li {
 	font-weight: bold;
 }
 
-.menu:hover, #relevant a:hover {
+.menu:hover, #relevant a:hover, .submit:hover {
 	background-color: #FFC836;
 }
 
@@ -246,4 +246,67 @@ li {
 #footer a {
 	color: #FFF;
 	text-decoration: underline;
+}
+
+form {
+    border-left: 1px solid #E0DFDF;
+    margin-left: 90px;
+    margin-top: 5%;
+    padding-left: 5%;
+}
+
+#content form p {
+	margin-bottom: 5%;
+}
+
+label {
+	display: block;
+	font-size: 16px;
+}
+
+.check-label {
+	display: inline;
+}
+
+.expl {
+	color: #CCC;
+}
+
+.input-text {
+    height: 30px;
+    width: 50%;
+    padding: 0 10px;
+}
+
+.input-text, .select, .upload, textarea {
+    background-color: #F9F9F9;
+    border: 1px solid #E0DFDF;
+    border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+    color: #366B97;
+    margin-top: 1%;
+}
+
+.select {
+	width: 30%;
+}
+
+textarea {
+	padding: 10px;
+	font-size: 14px;
+	width: 70%;
+}
+
+.submit {
+    background-color: #EA7949;
+    border: medium none;
+    border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-top: 2%;
+    padding: 10px;
+    cursor: pointer;
 }

@@ -6,10 +6,12 @@
     <meta name="keywords" content="python, pyday, cordoba, 2012, software libre" />
     <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="static/css/formstyle.css">
     <script type="text/javascript" src="static/js/utils.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Quicksand:400' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css' />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" /> 
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css' />
   </head>
 
   <body>
@@ -26,7 +28,25 @@
             </ul>
           </div>
 
-          <p id="days-left"><script type="text/javascript" src="static/js/daysleft.js"></script></p>
+          <p id="days-left"><script type="text/javascript">
+            var today = new Date();
+            var pyday = new Date(2012, 8, 15);
+            var day = 24*60*60*1000;
+            var daysLeft = Math.ceil((pyday.getTime() - today.getTime())/day);
+            var wordLeft = "Faltan ";
+            var wordDay = " días";
+            
+            if (daysLeft === 1) {
+              wordDay = " día";
+              wordLeft = "Falta ";
+            }
+            
+            else if (daysLeft < 0) {
+              daysLeft = 0;
+            }
+            
+            document.write(wordLeft + "<span>" + daysLeft + "</span>" + wordDay);
+         </script></p>
         </div>
       </div>
 
@@ -38,12 +58,12 @@
             <h2>Inscripción</h2>
             <form name="register" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
               <p>
-                <label for="name">Nombre</label>
+                <label for="name">Nombre<span class="strong">*</span></label>
                 <input id="name" name="name" type="text" class="input-text" value="" />
               </p>
 
               <p>
-                <label for="last-name">Apellido</label>
+                <label for="last-name">Apellido<span class="strong">*</span></label>
                 <input id="last-name" name="last-name" type="text" class="input-text" value="" />
               </p>
               
@@ -53,13 +73,13 @@
               </p>
 
               <p>
-                <label for="email">Email</label>
+                <label for="email">Email<span class="strong">*</span></label>
                 <input id="email" name="email" type="text" class="input-text" value="" />
               </p>
 
               <p>
                 <label for="level">Conocimiento de Python</label>
-                <select id="level" name="level" class="input-select" value="">
+                <select id="level" name="level" class="select" value="">
                   <option value="principiante">Principiante</option>
                   <option value="intermedio">Intermedio</option>
                   <option value="avanzado">Avanzado</option>
@@ -68,7 +88,7 @@
 
               <p>
                 <label for="country">País</label>
-                <select id="country" name="country" class="input-select" value="">
+                <select id="country" name="country" class="select" value="">
                   <option value="United States">United States</option>
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Albania">Albania</option>
@@ -270,7 +290,7 @@
 
               <p>
                 <label for="state">Provincia</label>
-                <select id="state" name="state" class="input-select" value="">
+                <select id="state" name="state" class="select" value="">
                   <option value="Buenos Aires">Buenos Aires</option>
                   <option value="Catamarca">Catamarca</option>
                   <option value="Chaco">Chaco</option>
@@ -304,12 +324,12 @@
               </p>
 
               <p>
-                <label id="include-attendees">Incluir en lista de participantes</label>
+                <label id="include-attendees" class="check-label">Incluir en lista de participantes</label>
                 <input id="include-attendees" name="include-attendees" type="checkbox" value="on" checked="checked" />
               </p>
 
               <p>
-                <label id="sponsors-contact">Contacto con auspiciantes</label>
+                <label id="sponsors-contact" class="check-label">Contacto con auspiciantes</label>
                 <input id="sponsors-contact" name="sponsors-contact" type="checkbox" value="on" checked="checked" />
               </p>
 
@@ -319,7 +339,7 @@
               </p>
 
               <p>
-                <label for="company">Nombre de entidad</label>
+                <label for="company">Nombre de entidad <span class="expl">(empresa, universidad)</span></label>
                 <input id="company" name="company" class="input-text" value="" />
               </p>
 
@@ -329,8 +349,8 @@
               </p>
 
               <p>
-                <label for="biography">Biografía (resumen)</label>
-                <textarea rows="10" name="biography" id="biography" cols="50" class="input-text"></textarea>
+                <label for="biography">Biografía <span class="expl">(resumen)</span></label>
+                <textarea rows="10" name="biography" id="biography"></textarea>
               </p>
 
               <p>
@@ -339,7 +359,7 @@
               </p>
 
               <p>
-                <input type="submit" value="Enviar datos">
+                <input type="submit" class="submit" value="Enviar datos">
               </p>
             </form>
           </div>

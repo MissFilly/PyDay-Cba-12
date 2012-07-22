@@ -6,8 +6,11 @@
     <meta name="keywords" content="python, pyday, cordoba, 2012, software libre" />
     <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-    <link href='http://fonts.googleapis.com/css?family=Quicksand:400' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css' />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" /> 
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css' />
   </head>
 
   <body>
@@ -24,7 +27,25 @@
             </ul>
           </div>
 
-          <p id="days-left"><script type="text/javascript" src="static/js/daysleft.js"></script></p>
+          <p id="days-left"><script type="text/javascript">
+            var today = new Date();
+            var pyday = new Date(2012, 8, 15);
+            var day = 24*60*60*1000;
+            var daysLeft = Math.ceil((pyday.getTime() - today.getTime())/day);
+            var wordLeft = "Faltan ";
+            var wordDay = " días";
+            
+            if (daysLeft === 1) {
+              wordDay = " día";
+              wordLeft = "Falta ";
+            }
+            
+            else if (daysLeft < 0) {
+              daysLeft = 0;
+            }
+            
+            document.write(wordLeft + "<span>" + daysLeft + "</span>" + wordDay);
+         </script></p>
         </div>
       </div>
 
