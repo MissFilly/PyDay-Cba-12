@@ -82,6 +82,21 @@ class Register(webapp.RequestHandler):
             pass
 
 
+class Propose(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            data = {'username': user.nickname(),
+                'logout': users.create_logout_url(self.request.uri)}
+            path = os.path.join(os.path.dirname(__file__),
+                "templates/others/propose.html")
+            self.response.out.write(template.render(path, data))
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
+
+    #def post(self): Diego's space
+
+
 class About(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -92,6 +107,19 @@ class About(webapp.RequestHandler):
             data = {'login': users.create_login_url(self.request.uri)}
         path = os.path.join(os.path.dirname(__file__),
             "templates/conference/about.html")
+        self.response.out.write(template.render(path, data))
+
+
+class Venue(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            data = {'username': user.nickname(),
+                'logout': users.create_logout_url(self.request.uri)}
+        else:
+            data = {'login': users.create_login_url(self.request.uri)}
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/conference/venue.html")
         self.response.out.write(template.render(path, data))
 
 
@@ -119,6 +147,8 @@ def main():
         ('/register', Register),
         ('/about', About),
         ('/attendees', Attendees),
+        ('/venue', Venue),
+        ('/propose', Propose),
         ], debug=True)
     run_wsgi_app(application)
 

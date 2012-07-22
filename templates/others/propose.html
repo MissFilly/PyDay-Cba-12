@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
   <head>
-    <title>PyDay Córdoba 2012 - Más info</title>
+    <title>PyDay Córdoba 2012 - Proponer charla</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="python, pyday, cordoba, 2012, software libre" />
     <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+    <script type="text/javascript" src="static/js/utils.js"></script>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" /> 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
@@ -28,7 +29,7 @@
             </ul>
             <ul id="relevant">
               <li><a href="/register">¡Inscribite!</a></li>
-              <li><a href="/propose">Proponé tu charla</a></li>
+              <li><a class="active" href="#">Proponé tu charla</a></li>
             </ul>
           </div>
 
@@ -59,30 +60,76 @@
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
           <div id="content">
-            <h2>¿Qué es Python?</h2>
-            <div class="text">
-              <p>Python es un lenguaje de programación de alto nivel cuya filosofía hace hincapié en una sintaxis muy limpia y que favorezca un código legible.</p>
-              <p>Se trata de un lenguaje multiparadigma ya que soporta orientación a objetos, programación imperativa y, en menor medida, programación funcional. Es un lenguaje interpretado, usa tipado dinámico, es fuertemente tipado y multiplataforma.</p>
-              <p>Posee una licencia de código abierto y es administrado por la Python Software Foundation.</p>
-              <p>Fuente: <a href="http://es.wikipedia.org/wiki/Python" target="_blank">Wikipedia</a></p>
-            </div>
+            <h2>Proponer una charla</h2>
+            <form name="propose" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+              <p>
+                <label for="title">Título<span class="strong">*</span></label>
+                <input id="title" name="title" type="text" class="input-text" value="" />
+              </p>
 
-            <h2>¿Qué es PyAr?</h2>
-            <div class="text">
-              <p><a href="http://python.org.ar/pyar/" target="_blank">PyAr</a> es la comunidad local de usuarios de Python que nuclea a todos los interesados en este lenguaje en la Argentina. Pretende llegar a usuarios y empresas, promover el uso del lenguaje, intercambiar información, compartir experiencias y, en general, ser el marco de referencia local en el uso y difusión de esta tecnología.</p>
-            </div>
+              <p>
+                <label for="author">Autor<span class="strong">*</span></label>
+                <input id="author" name="author" type="text" class="input-text" value="" />
+              </p>
+              
+              <p>
+                <label for="talk-level">Nivel</label>
+                <select id="talk-level" name="talk-level" class="select" value="">
+                  <option value="principiante" selected="selected">Principiante</option>
+                  <option value="intermedio">Intermedio</option>
+                  <option value="avanzado">Avanzado</option>
+                </select>
+              </p>
 
-            <h2>¿Qué necesito para asistir?</h2>
-            <div class="text">
-              <p>Para asistir al PyDay lo único que necesitás es <a href="/register">registrarte previamente</a> vía web, la entrada es libre y gratuita.</p>
-              <p>El evento está dirigido a cualquier persona interesada en compartir información y aprender sobre el lenguaje de programación Python. Por eso, todo aquél que quiera asistir para compartir sus experiencias, iniciarse en Python (o en programación) o simplemente conocer gente del rubro es bienvenido a participar.</p>
-            </div>
+              <p>
+                <label for="abstract">Descripción<span class="strong">*</span> <span class="expl">(se mostrará a los asistentes)</span></label>
+                <textarea rows="8" name="abstract" id="abstract"></textarea>
+              </p>
+
+              <p>
+                <label for="talk-category">Categoría</label>
+                <select id="talk-category" name="talk-category" class="select" value="">
+                  <option value="academico">Académico</option>
+                  <option value="caseo de estudio">Caseo de estudio</option>
+                  <option value="ciencia">Ciencia</option>
+                  <option value="comunidad">Comunidad</option>
+                  <option value="cli">Cli</option>
+                  <option value="core">Core</option>
+                  <option value="educacion">Educación</option>
+                  <option value="fomento">Fomento</option>
+                  <option value="gui">GUI</option>
+                  <option value="herramientas">Herramientas</option>
+                  <option value="juegos">Juegos</option>
+                  <option value="lenguaje">Lenguaje</option>
+                  <option value="moviles">Móviles</option>
+                  <option value="py3k">Py3k</option>
+                  <option value="redes">Redes</option>
+                  <option value="seguridad">Seguridad</option>
+                  <option value="testing">Testing</option>
+                  <option value="web">Web</option>
+                </select>
+              </p>
+              
+              <p>
+                <label for="req-knowledge">Conocimientos previos requeridos</label>
+                <textarea rows="3" name="req-knowledge" id="req-knowledge"></textarea>
+              </p>
+              
+              <p>
+                <label for"notes">Notas</label>
+                <textarea rows="3" name="notes" id="notes"></textarea>
+              </p>
+
+              <p>
+                <input type="submit" class="submit" value="Enviar datos">
+              </p>
+            </form>
           </div>
         </div>
 
         <div id="sidebar">
           <ul>
-            <li><a class="menu active" href="/about">Más info</a></li>
+            <li><a class="menu" href="/about">Más info</a></li>
             <li><a class="menu" href="/venue">Cómo llegar</a></li>
             <li><a class="menu" href="/attendees">Asistentes</a></li>
             <li class="menu unavailable">Programa</li>
@@ -92,7 +139,7 @@
           <div id="sponsors">
             <h2>Sponsors</h2>
 
-<!--        <h3>Diamante</h3>
+<!--            <h3>Diamante</h3>
             <ul><li><a class="sponsor" href="#" target="_blank"><img src="static/img/sponsor1.png" alt="Sponsor 1"/></a></li></ul>-->
             <h3>Platino</h3>
             <ul>

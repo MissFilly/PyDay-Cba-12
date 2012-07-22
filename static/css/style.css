@@ -133,6 +133,10 @@ li {
     padding-left: 22px;
 }
 
+.backtohome:hover {
+	background-image: url("../img/home-icon-hover.png");
+}
+
 #logo {
 	text-align: center;
 	padding: 9% 9% 1%;
@@ -200,16 +204,12 @@ li {
 	font-weight: bold;
 }
 
-.menu:hover, #relevant a:hover, .submit:hover {
+.menu:hover, #relevant a:hover, #relevant .active, .submit:hover, .active {
 	background-color: #FFC836;
 }
 
-.unavailable {
-	background-color: #E0DFDF !important;
-}
-
-.active {
-	background-color: #FFC836 !important;
+.unavailable, .unavailable:hover {
+	background-color: #E0DFDF;
 }
 
 #sponsors h3 {
