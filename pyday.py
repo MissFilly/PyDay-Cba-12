@@ -30,12 +30,17 @@ class About(webapp.RequestHandler):
             "templates/conference/about.html")
         self.response.out.write(template.render(path, {}))
 
+class Attendees(webapp.RequestHandler):
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), "templates/others/attendees.html")
+        self.response.out.write(template.render(path, {}))
 
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
         ('/register', Register),
         ('/about', About),
+	('/attendees', Attendees),
         ], debug=True)
     run_wsgi_app(application)
 

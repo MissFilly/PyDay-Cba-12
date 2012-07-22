@@ -9,6 +9,11 @@ body {
 	margin: 0;
 }
 
+.unavailable, .unavailable:hover {
+	background-color: #E0DFDF !important;
+	cursor: default !important;
+}
+
 .strong {
 	font-weight: bold;
 }
@@ -148,11 +153,26 @@ li {
 
 .text {
 	margin-bottom: 9%;
-	border-left: 1px solid #E0DFDF;
     line-height: 30px;
-    margin-left: 90px;
     padding-left: 15px;
-	
+	border-left: 1px solid #E0DFDF;
+    margin-left: 90px;
+}
+
+.description {
+	line-height: 30px;
+	margin: 8% 0;
+}
+
+.attendees-table th {
+	font-family: 'Helvetica', sans-serif;
+	font-weight: bold;
+    padding-bottom: 6%;
+    text-align: left;
+}
+
+.attendees-table td {
+	padding-bottom: 3%;
 }
 
 #sidebar {
