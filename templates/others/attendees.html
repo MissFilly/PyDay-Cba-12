@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" /> 
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css' />
@@ -39,16 +39,16 @@
             var daysLeft = Math.ceil((pyday.getTime() - today.getTime())/day);
             var wordLeft = "Faltan ";
             var wordDay = " días";
-            
+
             if (daysLeft === 1) {
               wordDay = " día";
               wordLeft = "Falta ";
             }
-            
+
             else if (daysLeft < 0) {
               daysLeft = 0;
             }
-            
+
             document.write(wordLeft + "<span>" + daysLeft + "</span>" + wordDay);
          </script></p>
         </div>

@@ -85,6 +85,10 @@ class Register(webapp.RequestHandler):
 class Propose(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        registered = db.user_is_attendee(user)
+        if not registered:
+            self.redirect('/register')
+            return
         if user:
             data = {'username': user.nickname(),
                 'logout': users.create_logout_url(self.request.uri)}
@@ -134,8 +138,8 @@ class Attendees(webapp.RequestHandler):
         attendees = db.get_attendees()
         len_attendees = attendees.count()
         attendees.filter('in_attendees =', True)
-        data = {'attendees': attendees,
-            'len_attendees': len_attendees}
+        data['attendees'] = attendees
+        data['len_attendees'] = len_attendees
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/attendees.html")
         self.response.out.write(template.render(path, data))

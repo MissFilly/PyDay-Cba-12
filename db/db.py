@@ -39,6 +39,15 @@ def add_attendee(user, name, surname, nick, email, level, country, state, tel,
     return True
 
 
+def user_is_attendee(user):
+    """Check if the current user is already registered as an attendee."""
+    attendee = model.Attendee.all()
+    attendee.filter('userId =', user)
+    if attendee.count() != 0:
+        return True
+    return False
+
+
 def get_attendees():
     attendees = model.Attendee.all()
     return attendees
