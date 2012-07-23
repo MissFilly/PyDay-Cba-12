@@ -38,6 +38,11 @@ h2 {
     color: #464646;
 }
 
+.long-title {
+	font-size: 31px;
+	line-height: 40px;
+}
+
 li {
 	list-style: none outside none;
 }
@@ -269,7 +274,7 @@ label {
 }
 
 .expl {
-	color: #CCC;
+	color: #777;
 }
 
 .input-text {
