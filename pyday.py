@@ -239,6 +239,19 @@ class Login(webapp.RequestHandler):
         self.response.out.write(template.render(path, data))
 
 
+class Success(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            data = {'username': user.nickname(),
+                'logout': users.create_logout_url(self.request.uri)}
+        else:
+            data = {'login': users.create_login_url(self.request.uri)}
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/user/success.html")
+        self.response.out.write(template.render(path, data))
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
@@ -248,6 +261,7 @@ def main():
         ('/venue', Venue),
         ('/propose', Propose),
         ('/login', Login),
+        ('/success', Success),
         ], debug=True)
     run_wsgi_app(application)
 
