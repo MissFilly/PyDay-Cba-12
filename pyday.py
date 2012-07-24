@@ -176,6 +176,24 @@ class Attendees(webapp.RequestHandler):
         self.response.out.write(template.render(path, data))
 
 
+class Login(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            data = {'username': user.nickname(),
+                'logout': users.create_logout_url(self.request.uri)}
+        else:
+            data = {'login': users.create_login_url(self.request.uri)}
+        attendees = db.get_attendees()
+        len_attendees = attendees.count()
+        attendees.filter('in_attendees =', True)
+        data['attendees'] = attendees
+        data['len_attendees'] = len_attendees
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/others/login.html")
+        self.response.out.write(template.render(path, data))
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
@@ -184,6 +202,7 @@ def main():
         ('/attendees', Attendees),
         ('/venue', Venue),
         ('/propose', Propose),
+        ('/login', Login),
         ], debug=True)
     run_wsgi_app(application)
 
