@@ -33,9 +33,9 @@ class PyDayHandler(webapp.RequestHandler):
             result['username'] = user.nickname()
         else:  # let user choose authenticator
             result['user'] = None
-            for name, uri in providers.items():
-                self.result.out.write('[<a href="%s">%s</a>]' % (
-                    users.create_login_url(federated_identity=uri), name))
+#            for name, uri in providers.items():
+#                self.result.out.write('[<a href="%s">%s</a>]' % (
+#                    users.create_login_url(federated_identity=uri), name))
 
         return result
 
@@ -43,12 +43,13 @@ class PyDayHandler(webapp.RequestHandler):
         data = {}
         for name, uri in providers.items():
             data[name] = users.create_login_url(federated_identity=uri)
-        path = os.path.join(os.path.dirname(__file__), "templates/openid.html")
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/others/login.html")
         self.response.out.write(template.render(path, data))
 
     def go_to_login(self, data):
         path = os.path.join(os.path.dirname(__file__),
-            "templates/openid.html")
+            "templates/others/login.html")
         self.response.out.write(template.render(path, data))
 
 
@@ -63,6 +64,7 @@ class Register(PyDayHandler):
     def get(self):
         result = self.user_login()
         if result.get('user', None):
+            result['showerror'] = 'none'
             path = os.path.join(os.path.dirname(__file__),
                 "templates/user/register.html")
             self.response.out.write(template.render(path, result))
@@ -70,54 +72,63 @@ class Register(PyDayHandler):
             self.go_to_login(result)
 
     def post(self):
-        user = users.get_current_user()
-        if user:
-            self.response.out.write('<html><body>You wrote:<pre>')
-            name = cgi.escape(self.request.get('name'))
-            surname = cgi.escape(self.request.get('last-name'))
-            nick = cgi.escape(self.request.get('nick'))
-            email = cgi.escape(self.request.get('email'))
-            level = cgi.escape(self.request.get('level'))
-            country = cgi.escape(self.request.get('country'))
-            state = cgi.escape(self.request.get('state'))
-            tel = cgi.escape(self.request.get('tel'))
-            in_attendees = cgi.escape(self.request.get('include-attendees'))
-            allow_contact = cgi.escape(self.request.get('sponsors-contact'))
-            personal_page = cgi.escape(self.request.get('personal-page'))
-            company = cgi.escape(self.request.get('company'))
-            company_page = cgi.escape(self.request.get('company-page'))
-            biography = cgi.escape(self.request.get('biography'))
-            cv = cgi.escape(self.request.get('cv'))
+        result = self.user_login()
+        # Collect data
+        name = cgi.escape(self.request.get('name'))
+        surname = cgi.escape(self.request.get('last-name'))
+        nick = cgi.escape(self.request.get('nick'))
+        email = cgi.escape(self.request.get('email'))
+        level = cgi.escape(self.request.get('level'))
+        country = cgi.escape(self.request.get('country'))
+        state = cgi.escape(self.request.get('state'))
+        tel = cgi.escape(self.request.get('tel'))
+        in_attendees = cgi.escape(self.request.get('include-attendees'))
+        allow_contact = cgi.escape(self.request.get('sponsors-contact'))
+        personal_page = cgi.escape(self.request.get('personal-page'))
+        company = cgi.escape(self.request.get('company'))
+        company_page = cgi.escape(self.request.get('company-page'))
+        biography = cgi.escape(self.request.get('biography'))
+        cv = cgi.escape(self.request.get('cv'))
+        data = {
+            'name': name,
+            'surname': surname,
+            'nick': nick,
+            'email': email,
+            'tel': tel,
+            'personal_page': personal_page,
+            'company': company,
+            'company_page': company_page,
+            'biography': biography,
+        }
+        data.update(result)
 
+        if result.get('user', None):
             if not (name and surname and email):
                 #error page
+                self.show_error(
+                    u'Falta completar alguno de los datos requeridos.', data)
                 return
 
-            registered = db.add_attendee(user, name, surname, nick, email,
-                level, country, state, tel, in_attendees, allow_contact,
+            registered = db.add_attendee(result['user'], name, surname, nick,
+                email, level, country, state, tel, in_attendees, allow_contact,
                 personal_page, company, company_page, biography, cv)
             if registered:
-                self.response.out.write(name + '\n')
-                self.response.out.write(surname + '\n')
-                self.response.out.write(email + '\n')
-                self.response.out.write(level + '\n')
-                self.response.out.write(country + '\n')
-                self.response.out.write(state + '\n')
-                self.response.out.write(tel + '\n')
-                self.response.out.write(repr(in_attendees) + '\n')
-                self.response.out.write(repr(allow_contact) + '\n')
-                self.response.out.write(personal_page + '\n')
-                self.response.out.write(company + '\n')
-                self.response.out.write(company_page + '\n')
-                self.response.out.write(biography + '\n')
-                self.response.out.write(repr(cv) + '\n')
-                self.response.out.write('DIEGOOOOOOOOOOO')
+                pass
             else:
-                self.response.out.write('FAIL')
-            self.response.out.write('</pre></body></html>')
+                self.show_error(
+                u'Hubo un problema al intentar procesar la inscripción.', data)
+                # show error
         else:
             #show error page
-            pass
+            self.show_error(
+                u'No hay una sesión iniciada.', data)
+
+    def show_error(self, message, data):
+        data['showerror'] = 'block'
+        data['errormessage'] = message
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/user/register.html")
+        self.response.out.write(template.render(path, data))
 
 
 class Propose(PyDayHandler):

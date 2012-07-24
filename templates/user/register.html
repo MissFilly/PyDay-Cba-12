@@ -5,31 +5,31 @@
           <script type="text/javascript" src="static/js/utils.js"></script>
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
-          <div id="error-message">
-            <p class="error">This is an error message for the register page.</p>
+          <div id="error-message" style="display: {{ showerror }};">
+            <p class="error">{{ errormessage }}</p>
           </div>
-          
+
           <div id="content">
             <h2>Inscripción</h2>
             <form name="register" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
               <p>
                 <label for="name">Nombre<span class="strong">*</span></label>
-                <input id="name" name="name" type="text" class="input-text" value="" />
+                <input id="name" name="name" type="text" class="input-text" value="{{ name }}" />
               </p>
 
               <p>
                 <label for="last-name">Apellido<span class="strong">*</span></label>
-                <input id="last-name" name="last-name" type="text" class="input-text" value="" />
+                <input id="last-name" name="last-name" type="text" class="input-text" value="{{ surname }}" />
               </p>
 
               <p>
                 <label for="nick">Apodo</label>
-                <input id="nick" name="nick" type="text" class="input-text" value="" />
+                <input id="nick" name="nick" type="text" class="input-text" value="{{ nick }}" />
               </p>
 
               <p>
                 <label for="email">Email<span class="strong">*</span></label>
-                <input id="email" name="email" type="text" class="input-text" value="" />
+                <input id="email" name="email" type="text" class="input-text" value="{{ email }}" />
               </p>
 
               <p>
@@ -275,7 +275,7 @@
 
               <p>
                 <label for="tel">Número de teléfono</label>
-                <input id="tel" name="tel" class="input-text" value="" />
+                <input id="tel" name="tel" class="input-text" value="{{ tel }}" />
               </p>
 
               <p>
@@ -290,22 +290,22 @@
 
               <p>
                 <label for="personal-page">Página web personal</label>
-                <input id="personal-page" name="personal-page" class="input-text" value="" />
+                <input id="personal-page" name="personal-page" class="input-text" value="{{ personal_page }}" />
               </p>
 
               <p>
                 <label for="company">Nombre de entidad <span class="expl">(empresa, universidad)</span></label>
-                <input id="company" name="company" class="input-text" value="" />
+                <input id="company" name="company" class="input-text" value="{{ company }}" />
               </p>
 
               <p>
                 <label for="company-page">Página web de entidad</label>
-                <input id="company-page" name="company-page" class="input-text" value="" />
+                <input id="company-page" name="company-page" class="input-text" value="{{ company_page }}" />
               </p>
 
               <p>
                 <label for="biography">Biografía <span class="expl">(resumen)</span></label>
-                <textarea rows="10" name="biography" id="biography"></textarea>
+                <textarea rows="10" name="biography" id="biography">{{ biography }}</textarea>
               </p>
 
               <p>
