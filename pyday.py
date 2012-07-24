@@ -10,30 +10,64 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from db import db
 
 
-class MainPage(webapp.RequestHandler):
-    def get(self):
+providers = {
+    'Google': 'www.google.com/accounts/o8/id',
+    'Yahoo': 'yahoo.com',
+    'MySpace': 'myspace.com',
+    'AOL': 'aol.com',
+    'MyOpenID': 'myopenid.com',
+    'LinkedIn': 'linkedin.com',
+    'Twitter': 'twitter.com',
+    'Facebook': 'facebook.com'
+    # add more here
+}
+
+
+class PyDayHandler(webapp.RequestHandler):
+    def user_login(self):
+        result = {}
         user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'login': users.create_login_url(self.request.uri),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
-        path = os.path.join(os.path.dirname(__file__), "templates/index.html")
+        if user:  # signed in already
+            result['user'] = user
+            result['logout'] = users.create_logout_url(self.request.uri)
+            result['username'] = user.nickname()
+        else:  # let user choose authenticator
+            result['user'] = None
+            for name, uri in providers.items():
+                self.result.out.write('[<a href="%s">%s</a>]' % (
+                    users.create_login_url(federated_identity=uri), name))
+
+        return result
+
+    def show_openid_login(self):
+        data = {}
+        for name, uri in providers.items():
+            data[name] = users.create_login_url(federated_identity=uri)
+        path = os.path.join(os.path.dirname(__file__), "templates/openid.html")
+        self.response.out.write(template.render(path, data))
+
+    def go_to_login(self, data):
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/openid.html")
         self.response.out.write(template.render(path, data))
 
 
-class Register(webapp.RequestHandler):
+class MainPage(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
+        result = self.user_login()
+        path = os.path.join(os.path.dirname(__file__), "templates/index.html")
+        self.response.out.write(template.render(path, result))
+
+
+class Register(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        if result.get('user', None):
             path = os.path.join(os.path.dirname(__file__),
                 "templates/user/register.html")
-            self.response.out.write(template.render(path, data))
+            self.response.out.write(template.render(path, result))
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.go_to_login(result)
 
     def post(self):
         user = users.get_current_user()
@@ -86,7 +120,7 @@ class Register(webapp.RequestHandler):
             pass
 
 
-class Propose(webapp.RequestHandler):
+class Propose(PyDayHandler):
     def get(self):
         user = users.get_current_user()
         registered = db.user_is_attendee(user)
@@ -132,7 +166,7 @@ class Propose(webapp.RequestHandler):
             pass
 
 
-class About(webapp.RequestHandler):
+class About(PyDayHandler):
     def get(self):
         user = users.get_current_user()
         if user:
@@ -145,7 +179,7 @@ class About(webapp.RequestHandler):
         self.response.out.write(template.render(path, data))
 
 
-class Venue(webapp.RequestHandler):
+class Venue(PyDayHandler):
     def get(self):
         user = users.get_current_user()
         if user:
@@ -158,7 +192,7 @@ class Venue(webapp.RequestHandler):
         self.response.out.write(template.render(path, data))
 
 
-class Attendees(webapp.RequestHandler):
+class Attendees(PyDayHandler):
     def get(self):
         user = users.get_current_user()
         if user:
