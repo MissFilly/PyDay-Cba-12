@@ -1,72 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
-  <head>
-    <title>PyDay Córdoba 2012 - Proponer una charla</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="python, pyday, cordoba, 2012, software libre" />
-    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-    <script type="text/javascript" src="static/js/utils.js"></script>
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" /> 
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
-    <![endif]-->
-    <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css' />
-  </head>
-
-  <body>
-      <div id="header">
-        <div id="header-wrapper">
-
-          <div id="nav">
-            <ul id="user">
-              {% if username %}
-                  <li><a href="#">Perfil</a></li>
-                  <li><a href="{{ logout }}">Cerrar sesión</a></li>
-              {% else %}
-                  <li><a href="{{ login }}">Iniciar sesión</a></li>
-              {% endif %}
-            </ul>
-            <ul id="relevant">
-              <li><a href="/register">¡Inscribite!</a></li>
-              <li><a class="active" href="#">Proponé tu charla</a></li>
-            </ul>
-          </div>
-
-          <p id="days-left"><script type="text/javascript">
-            var today = new Date();
-            var pyday = new Date(2012, 8, 15);
-            var day = 24*60*60*1000;
-            var daysLeft = Math.ceil((pyday.getTime() - today.getTime())/day);
-            var wordLeft = "Faltan ";
-            var wordDay = " días";
-            
-            if (daysLeft === 1) {
-              wordDay = " día";
-              wordLeft = "Falta ";
-            }
-            
-            else if (daysLeft < 0) {
-              daysLeft = 0;
-            }
-            
-            document.write(wordLeft + "<span>" + daysLeft + "</span>" + wordDay);
-         </script></p>
-        </div>
-      </div>
+{% include "../header.html" %}
 
       <div id="page">
         <div id="frame">
+          <script type="text/javascript" src="static/js/utils.js"></script>
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
           <div id="content">
             <h2>Proponer una charla</h2>
-            <form name="propose" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <form name="propose" action="" method="post" enctype="multipart/form-data" onsubmit="return validateFormTalk()">
               <p>
                 <label for="title">Título<span class="strong">*</span></label>
                 <input id="title" name="title" type="text" class="input-text" value="" />
               </p>
-              
+
               <p>
                 <label for="talk-level">Nivel</label>
                 <select id="talk-level" name="talk-level" class="select" value="">
@@ -104,12 +50,12 @@
                   <option value="web">Web</option>
                 </select>
               </p>
-              
+
               <p>
                 <label for="req-knowledge">Conocimientos previos requeridos</label>
                 <textarea rows="3" name="req-knowledge" id="req-knowledge"></textarea>
               </p>
-              
+
               <p>
                 <label for"notes">Notas</label>
                 <textarea rows="3" name="notes" id="notes"></textarea>
@@ -131,33 +77,8 @@
             <li class="menu unavailable">Remeras</li>
           </ul>
 
-          <div id="sponsors">
-            <h2>Sponsors</h2>
+    {% include "../sponsors.html" %}
 
-<!--            <h3>Diamante</h3>
-            <ul><li><a class="sponsor" href="#" target="_blank"><img src="static/img/sponsor1.png" alt="Sponsor 1"/></a></li></ul>-->
-            <h3>Platino</h3>
-            <ul>
-              <li><a class="sponsor" href="http://ninja-ide.org" target="_blank"><img src="static/img/sponsor2.png" alt="NINJA IDE" /></a></li>
-<!--              <li><a class="sponsor" href="#">Sponsor2</a></li>-->
-            </ul>
-<!--            <h3>Oro</h3>
-            <ul>
-              <li><a class="sponsor" href="#">...</a></li>
-              <li><a class="sponsor" href="#">...</a></li>
-              <li><a class="sponsor" href="#">...</a></li>
-            </ul>-->
-            <ul>
-              <li><a class="menu" href="#">Ser sponsor</a></li>
-            </ul>
-          </div>
-        </div>
       </div>
 
-      <div id="footer">
-        <div id="footer-wrapper">
-          <p><span>El código del sitio se encuentra bajo licencia GNU GPLv3.</span> | <span><a href="https://groups.google.com/group/pyday-cba" target="_blank">pyday-cba@googlegroups.com</a></span> | <span>Más Información: <a href="http://python.org.ar/pyar/Eventos/Conferencias" target="_blank">http://python.org.ar/</a></span></p>
-        </div>
-      </div>
-  </body>
-</html>
+  {% include "../footer.html" %}

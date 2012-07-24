@@ -9,3 +9,15 @@ function validateForm()
           return false;
     }
 }
+
+
+function validateFormTalk()
+{
+    var t = document.forms["propose"]["title"].value;
+    var a = document.forms["propose"]["abstract"].value;
+    if (t==null || t=="" || a==null || a=="")
+    {
+          alert("Debe completar: Titulo y Descripción");
+          return false;
+    }
+}

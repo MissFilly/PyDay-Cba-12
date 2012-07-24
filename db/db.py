@@ -39,6 +39,26 @@ def add_attendee(user, name, surname, nick, email, level, country, state, tel,
     return True
 
 
+def add_talk(user, title, level, abstract, category, knowledge, notes):
+    """Register a new talk for the event."""
+    # Check if this user is already registered
+    attendee = model.Attendee.all()
+    attendee.filter('userId =', user)
+    if attendee.count() == 0:
+        return False
+
+    talk = model.Talk()
+    talk.userId = user
+    talk.title = title
+    talk.level = level
+    talk.abstract = abstract
+    talk.category = category
+    talk.knowledge = knowledge
+    talk.notes = notes
+    talk.put()
+    return True
+
+
 def user_is_attendee(user):
     """Check if the current user is already registered as an attendee."""
     attendee = model.Attendee.all()

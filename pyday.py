@@ -55,6 +55,10 @@ class Register(webapp.RequestHandler):
             biography = cgi.escape(self.request.get('biography'))
             cv = cgi.escape(self.request.get('cv'))
 
+            if not (name and surname and email):
+                #error page
+                return
+
             registered = db.add_attendee(user, name, surname, nick, email,
                 level, country, state, tel, in_attendees, allow_contact,
                 personal_page, company, company_page, biography, cv)
@@ -98,7 +102,34 @@ class Propose(webapp.RequestHandler):
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
-    #def post(self): Diego's space
+    def post(self):
+        user = users.get_current_user()
+        if user:
+            self.response.out.write('<html><body>You wrote:<pre>')
+            title = cgi.escape(self.request.get('title'))
+            level = cgi.escape(self.request.get('talk-level'))
+            abstract = cgi.escape(self.request.get('abstract'))
+            category = cgi.escape(self.request.get('talk-category'))
+            knowledge = cgi.escape(self.request.get('req-knowledge'))
+            notes = cgi.escape(self.request.get('notes'))
+
+            if not (title and abstract):
+                #error page
+                return
+
+            saved = db.add_talk(user, title, level, abstract, category,
+                knowledge, notes)
+            if saved:
+                self.response.out.write(repr(title) + '\n')
+                self.response.out.write(repr(level) + '\n')
+                self.response.out.write(repr(abstract) + '\n')
+                self.response.out.write(repr(category) + '\n')
+                self.response.out.write(repr(knowledge) + '\n')
+                self.response.out.write(repr(notes) + '\n')
+                self.response.out.write('</pre></body></html>')
+        else:
+            #show error page
+            pass
 
 
 class About(webapp.RequestHandler):

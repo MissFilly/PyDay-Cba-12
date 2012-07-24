@@ -19,3 +19,13 @@ class Attendee(db.Model):
     company_page = db.StringProperty()
     biography = db.TextProperty()
     cv = db.BlobProperty()
+
+
+class Talk(db.Model):
+    userId = db.UserProperty()
+    title = db.StringProperty()
+    level = db.StringProperty()
+    abstract = db.TextProperty()
+    category = db.StringProperty()
+    knowledge = db.TextProperty()
+    notes = db.TextProperty()
