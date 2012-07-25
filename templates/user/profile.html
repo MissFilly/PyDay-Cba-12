@@ -5,7 +5,7 @@
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
           <div id="content">
-            <h2 class="inline-header">Perfil</h2><a class="modify" href="">Modificar</a>
+            <h2 class="inline-header">Perfil</h2><a class="modify" href="modify_profile">Modificar</a>
             <table class="personal-details">
               <tbody>
               <tr>
@@ -80,7 +80,7 @@
                           <tr>
                             <td>{{ talk.title }}</td>
                             <td>{{ talk.abstract }}</td>
-                            <td><a class="modify" href="">Modificar</a></td>
+                            <td><a class="modify" href="/modify_talk?talk={{ talk.id }}">Modificar</a></td>
                           </tr>
                       {% endfor %}
                     </tbody>

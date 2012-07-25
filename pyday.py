@@ -270,12 +270,125 @@ class Login(PyDayHandler):
         self.go_to_login(result)
 
 
-class Success(webapp.RequestHandler):
+class Success(PyDayHandler):
     def get(self):
         result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
             "templates/user/success.html")
         self.response.out.write(template.render(path, result))
+
+
+class ModifyProfile(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        if result.get('user', None):
+            attendee = db.get_profile(result['user'])
+            if attendee is None:
+                self.redirect('/register')
+                return
+            data = {
+                'name': attendee.name,
+                'surname': attendee.surname,
+                'nick': attendee.nick,
+                'email': attendee.email,
+                'tel': attendee.tel,
+                'personal_page': attendee.personal_page,
+                'company': attendee.company,
+                'company_page': attendee.company_page,
+                'biography': attendee.biography,
+            }
+            result.update(data)
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/user/register.html")
+        self.response.out.write(template.render(path, result))
+
+    def post(self):
+        result = self.user_login()
+        # Collect data
+        name = cgi.escape(self.request.get('name'))
+        surname = cgi.escape(self.request.get('last-name'))
+        nick = cgi.escape(self.request.get('nick'))
+        email = cgi.escape(self.request.get('email'))
+        level = cgi.escape(self.request.get('level'))
+        country = cgi.escape(self.request.get('country'))
+        state = cgi.escape(self.request.get('state'))
+        tel = cgi.escape(self.request.get('tel'))
+        in_attendees = cgi.escape(self.request.get('include-attendees'))
+        allow_contact = cgi.escape(self.request.get('sponsors-contact'))
+        personal_page = cgi.escape(self.request.get('personal-page'))
+        company = cgi.escape(self.request.get('company'))
+        company_page = cgi.escape(self.request.get('company-page'))
+        biography = cgi.escape(self.request.get('biography'))
+        cv = cgi.escape(self.request.get('cv'))
+        data = {
+            'name': name,
+            'surname': surname,
+            'nick': nick,
+            'email': email,
+            'tel': tel,
+            'personal_page': personal_page,
+            'company': company,
+            'company_page': company_page,
+            'biography': biography,
+        }
+        data.update(result)
+
+        if result.get('user', None):
+            if not (name and surname and email):
+                #error page
+                self.show_error("templates/user/register.html",
+                    u'Falta completar alguno de los datos requeridos.', data)
+                return
+
+            registered = db.update_attendee(result['user'], name, surname,
+                nick, email, level, country, state, tel, in_attendees,
+                allow_contact, personal_page, company, company_page, biography,
+                cv)
+            if registered:
+                data['title'] = (
+                    u'Registración actualizada exitosamente para'
+                    u' el PyDay Córdoba 2012.')
+                data['message'] = (
+                    u'Podés ver <a href="/attendees">quiénes van'
+                    ' a asistir</a> o compartirlo en:')
+                data['share_twitter'] = (
+                    u'https://twitter.com/intent/tweet?text=Voy+a+estar '
+                    'asistiendo+al+PyDay+Cba+el+15+de+Septiembre+-+'
+                    'http://pydaycba.com.ar+Sumate!')
+                data['share_facebook'] = (u'http://www.facebook.com/login.php?'
+                    'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
+                    '%3Fu%3DVoy+a+estar+asistiendo+al+PyDay+Cba+el+15+de+'
+                    'Septiembre+-+http://pydaycba.com.ar+'
+                    'Sumate!&display=popup')
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/success.html")
+                self.response.out.write(template.render(path, data))
+            else:
+                self.show_error("templates/user/register.html",
+                u'Hubo un problema al intentar procesar la inscripción.', data)
+                # show error
+        else:
+            #show error page
+            self.show_error("templates/user/register.html",
+                u'No hay una sesión iniciada.', data)
+
+
+class ModifyTalk(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        cv = cgi.escape(self.request.get('algo'))
+        self.response.out.write(cv)
+#        registered = db.user_is_attendee(result.get('user', None))
+#        if not registered:
+#            self.redirect('/register')
+#            return
+#        if result.get('user', None):
+#            talks = db.get_user_talks(result['user'])
+#            path = os.path.join(os.path.dirname(__file__),
+#                "templates/others/propose.html")
+#            self.response.out.write(template.render(path, result))
+#        else:
+#            self.redirect(result['login'])
 
 
 def main():
@@ -289,6 +402,8 @@ def main():
         ('/propose', Propose),
         ('/success', Success),
         ('/login', Login),
+        ('/modify_profile', ModifyProfile),
+        ('/modify_talk', ModifyTalk),
         ], debug=True)
     run_wsgi_app(application)
 
