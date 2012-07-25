@@ -11,14 +11,13 @@ from db import db
 
 
 providers = {
-    'Google': 'www.google.com/accounts/o8/id',
-    'Yahoo': 'yahoo.com',
-    'MySpace': 'myspace.com',
-    'AOL': 'aol.com',
-    'MyOpenID': 'myopenid.com',
-    'LinkedIn': 'linkedin.com',
-    'Twitter': 'twitter.com',
-    'Facebook': 'facebook.com'
+    'google': 'www.google.com/accounts/o8/id',
+    'yahoo': 'yahoo.com',
+    'live': 'myspace',
+    'aol': 'aol.com',
+    'openid': 'myopenid.com',
+    'linkedin': 'linkedin.com',
+    'twitter': 'twitter.com',
     # add more here
 }
 
@@ -33,30 +32,21 @@ class PyDayHandler(webapp.RequestHandler):
             result['username'] = user.nickname()
         else:  # let user choose authenticator
             result['user'] = None
-#            for name, uri in providers.items():
-#                self.result.out.write('[<a href="%s">%s</a>]' % (
-#                    users.create_login_url(federated_identity=uri), name))
+            result['login'] = '/login'
 
         return result
 
-    def show_openid_login(self):
-        data = {}
+    def go_to_login(self, data):
         for name, uri in providers.items():
             data[name] = users.create_login_url(federated_identity=uri)
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/login.html")
         self.response.out.write(template.render(path, data))
 
-    def go_to_login(self, data):
-        path = os.path.join(os.path.dirname(__file__),
-            "templates/others/login.html")
-        self.response.out.write(template.render(path, data))
-
-    def show_error(self, message, data):
+    def show_error(self, page_base, message, data):
         data['showerror'] = 'block'
         data['errormessage'] = message
-        path = os.path.join(os.path.dirname(__file__),
-            "templates/user/register.html")
+        path = os.path.join(os.path.dirname(__file__), page_base)
         self.response.out.write(template.render(path, data))
 
 
@@ -112,7 +102,7 @@ class Register(PyDayHandler):
         if result.get('user', None):
             if not (name and surname and email):
                 #error page
-                self.show_error(
+                self.show_error("templates/user/register.html",
                     u'Falta completar alguno de los datos requeridos.', data)
                 return
 
@@ -120,150 +110,138 @@ class Register(PyDayHandler):
                 email, level, country, state, tel, in_attendees, allow_contact,
                 personal_page, company, company_page, biography, cv)
             if registered:
-                data['message'] = ('Te registraste exitosamente en el PyDay'
-                    ' Córdoba 2012. Podés ver <a href="/attendees">quiénes van'
+                data['title'] = (
+                    u'Te registraste exitosamente en el PyDay Córdoba 2012.')
+                data['message'] = (
+                    u'Podés ver <a href="/attendees">quiénes van'
                     ' a asistir</a> o compartirlo en:')
                 data['share_twitter'] = (
-                    'https://twitter.com/intent/tweet?text=Voy a estar '
-                    'asistiendo al PyDay Cba el 15 de Septiembre - '
-                    'http://pydaycba.com.ar Sumate!')
-                data['share_facebook'] = ('http://www.facebook.com/login.php?'
+                    u'https://twitter.com/intent/tweet?text=Voy+a+estar '
+                    'asistiendo+al+PyDay+Cba+el+15+de+Septiembre+-+'
+                    'http://pydaycba.com.ar+Sumate!')
+                data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DVoy a estar asistiendo al PyDay Cba el 15 de '
-                    'Septiembre - http://pydaycba.com.ar '
+                    '%3Fu%3DVoy+a+estar+asistiendo+al+PyDay+Cba+el+15+de+'
+                    'Septiembre+-+http://pydaycba.com.ar+'
                     'Sumate!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
             else:
-                self.show_error(
+                self.show_error("templates/user/register.html",
                 u'Hubo un problema al intentar procesar la inscripción.', data)
                 # show error
         else:
             #show error page
-            self.show_error(
+            self.show_error("templates/user/register.html",
                 u'No hay una sesión iniciada.', data)
 
 
 class Propose(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        registered = db.user_is_attendee(user)
+        result = self.user_login()
+        registered = db.user_is_attendee(result.get('user', None))
         if not registered:
             self.redirect('/register')
             return
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
+        if result.get('user', None):
             path = os.path.join(os.path.dirname(__file__),
                 "templates/others/propose.html")
-            self.response.out.write(template.render(path, data))
+            self.response.out.write(template.render(path, result))
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect(result['login'])
 
     def post(self):
-        user = users.get_current_user()
-        if user:
-            self.response.out.write('<html><body>You wrote:<pre>')
-            title = cgi.escape(self.request.get('title'))
-            level = cgi.escape(self.request.get('talk-level'))
-            abstract = cgi.escape(self.request.get('abstract'))
-            category = cgi.escape(self.request.get('talk-category'))
-            knowledge = cgi.escape(self.request.get('req-knowledge'))
-            notes = cgi.escape(self.request.get('notes'))
+        result = self.user_login()
+        # Collect data
+        title = cgi.escape(self.request.get('title'))
+        level = cgi.escape(self.request.get('talk-level'))
+        abstract = cgi.escape(self.request.get('abstract'))
+        category = cgi.escape(self.request.get('talk-category'))
+        knowledge = cgi.escape(self.request.get('req-knowledge'))
+        notes = cgi.escape(self.request.get('notes'))
+        data = {
+            'title': title,
+            'abstract': abstract,
+            'knowledge': knowledge,
+            'notes': notes,
+        }
+        data.update(result)
+        if result.get('user', None):
 
             if not (title and abstract):
                 #error page
+                self.show_error("templates/others/propose.html",
+                    u'Falta completar alguno de los datos requeridos.', data)
                 return
 
-            saved = db.add_talk(user, title, level, abstract, category,
-                knowledge, notes)
+            saved = db.add_talk(result['user'], title, level, abstract,
+                category, knowledge, notes)
             if saved:
-                self.response.out.write(repr(title) + '\n')
-                self.response.out.write(repr(level) + '\n')
-                self.response.out.write(repr(abstract) + '\n')
-                self.response.out.write(repr(category) + '\n')
-                self.response.out.write(repr(knowledge) + '\n')
-                self.response.out.write(repr(notes) + '\n')
-                self.response.out.write('</pre></body></html>')
+                data['title'] = u'Tu propuesta fue cargada con éxito.'
+                data['message'] = u'Podés compartirlo en:'
+                data['share_twitter'] = (
+                    u'https://twitter.com/intent/tweet?text=Cargue la Charla+'
+                    '%s+para+el+PyDay+Cba+-+http://pydaycba.com.ar Sumate!' %
+                    title)
+                data['share_facebook'] = (u'http://www.facebook.com/login.php?'
+                    'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
+                    '%3Fu%3DCargue+la+Charla+' + title +
+                    '+para+el+PyDay+Cba+-+'
+                    'http://pydaycba.com.ar Sumate!&display=popup')
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/success.html")
+                self.response.out.write(template.render(path, data))
         else:
             #show error page
-            pass
+            self.show_error("templates/others/propose.html",
+                u'Hubo un problema al intentar registrar la charla.', data)
 
 
 class About(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
+        result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
             "templates/conference/about.html")
-        self.response.out.write(template.render(path, data))
+        self.response.out.write(template.render(path, result))
 
 
 class Venue(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
+        result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
             "templates/conference/venue.html")
-        self.response.out.write(template.render(path, data))
+        self.response.out.write(template.render(path, result))
 
 
 class Attendees(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
+        result = self.user_login()
         attendees = db.get_attendees()
         len_attendees = attendees.count()
         attendees.filter('in_attendees =', True)
-        data['attendees'] = attendees
-        data['len_attendees'] = len_attendees
+        result['attendees'] = attendees
+        result['len_attendees'] = len_attendees
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/attendees.html")
-        self.response.out.write(template.render(path, data))
+        self.response.out.write(template.render(path, result))
 
 
-class Login(webapp.RequestHandler):
+class Login(PyDayHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
-        attendees = db.get_attendees()
-        len_attendees = attendees.count()
-        attendees.filter('in_attendees =', True)
-        data['attendees'] = attendees
-        data['len_attendees'] = len_attendees
-        path = os.path.join(os.path.dirname(__file__),
-            "templates/others/login.html")
-        self.response.out.write(template.render(path, data))
+        result = self.user_login()
+        if result.get('user', None):
+            self.redirect('/')
+            return
+        self.go_to_login(result)
 
 
 class Success(webapp.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            data = {'username': user.nickname(),
-                'logout': users.create_logout_url(self.request.uri)}
-        else:
-            data = {'login': users.create_login_url(self.request.uri)}
+        result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
             "templates/user/success.html")
-        self.response.out.write(template.render(path, data))
+        self.response.out.write(template.render(path, result))
 
 
 def main():
@@ -274,8 +252,8 @@ def main():
         ('/attendees', Attendees),
         ('/venue', Venue),
         ('/propose', Propose),
-        ('/login', Login),
         ('/success', Success),
+        ('/login', Login),
         ], debug=True)
     run_wsgi_app(application)
 

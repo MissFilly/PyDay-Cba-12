@@ -5,16 +5,16 @@
           <script type="text/javascript" src="static/js/utils.js"></script>
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
-          <div id="error-message">
-            <p class="error">This is an error message for the talk proposal page.</p>
+          <div id="error-message" style="display: {{ showerror }};">
+            <p class="error">{{ errormessage }}</p>
           </div>
-          
+
           <div id="content">
             <h2>Proponer una charla</h2>
             <form name="propose" action="" method="post" enctype="multipart/form-data" onsubmit="return validateFormTalk()">
               <p>
                 <label for="title">Título<span class="strong">*</span></label>
-                <input id="title" name="title" type="text" class="input-text" value="" />
+                <input id="title" name="title" type="text" class="input-text" value="{{ title }}" />
               </p>
 
               <p>
@@ -28,7 +28,7 @@
 
               <p>
                 <label for="abstract">Descripción<span class="strong">*</span> <span class="expl">(se mostrará a los asistentes)</span></label>
-                <textarea rows="8" name="abstract" id="abstract"></textarea>
+                <textarea rows="8" name="abstract" id="abstract">{{ abstract }}</textarea>
               </p>
 
               <p>
@@ -57,12 +57,12 @@
 
               <p>
                 <label for="req-knowledge">Conocimientos previos requeridos</label>
-                <textarea rows="3" name="req-knowledge" id="req-knowledge"></textarea>
+                <textarea rows="3" name="req-knowledge" id="req-knowledge">{{ knowledge }}</textarea>
               </p>
 
               <p>
                 <label for"notes">Notas</label>
-                <textarea rows="3" name="notes" id="notes"></textarea>
+                <textarea rows="3" name="notes" id="notes">{{ notes }}</textarea>
               </p>
 
               <p>
