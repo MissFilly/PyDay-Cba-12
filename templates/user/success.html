@@ -4,25 +4,25 @@
         <div id="frame">
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
-          
+
           <div id="content">
             <h2>¡Éxito!</h2>
             <div class="text">
-              <p>Te registraste exitosamente en el PyDay Córdoba 2012. Podés ver <a href="/attendees">quiénes van a asistir</a> o compartirlo en:</p>
-              
+              <p>{{ message }}</p>
+
             <ul id="share-buttons">
-              <li class="share" id="share-tw"></li>
-              <li class="share" id="share-fb"></li>
+              <a href="{{ share_twitter }}"><li class="share" id="share-tw"></li></a>
+              <a href="{{ share_facebook }}"><li class="share" id="share-fb"></li></a>
             </ul>
-            
-            
+
+
 <!--            <p>Tu propuesta fue cargada con éxito. Compartirlo en:</p>
-              
+
             <ul id="share-buttons">
               <li class="share" id="share-tw"></li>
               <li class="share" id="share-fb"></li>
             </ul>-->
-            
+
             <div class="visualclear"></div>
             </div>
           </div>

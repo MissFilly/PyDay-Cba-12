@@ -52,6 +52,13 @@ class PyDayHandler(webapp.RequestHandler):
             "templates/others/login.html")
         self.response.out.write(template.render(path, data))
 
+    def show_error(self, message, data):
+        data['showerror'] = 'block'
+        data['errormessage'] = message
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/user/register.html")
+        self.response.out.write(template.render(path, data))
+
 
 class MainPage(PyDayHandler):
     def get(self):
@@ -113,7 +120,21 @@ class Register(PyDayHandler):
                 email, level, country, state, tel, in_attendees, allow_contact,
                 personal_page, company, company_page, biography, cv)
             if registered:
-                pass
+                data['message'] = ('Te registraste exitosamente en el PyDay'
+                    ' Córdoba 2012. Podés ver <a href="/attendees">quiénes van'
+                    ' a asistir</a> o compartirlo en:')
+                data['share_twitter'] = (
+                    'https://twitter.com/intent/tweet?text=Voy a estar '
+                    'asistiendo al PyDay Cba el 15 de Septiembre - '
+                    'http://pydaycba.com.ar Sumate!')
+                data['share_facebook'] = ('http://www.facebook.com/login.php?'
+                    'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
+                    '%3Fu%3DVoy a estar asistiendo al PyDay Cba el 15 de '
+                    'Septiembre - http://pydaycba.com.ar '
+                    'Sumate!&display=popup')
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/success.html")
+                self.response.out.write(template.render(path, data))
             else:
                 self.show_error(
                 u'Hubo un problema al intentar procesar la inscripción.', data)
@@ -122,13 +143,6 @@ class Register(PyDayHandler):
             #show error page
             self.show_error(
                 u'No hay una sesión iniciada.', data)
-
-    def show_error(self, message, data):
-        data['showerror'] = 'block'
-        data['errormessage'] = message
-        path = os.path.join(os.path.dirname(__file__),
-            "templates/user/register.html")
-        self.response.out.write(template.render(path, data))
 
 
 class Propose(PyDayHandler):
