@@ -227,6 +227,43 @@ class Attendees(PyDayHandler):
         self.response.out.write(template.render(path, result))
 
 
+class Profile(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        if result.get('user', None):
+            attendee = db.get_profile(result['user'])
+            if attendee is None:
+                self.redirect('/register')
+                return
+            in_attendees = 'Si' if attendee.in_attendees else 'No'
+            allow_contact = 'Si' if attendee.allow_contact else 'No'
+            data = {
+                'name': attendee.name,
+                'surname': attendee.surname,
+                'nick': attendee.nick,
+                'email': attendee.email,
+                'level': attendee.level,
+                'country': attendee.country,
+                'state': attendee.state,
+                'tel': attendee.tel,
+                'personal_page': attendee.personal_page,
+                'company': attendee.company,
+                'company_page': attendee.company_page,
+                'in_attendees': in_attendees,
+                'allow_contact': allow_contact,
+                'biography': attendee.biography,
+            }
+            result.update(data)
+            talks = db.get_user_talks(result['user'])
+            if talks:
+                result['talks'] = talks
+            path = os.path.join(os.path.dirname(__file__),
+                "templates/user/profile.html")
+            self.response.out.write(template.render(path, result))
+        else:
+            self.redirect('/register')
+
+
 class Login(PyDayHandler):
     def get(self):
         result = self.user_login()
@@ -249,6 +286,7 @@ def main():
         ('/', MainPage),
         ('/register', Register),
         ('/about', About),
+        ('/profile', Profile),
         ('/attendees', Attendees),
         ('/venue', Venue),
         ('/propose', Propose),

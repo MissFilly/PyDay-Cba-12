@@ -71,3 +71,19 @@ def user_is_attendee(user):
 def get_attendees():
     attendees = model.Attendee.all()
     return attendees
+
+
+def get_profile(user):
+    attendee = model.Attendee.all()
+    attendee.filter('userId =', user)
+    if attendee.count() == 0:
+        return None
+    return attendee[0]
+
+
+def get_user_talks(user):
+    talks = model.Talk.all()
+    talks.filter('userId =', user)
+    if talks.count() == 0:
+        return None
+    return talks
