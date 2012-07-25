@@ -1,0 +1,121 @@
+{% include "../header.html" %}
+
+      <div id="page">
+        <div id="frame">
+          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+
+          <div id="content">
+            <h2 class="inline-header">Perfil</h2><a class="modify" href="">Modificar</a>
+            <table class="personal-details">
+              <tbody>
+              <tr>
+                <td class="p-col1">Nombre</td>
+                <td class="p-detail">Garrus</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Apellido</td>
+                <td class="p-detail">Vakarian</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Apodo</td>
+                <td class="p-detail">No completado</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Email</td>
+                <td class="p-detail">something@domain.com</td>
+              </tr>
+              <tr>
+                <td class="p-col1">País</td>
+                <td class="p-detail">Argentina</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Provincia</td>
+                <td class="p-detail">Córdoba</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Teléfono</td>
+                <td class="p-detail">3512222222</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Web personal</td>
+                <td class="p-detail">http://www.test.com</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Entidad</td>
+                <td class="p-detail">PyAr</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Web de entidad</td>
+                <td class="p-detail">http://python.org.ar/pyar/</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Biografía</td>
+                <td class="p-detail">Vestibulum feugiat ligula ante. Etiam ac lorem et diam porttitor facilisis. Nam sagittis sagittis quam, ac eleifend odio convallis eu. Nam eu quam at sem rutrum laoreet.</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Conocimiento de Python</td>
+                <td class="p-detail">Intermedio</td>
+              </tr>
+              <tr>
+                <td class="p-col1">En lista de participantes</td>
+                <td class="p-detail">Sí</td>
+              </tr>
+              <tr>
+                <td class="p-col1">Contacto con auspiciantes</td>
+                <td class="p-detail">No</td>
+              </tr>
+            </tbody>
+              </table>
+ <!--             <div class="text">
+              <p>Nombre: <span id="pr-name" class="p-detail">Aylen</span></p>
+              <p>Apellido: <span id="pr-last-name" class="p-detail">Bombelli</span></p>
+              <p>Apodo: <span id="pr-nick" class="p-detail">Filly</span></p>
+              <p>Email: <span id="pr-email" class="p-detail"></span></p>
+              <p>Conocimiento de Python: <span id="pr-knowledge" class="p-detail"></span></p>
+              <p>País: <span id="pr-country" class="p-detail"></span></p>
+              <p>Provincia: <span id="pr-state" class="p-detail"></span></p>
+              <p>Teléfono: <span id="pr-phone" class="p-detail"></span></p>
+              <p>Incluído en lista de participantes: <span id="pr-included" class="p-detail"></span></p>
+              <p>Podés ser contactado por los auspiciantes: <span id="pr-contact" class="p-detail"></span></p>
+              <p>Página web personal: <span id="pr-personal-page" class="p-detail"></span></p>
+              <p>Entidad: <span id="pr-company" class="p-detail"></span></p>
+              <p>Página web de entidad: <span id="pr-company-page" class="p-detail"></span></p>
+              <p>Biografía: <span id="pr-biography" class="p-detail"></span></p></div>-->
+            
+              <h2>Charlas propuestas</h2>
+              <table class="pr-talks">
+                <tbody>
+                  <tr>
+                    <th width="150px">Título</th>
+                    <th>Descripción</th>
+                    <th></th>
+                  </tr>
+                  <tr>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor pretium urna id auctor. Duis posuere venenatis dictum. Morbi et nisl augue. Ut vitae eros elit, interdum hendrerit orci.</td>
+                    <td><a class="modify" href="">Modificar</a></td>
+                  </tr>
+                  <tr>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>Aliquam ut sem vitae enim fringilla suscipit. Morbi vitae nisl tortor, non congue lacus. Sed eget nisi orci, sed congue dolor. Ut adipiscing malesuada augue, vitae consequat lacus tempus eu.</td>
+                    <td><a class="modify" href="">Modificar</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        <div id="sidebar">
+          <ul>
+            <li><a class="menu active" href="/about">Más info</a></li>
+            <li><a class="menu" href="/venue">Cómo llegar</a></li>
+            <li><a class="menu" href="/attendees">Asistentes</a></li>
+            <li class="menu unavailable">Programa</li>
+            <li class="menu unavailable">Remeras</li>
+          </ul>
+
+    {% include "../sponsors.html" %}
+
+      </div>
+
+  {% include "../footer.html" %}

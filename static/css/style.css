@@ -168,15 +168,33 @@ li {
 	margin: 8% 0;
 }
 
-.attendees-table th {
+.pr-talks {
+	margin-top: 5%;
+}
+
+.attendees-table th, .pr-talks th {
 	font-family: 'Helvetica', sans-serif;
 	font-weight: bold;
-    padding-bottom: 6%;
     text-align: left;
+}
+
+.attendees-table th {
+	padding-bottom: 6%;
+}
+
+.pr-talks th {
+    padding-bottom: 2%;
+    padding-right: 13px;
 }
 
 .attendees-table td {
 	padding-bottom: 3%;
+}
+
+.pr-talks td {
+	border-top: 1px solid #E0DFDF;
+    font-size: 16px;
+    padding: 10px 0;
 }
 
 #sidebar {
@@ -389,4 +407,39 @@ textarea {
 #share-fb {
 	background: url("../img/share.png") no-repeat scroll 0 -43px transparent;
 	float: right;
+}
+
+.personal-details {
+	margin-top: 5%;
+	margin-bottom: 9%;
+}
+
+.p-col1 {
+    background-color: #F9F9F9;
+    border-right: 1px solid #E0DFDF;
+    padding: 0 15px 0 15px;
+    text-align: right;
+    width: 50%;
+    line-height: 28px;
+}
+
+.p-detail {
+    color: #555;
+    font-family: 'Helvetica';
+    font-size: 16px;
+    padding-left: 15px;
+    width: 50%;
+}
+
+.modify {
+	background-color: #EA7949;
+    border-radius: 7px 7px 7px 7px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 4px;
+}
+
+.inline-header {
+	display: inline;
 }
