@@ -16,9 +16,6 @@ providers = {
     'live': 'myspace',
     'aol': 'aol.com',
     'openid': 'myopenid.com',
-    'linkedin': 'linkedin.com',
-    'twitter': 'twitter.com',
-    # add more here
 }
 
 
