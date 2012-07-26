@@ -113,14 +113,14 @@ class Register(PyDayHandler):
                     u'Podés ver <a href="/attendees">quiénes van'
                     ' a asistir</a> o compartirlo en:')
                 data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Voy+a+estar '
-                    'asistiendo+al+PyDay+Cba+el+15+de+Septiembre+-+'
-                    'http://pydaycba.com.ar+Sumate!')
+                    u'https://twitter.com/intent/tweet?text=Voy+a+asistir '
+                    'al+%23PyDayCba+el+15+de+septiembre+-+'
+                    u'http://pydaycba.com.ar+¡Inscribite+vos+también!')
                 data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DVoy+a+estar+asistiendo+al+PyDay+Cba+el+15+de+'
-                    'Septiembre+-+http://pydaycba.com.ar+'
-                    'Sumate!&display=popup')
+                    u'%3Fu%3DVoy+a+asistir+al+PyDay+Córdoba+el+15+de+'
+                    'septiembre+-+http://pydaycba.com.ar+'
+                    u'¡Inscribite+vos+también!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
@@ -178,14 +178,14 @@ class Propose(PyDayHandler):
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Cargue la Charla+'
-                    '%s+para+el+PyDay+Cba+-+http://pydaycba.com.ar Sumate!' %
+                    u'https://twitter.com/intent/tweet?text=Propuse la charla+'
+                    u'%s+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!' %
                     title)
                 data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DCargue+la+Charla+' + title +
-                    '+para+el+PyDay+Cba+-+'
-                    'http://pydaycba.com.ar Sumate!&display=popup')
+                    '%3Fu%3DPropuse+la+charla+' + title +
+                    u'+para+el+PyDay+Córdoba+-+'
+                    u'http://pydaycba.com.ar ¡Sumate!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
@@ -232,8 +232,8 @@ class Profile(PyDayHandler):
             if attendee is None:
                 self.redirect('/register')
                 return
-            in_attendees = 'Si' if attendee.in_attendees else 'No'
-            allow_contact = 'Si' if attendee.allow_contact else 'No'
+            in_attendees = u'Sí' if attendee.in_attendees else 'No'
+            allow_contact = u'Sí' if attendee.allow_contact else 'No'
             data = {
                 'name': attendee.name,
                 'surname': attendee.surname,
@@ -352,14 +352,14 @@ class ModifyProfile(PyDayHandler):
                     u'Podés ver <a href="/attendees">quiénes van'
                     ' a asistir</a> o compartirlo en:')
                 data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Voy+a+estar '
-                    'asistiendo+al+PyDay+Cba+el+15+de+Septiembre+-+'
-                    'http://pydaycba.com.ar+Sumate!')
+                    u'https://twitter.com/intent/tweet?text=Voy+a+asistir'
+                    '+al+%23PyDayCba+el+15+de+septiembre+-+'
+                    u'http://pydaycba.com.ar+¡Inscribite+vos+también!')
                 data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DVoy+a+estar+asistiendo+al+PyDay+Cba+el+15+de+'
-                    'Septiembre+-+http://pydaycba.com.ar+'
-                    'Sumate!&display=popup')
+                    u'%3Fu%3DVoy+a+asistir+al+PyDay+Córdoba+el+15+de+'
+                    'septiembre+-+http://pydaycba.com.ar+'
+                    u'¡Inscribite+vos+también!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
