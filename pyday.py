@@ -376,19 +376,68 @@ class ModifyProfile(PyDayHandler):
 class ModifyTalk(PyDayHandler):
     def get(self):
         result = self.user_login()
-        cv = cgi.escape(self.request.get('algo'))
-        self.response.out.write(cv)
-#        registered = db.user_is_attendee(result.get('user', None))
-#        if not registered:
-#            self.redirect('/register')
-#            return
-#        if result.get('user', None):
-#            talks = db.get_user_talks(result['user'])
-#            path = os.path.join(os.path.dirname(__file__),
-#                "templates/others/propose.html")
-#            self.response.out.write(template.render(path, result))
-#        else:
-#            self.redirect(result['login'])
+        key = cgi.escape(self.request.get('talk'))
+        talk = db.get_talk(result['user'], key)
+        if result.get('user', None) and talk:
+            data = {
+                'title': talk.title,
+                'abstract': talk.abstract,
+                'knowledge': talk.knowledge,
+                'notes': talk.notes,
+            }
+            result.update(data)
+            path = os.path.join(os.path.dirname(__file__),
+                "templates/others/propose.html")
+            self.response.out.write(template.render(path, result))
+        else:
+            self.redirect(result['login'])
+
+    def post(self):
+        result = self.user_login()
+        # Collect data
+        key = cgi.escape(self.request.get('talk'))
+        title = cgi.escape(self.request.get('title'))
+        level = cgi.escape(self.request.get('talk-level'))
+        abstract = cgi.escape(self.request.get('abstract'))
+        category = cgi.escape(self.request.get('talk-category'))
+        knowledge = cgi.escape(self.request.get('req-knowledge'))
+        notes = cgi.escape(self.request.get('notes'))
+        data = {
+            'title': title,
+            'abstract': abstract,
+            'knowledge': knowledge,
+            'notes': notes,
+        }
+        data.update(result)
+        if result.get('user', None):
+
+            if not (title and abstract):
+                #error page
+                self.show_error("templates/others/propose.html",
+                    u'Falta completar alguno de los datos requeridos.', data)
+                return
+
+            saved = db.update_talk(key, result['user'], title, level, abstract,
+                category, knowledge, notes)
+            if saved:
+                data['title'] = u'Tu propuesta fue cargada con éxito.'
+                data['message'] = u'Podés compartirlo en:'
+                data['share_twitter'] = (
+                    u'https://twitter.com/intent/tweet?text=Cargue la Charla+'
+                    '%s+para+el+PyDay+Cba+-+http://pydaycba.com.ar Sumate!' %
+                    title)
+                data['share_facebook'] = (u'http://www.facebook.com/login.php?'
+                    'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
+                    '%3Fu%3DCargue+la+Charla+' + title +
+                    '+para+el+PyDay+Cba+-+'
+                    'http://pydaycba.com.ar Sumate!&display=popup')
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/success.html")
+                self.response.out.write(template.render(path, data))
+        else:
+            #show error page
+            self.show_error("templates/others/propose.html",
+                u'Hubo un problema al intentar registrar la charla.', data)
 
 
 def main():
