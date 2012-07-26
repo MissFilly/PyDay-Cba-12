@@ -178,12 +178,12 @@ class Propose(PyDayHandler):
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Propuse la charla+'
-                    u'%s+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!' %
-                    title)
+                    u'https://twitter.com/intent/tweet?text=Propuse+la+' +
+                    title.replace(' ', '+') +
+                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DPropuse+la+charla+' + title +
+                    '%3Fu%3DPropuse+la+charla+' + title.replace(' ', '+') +
                     u'+para+el+PyDay+Córdoba+-+'
                     u'http://pydaycba.com.ar ¡Sumate!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
@@ -423,12 +423,12 @@ class ModifyTalk(PyDayHandler):
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Cargue la Charla+'
-                    '%s+para+el+PyDay+Cba+-+http://pydaycba.com.ar Sumate!' %
-                    title)
+                    u'https://twitter.com/intent/tweet?text=Propuse+la+' +
+                    title.replace(' ', '+') +
+                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (u'http://www.facebook.com/login.php?'
                     'next=http%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php'
-                    '%3Fu%3DCargue+la+Charla+' + title +
+                    '%3Fu%3DCargue+la+Charla+' + title.replace(' ', '+') +
                     '+para+el+PyDay+Cba+-+'
                     'http://pydaycba.com.ar Sumate!&display=popup')
                 path = os.path.join(os.path.dirname(__file__),
