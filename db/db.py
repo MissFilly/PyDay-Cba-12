@@ -94,6 +94,29 @@ def add_talk(user, title, level, abstract, category, knowledge, notes):
     return True
 
 
+def update_talk(key, user, title, level, abstract, category, knowledge, notes):
+    """Register a new talk for the event."""
+    # Check if this user is already registered
+    talks = model.Talk.all()
+    talks.filter('userId =', user)
+
+    talk = None
+    for t in talks:
+        if str(t.key()) == key:
+            talk = t
+            break
+    if talk is None:
+        return False
+    talk.title = title
+    talk.level = level
+    talk.abstract = abstract
+    talk.category = category
+    talk.knowledge = knowledge
+    talk.notes = notes
+    talk.put()
+    return True
+
+
 def user_is_attendee(user):
     """Check if the current user is already registered as an attendee."""
     attendee = model.Attendee.all()
@@ -122,3 +145,14 @@ def get_user_talks(user):
     if talks.count() == 0:
         return None
     return talks
+
+
+def get_talk(user, key):
+    talks = model.Talk.all()
+    talks.filter('userId =', user)
+    if talks.count() == 0:
+        return None
+#    return talks[0]
+    for talk in talks:
+        if str(talk.key()) == key:
+            return talk
