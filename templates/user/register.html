@@ -280,12 +280,12 @@
 
               <p>
                 <label id="include-attendees" class="check-label">Incluir en lista de participantes</label>
-                <input id="include-attendees" name="include-attendees" type="checkbox" value="on" checked="checked" />
+                <input id="include-attendees" name="include-attendees" type="checkbox" value="on" {{ in_attendees }} />
               </p>
 
               <p>
                 <label id="sponsors-contact" class="check-label">Contacto con auspiciantes</label>
-                <input id="sponsors-contact" name="sponsors-contact" type="checkbox" value="on" checked="checked" />
+                <input id="sponsors-contact" name="sponsors-contact" type="checkbox" value="on" {{ allow_contact }} />
               </p>
 
               <p>

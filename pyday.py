@@ -7,6 +7,7 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import utils
 from db import db
 
 
@@ -23,6 +24,10 @@ class PyDayHandler(webapp.RequestHandler):
     def user_login(self):
         result = {}
         user = users.get_current_user()
+        message = utils.days_left_message()
+        result['daysleft0'] = message[0]
+        result['daysleft1'] = message[1]
+        result['daysleft2'] = message[2]
         if user:  # signed in already
             result['user'] = user
             result['logout'] = users.create_logout_url(self.request.uri)
@@ -59,6 +64,8 @@ class Register(PyDayHandler):
         result = self.user_login()
         if result.get('user', None):
             result['showerror'] = 'none'
+            result['allow_contact'] = 'checked="checked"'
+            result['in_attendees'] = 'checked="checked"'
             path = os.path.join(os.path.dirname(__file__),
                 "templates/user/register.html")
             self.response.out.write(template.render(path, result))
@@ -83,6 +90,7 @@ class Register(PyDayHandler):
         company_page = cgi.escape(self.request.get('company-page'))
         biography = cgi.escape(self.request.get('biography'))
         cv = cgi.escape(self.request.get('cv'))
+        checked = 'checked="checked"'
         data = {
             'name': name,
             'surname': surname,
@@ -93,6 +101,8 @@ class Register(PyDayHandler):
             'company': company,
             'company_page': company_page,
             'biography': biography,
+            'allow_contact': checked if allow_contact == 'on' else '',
+            'in_attendees': checked if in_attendees == 'on' else '',
         }
         data.update(result)
 
@@ -286,6 +296,7 @@ class ModifyProfile(PyDayHandler):
             if attendee is None:
                 self.redirect('/register')
                 return
+            checked = 'checked="checked"'
             data = {
                 'name': attendee.name,
                 'surname': attendee.surname,
@@ -296,6 +307,8 @@ class ModifyProfile(PyDayHandler):
                 'company': attendee.company,
                 'company_page': attendee.company_page,
                 'biography': attendee.biography,
+                'allow_contact': checked if attendee.allow_contact else '',
+                'in_attendees': checked if attendee.in_attendees else '',
             }
             result.update(data)
         path = os.path.join(os.path.dirname(__file__),
@@ -320,6 +333,7 @@ class ModifyProfile(PyDayHandler):
         company_page = cgi.escape(self.request.get('company-page'))
         biography = cgi.escape(self.request.get('biography'))
         cv = cgi.escape(self.request.get('cv'))
+        checked = 'checked="checked"'
         data = {
             'name': name,
             'surname': surname,
@@ -330,6 +344,8 @@ class ModifyProfile(PyDayHandler):
             'company': company,
             'company_page': company_page,
             'biography': biography,
+            'allow_contact': checked if allow_contact == 'on' else '',
+            'in_attendees': checked if in_attendees == 'on' else '',
         }
         data.update(result)
 
@@ -440,6 +456,16 @@ class ModifyTalk(PyDayHandler):
                 u'Hubo un problema al intentar registrar la charla.', data)
 
 
+class DownloadCV(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        if result.get('user', None):
+            profile = db.get_profile(result['user'])
+            self.response.out.write(profile.cv)
+        else:
+            self.redirect(result['login'])
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
@@ -453,6 +479,7 @@ def main():
         ('/login', Login),
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
+        ('/download_cv', DownloadCV),
         ], debug=True)
     run_wsgi_app(application)
 
