@@ -20,7 +20,7 @@
     ".js", 
     ".ini", 
     ".qss", 
-    ".*"
+    ".yaml"
   ], 
   "project-type": "", 
   "postExecScript": "", 

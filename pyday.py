@@ -7,6 +7,7 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import forms
 import utils
 from db import db
 
@@ -18,6 +19,13 @@ providers = {
     'aol': 'aol.com',
     'openid': 'myopenid.com',
 }
+
+
+from google.appengine.ext.db import djangoforms
+
+
+class ItemForm(djangoforms.ModelForm):
+    pass
 
 
 class PyDayHandler(webapp.RequestHandler):
@@ -48,6 +56,7 @@ class PyDayHandler(webapp.RequestHandler):
     def show_error(self, page_base, message, data):
         data['showerror'] = 'block'
         data['errormessage'] = message
+        data['form'].errors.clear()
         path = os.path.join(os.path.dirname(__file__), page_base)
         self.response.out.write(template.render(path, data))
 
@@ -64,8 +73,10 @@ class Register(PyDayHandler):
         result = self.user_login()
         if result.get('user', None):
             result['showerror'] = 'none'
-            result['allow_contact'] = 'checked="checked"'
-            result['in_attendees'] = 'checked="checked"'
+            form = forms.AttendeeForm()
+            form.initial = {'allow_contact': True,
+                'in_attendees': True}
+            result['form'] = form
             path = os.path.join(os.path.dirname(__file__),
                 "templates/user/register.html")
             self.response.out.write(template.render(path, result))
@@ -74,49 +85,21 @@ class Register(PyDayHandler):
 
     def post(self):
         result = self.user_login()
-        # Collect data
-        name = cgi.escape(self.request.get('name'))
-        surname = cgi.escape(self.request.get('last-name'))
-        nick = cgi.escape(self.request.get('nick'))
-        email = cgi.escape(self.request.get('email'))
-        level = cgi.escape(self.request.get('level'))
-        country = cgi.escape(self.request.get('country'))
-        state = cgi.escape(self.request.get('state'))
-        tel = cgi.escape(self.request.get('tel'))
-        in_attendees = cgi.escape(self.request.get('include-attendees'))
-        allow_contact = cgi.escape(self.request.get('sponsors-contact'))
-        personal_page = cgi.escape(self.request.get('personal-page'))
-        company = cgi.escape(self.request.get('company'))
-        company_page = cgi.escape(self.request.get('company-page'))
-        biography = cgi.escape(self.request.get('biography'))
-        cv = cgi.escape(self.request.get('cv'))
-        checked = 'checked="checked"'
-        data = {
-            'name': name,
-            'surname': surname,
-            'nick': nick,
-            'email': email,
-            'tel': tel,
-            'personal_page': personal_page,
-            'company': company,
-            'company_page': company_page,
-            'biography': biography,
-            'allow_contact': checked if allow_contact == 'on' else '',
-            'in_attendees': checked if in_attendees == 'on' else '',
-        }
-        data.update(result)
+        values = forms.AttendeeForm(data=self.request.POST)
+        result['form'] = values
 
         if result.get('user', None):
-            if not (name and surname and email):
+            if not values.is_valid():
                 #error page
                 self.show_error("templates/user/register.html",
-                    u'Falta completar alguno de los datos requeridos.', data)
+                    u'Falta completar alguno de los datos requeridos.', result)
                 return
 
-            registered = db.add_attendee(result['user'], name, surname, nick,
-                email, level, country, state, tel, in_attendees, allow_contact,
-                personal_page, company, company_page, biography, cv)
+            attendee = values.save(commit=False)
+            attendee.userId = result['user']
+            registered = db.add_attendee(attendee)
             if registered:
+                data = {}
                 data['title'] = (
                     u'Te registraste exitosamente en el PyDay Córdoba 2012.')
                 data['message'] = (
@@ -129,17 +112,20 @@ class Register(PyDayHandler):
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
+                data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
             else:
                 self.show_error("templates/user/register.html",
-                u'Hubo un problema al intentar procesar la inscripción.', data)
+                u'Hubo un problema al intentar procesar la inscripción '
+                u'o el usuario ingresado ya existe.',
+                    result)
                 # show error
         else:
             #show error page
             self.show_error("templates/user/register.html",
-                u'No hay una sesión iniciada.', data)
+                u'No hay una sesión iniciada.', result)
 
 
 class Propose(PyDayHandler):
