@@ -22,36 +22,36 @@ def add_attendee(attendee):
     return True
 
 
-def update_attendee(user, name, surname, nick, email, level, country, state,
-    tel, in_attendees, allow_contact, personal_page, company, company_page,
-    biography, cv):
+def update_attendee(registered_attendee):
     """Register a new attendee in the database."""
     # Check if this user is already registered
     attendee = model.Attendee.all()
-    attendee.filter('userId =', user)
+    attendee.filter('userId =', registered_attendee.userId)
     if attendee.count() == 0:
         return False
 
     attendee = attendee[0]
-    attendee.name = name
-    attendee.surname = surname
-    attendee.nick = nick
-    attendee.email = email
-    attendee.level = level
-    attendee.country = country
-    attendee.state = state
-    attendee.tel = tel
-    attendee.in_attendees = True if in_attendees == 'on' else False
-    attendee.allow_contact = True if allow_contact == 'on' else False
-    if personal_page and not personal_page.startswith('http://'):
-        personal_page = 'http://%s' % personal_page
-    attendee.personal_page = personal_page
-    attendee.company = company
-    if company_page and not company_page.startswith('http://'):
-        company_page = 'http://%s' % company_page
-    attendee.company_page = company_page
-    attendee.biography = biography
-    attendee.cv = str(cv)
+    attendee.name = registered_attendee.name
+    attendee.surname = registered_attendee.surname
+    attendee.nick = registered_attendee.nick
+    attendee.email = registered_attendee.email
+    attendee.level = registered_attendee.level
+    attendee.country = registered_attendee.country
+    attendee.state = registered_attendee.state
+    attendee.tel = registered_attendee.tel
+    attendee.in_attendees = registered_attendee.in_attendees
+    attendee.allow_contact = registered_attendee.allow_contact
+    if (registered_attendee.personal_page and
+       not registered_attendee.personal_page.startswith('http://')):
+        attendee.personal_page = ('http://%s' %
+            registered_attendee.personal_page)
+    attendee.company = registered_attendee.company
+    if (registered_attendee.company_page and
+       not registered_attendee.company_page.startswith('http://')):
+        attendee.company_page = 'http://%s' % registered_attendee.company_page
+    attendee.company_page = registered_attendee.company_page
+    attendee.biography = registered_attendee.biography
+    attendee.cv = registered_attendee.cv
 
     attendee.put()
     return True
@@ -69,11 +69,11 @@ def add_talk(talk):
     return True
 
 
-def update_talk(key, user, title, level, abstract, category, knowledge, notes):
+def update_talk(key, registered_talk):
     """Register a new talk for the event."""
     # Check if this user is already registered
     talks = model.Talk.all()
-    talks.filter('userId =', user)
+    talks.filter('userId =', registered_talk.userId)
 
     talk = None
     for t in talks:
@@ -82,12 +82,12 @@ def update_talk(key, user, title, level, abstract, category, knowledge, notes):
             break
     if talk is None:
         return False
-    talk.title = title
-    talk.level = level
-    talk.abstract = abstract
-    talk.category = category
-    talk.knowledge = knowledge
-    talk.notes = notes
+    talk.title = registered_talk.title
+    talk.level = registered_talk.level
+    talk.abstract = registered_talk.abstract
+    talk.category = registered_talk.category
+    talk.knowledge = registered_talk.knowledge
+    talk.notes = registered_talk.notes
     talk.put()
     return True
 
@@ -127,7 +127,6 @@ def get_talk(user, key):
     talks.filter('userId =', user)
     if talks.count() == 0:
         return None
-#    return talks[0]
     for talk in talks:
         if str(talk.key()) == key:
             return talk

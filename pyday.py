@@ -49,7 +49,8 @@ class PyDayHandler(webapp.RequestHandler):
     def show_error(self, page_base, message, data):
         data['showerror'] = 'block'
         data['errormessage'] = message
-        data['form'].errors.clear()
+        if 'form' in data:
+            data['form'].errors.clear()
         path = os.path.join(os.path.dirname(__file__), page_base)
         self.response.out.write(template.render(path, data))
 
@@ -230,6 +231,8 @@ class Profile(PyDayHandler):
                 'allow_contact': allow_contact,
                 'biography': attendee.biography,
             }
+            if attendee.cv:
+                data['cv'] = attendee.cv
             result.update(data)
             talks = db.get_user_talks(result['user'])
             if talks:
@@ -266,71 +269,28 @@ class ModifyProfile(PyDayHandler):
             if attendee is None:
                 self.redirect('/register')
                 return
-            checked = 'checked="checked"'
-            data = {
-                'name': attendee.name,
-                'surname': attendee.surname,
-                'nick': attendee.nick,
-                'email': attendee.email,
-                'tel': attendee.tel,
-                'personal_page': attendee.personal_page,
-                'company': attendee.company,
-                'company_page': attendee.company_page,
-                'biography': attendee.biography,
-                'allow_contact': checked if attendee.allow_contact else '',
-                'in_attendees': checked if attendee.in_attendees else '',
-            }
-            result.update(data)
+            result['form'] = forms.AttendeeForm(instance=attendee)
         path = os.path.join(os.path.dirname(__file__),
             "templates/user/register.html")
         self.response.out.write(template.render(path, result))
 
     def post(self):
         result = self.user_login()
-        # Collect data
-        name = cgi.escape(self.request.get('name'))
-        surname = cgi.escape(self.request.get('last-name'))
-        nick = cgi.escape(self.request.get('nick'))
-        email = cgi.escape(self.request.get('email'))
-        level = cgi.escape(self.request.get('level'))
-        country = cgi.escape(self.request.get('country'))
-        state = cgi.escape(self.request.get('state'))
-        tel = cgi.escape(self.request.get('tel'))
-        in_attendees = cgi.escape(self.request.get('include-attendees'))
-        allow_contact = cgi.escape(self.request.get('sponsors-contact'))
-        personal_page = cgi.escape(self.request.get('personal-page'))
-        company = cgi.escape(self.request.get('company'))
-        company_page = cgi.escape(self.request.get('company-page'))
-        biography = cgi.escape(self.request.get('biography'))
-        cv = cgi.escape(self.request.get('cv'))
-        checked = 'checked="checked"'
-        data = {
-            'name': name,
-            'surname': surname,
-            'nick': nick,
-            'email': email,
-            'tel': tel,
-            'personal_page': personal_page,
-            'company': company,
-            'company_page': company_page,
-            'biography': biography,
-            'allow_contact': checked if allow_contact == 'on' else '',
-            'in_attendees': checked if in_attendees == 'on' else '',
-        }
-        data.update(result)
+        values = forms.AttendeeForm(data=self.request.POST)
+        result['form'] = values
 
         if result.get('user', None):
-            if not (name and surname and email):
+            if not values.is_valid():
                 #error page
                 self.show_error("templates/user/register.html",
-                    u'Falta completar alguno de los datos requeridos.', data)
+                    u'Falta completar alguno de los datos requeridos.', result)
                 return
 
-            registered = db.update_attendee(result['user'], name, surname,
-                nick, email, level, country, state, tel, in_attendees,
-                allow_contact, personal_page, company, company_page, biography,
-                cv)
+            attendee = values.save(commit=False)
+            attendee.userId = result['user']
+            registered = db.update_attendee(attendee)
             if registered:
+                data = {}
                 data['title'] = (
                     u'Registración actualizada exitosamente para'
                     u' el PyDay Córdoba 2012.')
@@ -344,17 +304,19 @@ class ModifyProfile(PyDayHandler):
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
+                data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
             else:
                 self.show_error("templates/user/register.html",
-                u'Hubo un problema al intentar procesar la inscripción.', data)
+                u'Hubo un problema al intentar procesar la inscripción.',
+                result)
                 # show error
         else:
             #show error page
             self.show_error("templates/user/register.html",
-                u'No hay una sesión iniciada.', data)
+                u'No hay una sesión iniciada.', result)
 
 
 class ModifyTalk(PyDayHandler):
@@ -363,13 +325,7 @@ class ModifyTalk(PyDayHandler):
         key = cgi.escape(self.request.get('talk'))
         talk = db.get_talk(result['user'], key)
         if result.get('user', None) and talk:
-            data = {
-                'title': talk.title,
-                'abstract': talk.abstract,
-                'knowledge': talk.knowledge,
-                'notes': talk.notes,
-            }
-            result.update(data)
+            result['form'] = forms.TalkForm(instance=talk)
             path = os.path.join(os.path.dirname(__file__),
                 "templates/others/propose.html")
             self.response.out.write(template.render(path, result))
@@ -380,56 +336,39 @@ class ModifyTalk(PyDayHandler):
         result = self.user_login()
         # Collect data
         key = cgi.escape(self.request.get('talk'))
-        title = cgi.escape(self.request.get('title'))
-        level = cgi.escape(self.request.get('talk-level'))
-        abstract = cgi.escape(self.request.get('abstract'))
-        category = cgi.escape(self.request.get('talk-category'))
-        knowledge = cgi.escape(self.request.get('req-knowledge'))
-        notes = cgi.escape(self.request.get('notes'))
-        data = {
-            'title': title,
-            'abstract': abstract,
-            'knowledge': knowledge,
-            'notes': notes,
-        }
-        data.update(result)
+        values = forms.TalkForm(data=self.request.POST)
+        result['form'] = values
+
         if result.get('user', None):
 
-            if not (title and abstract):
+            if not values.is_valid():
                 #error page
                 self.show_error("templates/others/propose.html",
-                    u'Falta completar alguno de los datos requeridos.', data)
+                    u'Falta completar alguno de los datos requeridos.', result)
                 return
 
-            saved = db.update_talk(key, result['user'], title, level, abstract,
-                category, knowledge, notes)
+            talk = values.save(commit=False)
+            talk.userId = result['user']
+            saved = db.update_talk(key, talk)
             if saved:
+                data = {}
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
                     u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+' + title.replace(' ', '+') +
+                    u'charla+' + talk.title.replace(' ', '+') +
                     u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
+                data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
         else:
             #show error page
             self.show_error("templates/others/propose.html",
-                u'Hubo un problema al intentar registrar la charla.', data)
-
-
-class DownloadCV(PyDayHandler):
-    def get(self):
-        result = self.user_login()
-        if result.get('user', None):
-            profile = db.get_profile(result['user'])
-            self.response.out.write(profile.cv)
-        else:
-            self.redirect(result['login'])
+                u'Hubo un problema al intentar registrar la charla.', result)
 
 
 def main():
@@ -445,7 +384,6 @@ def main():
         ('/login', Login),
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
-        ('/download_cv', DownloadCV),
         ], debug=True)
     run_wsgi_app(application)
 
