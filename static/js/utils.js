@@ -13,8 +13,8 @@ function validateForm()
 
 function validateFormTalk()
 {
-    var t = document.forms["propose"]["title"].value;
-    var a = document.forms["propose"]["abstract"].value;
+    var t = document.forms["propose"]["id_title"].value;
+    var a = document.forms["propose"]["id_abstract"].value;
     if (t==null || t=="" || a==null || a=="")
     {
           alert("Debe completar: Titulo y Descripción");

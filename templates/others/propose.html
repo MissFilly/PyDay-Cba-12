@@ -12,58 +12,7 @@
           <div id="content">
             <h2>Proponer una charla</h2>
             <form name="propose" action="" method="post" enctype="multipart/form-data" onsubmit="return validateFormTalk()">
-              <p>
-                <label for="title">Título<span class="strong">*</span></label>
-                <input id="title" name="title" type="text" class="input-text" value="{{ title }}" />
-              </p>
-
-              <p>
-                <label for="talk-level">Nivel</label>
-                <select id="talk-level" name="talk-level" class="select" value="">
-                  <option value="principiante" selected="selected">Principiante</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
-                </select>
-              </p>
-
-              <p>
-                <label for="abstract">Descripción<span class="strong">*</span> <span class="expl">(se mostrará a los asistentes)</span></label>
-                <textarea rows="8" name="abstract" id="abstract">{{ abstract }}</textarea>
-              </p>
-
-              <p>
-                <label for="talk-category">Categoría</label>
-                <select id="talk-category" name="talk-category" class="select" value="">
-                  <option value="academico">Académico</option>
-                  <option value="caseo de estudio">Caseo de estudio</option>
-                  <option value="ciencia">Ciencia</option>
-                  <option value="comunidad">Comunidad</option>
-                  <option value="cli">Cli</option>
-                  <option value="core">Core</option>
-                  <option value="educacion">Educación</option>
-                  <option value="fomento">Fomento</option>
-                  <option value="gui">GUI</option>
-                  <option value="herramientas">Herramientas</option>
-                  <option value="juegos">Juegos</option>
-                  <option value="lenguaje">Lenguaje</option>
-                  <option value="moviles">Móviles</option>
-                  <option value="py3k">Py3k</option>
-                  <option value="redes">Redes</option>
-                  <option value="seguridad">Seguridad</option>
-                  <option value="testing">Testing</option>
-                  <option value="web">Web</option>
-                </select>
-              </p>
-
-              <p>
-                <label for="req-knowledge">Conocimientos previos requeridos</label>
-                <textarea rows="3" name="req-knowledge" id="req-knowledge">{{ knowledge }}</textarea>
-              </p>
-
-              <p>
-                <label for"notes">Notas</label>
-                <textarea rows="3" name="notes" id="notes">{{ notes }}</textarea>
-              </p>
+              {{ form.as_p }}
 
               <p>
                 <input type="submit" class="submit" value="Enviar datos">

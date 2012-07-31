@@ -21,13 +21,6 @@ providers = {
 }
 
 
-from google.appengine.ext.db import djangoforms
-
-
-class ItemForm(djangoforms.ModelForm):
-    pass
-
-
 class PyDayHandler(webapp.RequestHandler):
     def user_login(self):
         result = {}
@@ -136,6 +129,8 @@ class Propose(PyDayHandler):
             self.redirect('/register')
             return
         if result.get('user', None):
+            form = forms.TalkForm()
+            result['form'] = form
             path = os.path.join(os.path.dirname(__file__),
                 "templates/others/propose.html")
             self.response.out.write(template.render(path, result))
@@ -145,46 +140,39 @@ class Propose(PyDayHandler):
     def post(self):
         result = self.user_login()
         # Collect data
-        title = cgi.escape(self.request.get('title'))
-        level = cgi.escape(self.request.get('talk-level'))
-        abstract = cgi.escape(self.request.get('abstract'))
-        category = cgi.escape(self.request.get('talk-category'))
-        knowledge = cgi.escape(self.request.get('req-knowledge'))
-        notes = cgi.escape(self.request.get('notes'))
-        data = {
-            'title': title,
-            'abstract': abstract,
-            'knowledge': knowledge,
-            'notes': notes,
-        }
-        data.update(result)
+        values = forms.TalkForm(data=self.request.POST)
+        result['form'] = values
+
         if result.get('user', None):
 
-            if not (title and abstract):
+            if not values.is_valid():
                 #error page
                 self.show_error("templates/others/propose.html",
-                    u'Falta completar alguno de los datos requeridos.', data)
+                    u'Falta completar alguno de los datos requeridos.', result)
                 return
 
-            saved = db.add_talk(result['user'], title, level, abstract,
-                category, knowledge, notes)
+            talk = values.save(commit=False)
+            talk.userId = result['user']
+            saved = db.add_talk(talk)
             if saved:
+                data = {}
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
                     u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+' + title.replace(' ', '+') +
+                    u'charla+' + talk.title.replace(' ', '+') +
                     u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
+                data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
         else:
             #show error page
             self.show_error("templates/others/propose.html",
-                u'Hubo un problema al intentar registrar la charla.', data)
+                u'Hubo un problema al intentar registrar la charla.', result)
 
 
 class About(PyDayHandler):

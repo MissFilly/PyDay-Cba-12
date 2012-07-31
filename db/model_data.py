@@ -233,3 +233,25 @@ LEVEL = (
     "Intermedio",
     "Avanzado",
 )
+
+
+CATEGORY = (
+  "Academico",
+  "Caseo de estudio",
+  "Ciencia",
+  "Comunidad",
+  "Cli",
+  "Core",
+  "Educacion",
+  "Fomento",
+  "GUI",
+  "Herramientas",
+  "Juegos",
+  "Lenguaje",
+  "Moviles",
+  "Py3k",
+  "Redes",
+  "Seguridad",
+  "Testing",
+  "Web",
+)

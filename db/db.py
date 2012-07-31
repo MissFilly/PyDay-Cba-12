@@ -57,22 +57,14 @@ def update_attendee(user, name, surname, nick, email, level, country, state,
     return True
 
 
-def add_talk(user, title, level, abstract, category, knowledge, notes):
+def add_talk(talk):
     """Register a new talk for the event."""
     # Check if this user is already registered
     attendee = model.Attendee.all()
-    attendee.filter('userId =', user)
+    attendee.filter('userId =', talk.userId)
     if attendee.count() == 0:
         return False
 
-    talk = model.Talk()
-    talk.userId = user
-    talk.title = title
-    talk.level = level
-    talk.abstract = abstract
-    talk.category = category
-    talk.knowledge = knowledge
-    talk.notes = notes
     talk.put()
     return True
 
