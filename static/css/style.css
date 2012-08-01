@@ -172,7 +172,7 @@ h3 {
 
 .description {
     line-height: 30px;
-    margin: 8% 0;
+    margin: 5% 0 8%;
 }
 
 .pr-talks {
@@ -242,7 +242,7 @@ h3 {
     background-color: #E0DFDF;
 }
 
-#sponsors h3 {
+#sponsors h4 {
     font-size: 22px;
     font-weight: bold;
     margin: 13% 0 7%;
@@ -313,10 +313,6 @@ label {
 
 label[for="id_in_attendees"], label[for="id_allow_contact"] {
 	display: inline;
-}
-
-.expl {
-    color: #777;
 }
 
 form input[type="text"] {
