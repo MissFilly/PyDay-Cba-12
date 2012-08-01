@@ -30,12 +30,19 @@ a:hover, #user a:hover, .backtohome:hover {
     color: #FFF;
 }
 
-h2 {
+h2, h3 {
     font-family: 'Helvetica', sans-serif;
-    font-size: 36px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #464646;
+}
+
+h2 {
+	font-size: 36px;
+}
+
+h3 {
+	font-size: 28px;
 }
 
 .long-title {
@@ -43,9 +50,9 @@ h2 {
     line-height: 40px;
 }
 
-li {
+/*li {
     list-style: none outside none;
-}
+}*/
 
 #header {
     height: 120px;
@@ -285,6 +292,9 @@ li {
     padding: 4%;
 }
 
+
+/* FORMS */
+
 form {
     border-left: 1px solid #E0DFDF;
     margin-left: 90px;
@@ -348,6 +358,8 @@ form textarea {
     cursor: pointer;
 }
 
+/* LOGIN PAGE */
+
 .provider {
     height: 50px;
     margin: 20px 0 8px;
@@ -387,6 +399,8 @@ form textarea {
     width: 100%;
 }
 
+/* SUCCESS PAGE */
+
 #share-buttons {
     margin: 20px auto auto;
     width: 306px;
@@ -408,6 +422,8 @@ form textarea {
     background: url("../img/share.png") no-repeat scroll 0 -43px transparent;
     float: right;
 }
+
+/* PROFILE */
 
 .personal-details {
     margin-top: 5%;
@@ -433,7 +449,9 @@ form textarea {
 
 .modify {
     background-color: #EA7949;
-    border-radius: 7px 7px 7px 7px;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
     color: #FFFFFF;
     font-weight: bold;
     margin-left: 10px;
@@ -442,4 +460,24 @@ form textarea {
 
 .inline-header {
     display: inline;
+}
+
+/* SPONSOR BENEFITS LIST */
+
+.full {
+	color: #EA3E49;
+	font-size: 20px;
+}
+
+.benefits {
+	list-style: disc none outside;
+	margin-bottom: 9%;
+    line-height: 30px;
+    padding-left: 30px;
+    border-left: 1px solid #E0DFDF;
+    margin-left: 50px;
+}
+
+.benefits li {
+	margin-bottom: 3%;
 }

@@ -375,6 +375,14 @@ class ModifyTalk(PyDayHandler):
                 u'Hubo un problema al intentar registrar la charla.', result)
 
 
+class Prospectus(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/others/prospectus.html")
+        self.response.out.write(template.render(path, result))
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
@@ -388,6 +396,7 @@ def main():
         ('/login', Login),
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
+        ('/prospectus', Prospectus),
         ], debug=True)
     run_wsgi_app(application)
 
