@@ -301,15 +301,15 @@ label {
     font-size: 16px;
 }
 
-.check-label {
-    display: inline;
+label[for="id_in_attendees"], label[for="id_allow_contact"] {
+	display: inline;
 }
 
 .expl {
     color: #777;
 }
 
-form input {
+form input[type="text"] {
     height: 30px;
     width: 50%;
     padding: 0 10px;
@@ -330,32 +330,6 @@ form select {
 }
 
 form textarea {
-    padding: 10px;
-    font-size: 14px;
-    width: 70%;
-}
-
-.input-text {
-    height: 30px;
-    width: 50%;
-    padding: 0 10px;
-}
-
-.input-text, .select, .upload, textarea {
-    background-color: #F9F9F9;
-    border: 1px solid #E0DFDF;
-    border-radius: 7px;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    color: #366B97;
-    margin-top: 1%;
-}
-
-.select {
-    width: 30%;
-}
-
-textarea {
     padding: 10px;
     font-size: 14px;
     width: 70%;
