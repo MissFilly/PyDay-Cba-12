@@ -368,18 +368,14 @@ form textarea {
 #google:hover { background-position: -150px 0; }
 #yahoo { background-position: 0 -50px; }
 #yahoo:hover { background-position: -150px -50px; }
-#twitter { background-position: 0 -100px; }
-#twitter:hover { background-position: -150px -100px; }
-#facebook { background-position: 0 -150px; }
-#facebook:hover { background-position: -150px -150px; }
-#live { background-position: 0 -200px; }
-#live:hover { background-position: -150px -200px; }
-#linkedin { background-position: 0 -250px; }
-#linkedin:hover { background-position: -150px -250px; }
-#aol { background-position: 0 -300px; }
-#aol:hover { background-position: -150px -300px; }
-#openid { background-position: 0 -350px; }
-#openid:hover { background-position: -150px -350px; }
+#aol { background-position: 0 -100px; }
+#aol:hover { background-position: -150px -100px; }
+#openid { background-position: 0 -150px; }
+#openid:hover { background-position: -150px -150px; }
+#wordpress { background-position: 0 -200px; }
+#wordpress:hover { background-position: -150px -200px; }
+#flickr { background-position: 0 -250px; }
+#flickr:hover { background-position: -150px -250px; }
 #col1 { float: left; }
 #col2 { float: right; }
 
