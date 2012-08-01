@@ -255,14 +255,6 @@ class Login(PyDayHandler):
         self.go_to_login(result)
 
 
-class Success(PyDayHandler):
-    def get(self):
-        result = self.user_login()
-        path = os.path.join(os.path.dirname(__file__),
-            "templates/user/success.html")
-        self.response.out.write(template.render(path, result))
-
-
 class ModifyProfile(PyDayHandler):
     def get(self):
         result = self.user_login()
@@ -392,7 +384,6 @@ def main():
         ('/attendees', Attendees),
         ('/venue', Venue),
         ('/propose', Propose),
-        ('/success', Success),
         ('/login', Login),
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
