@@ -370,6 +370,7 @@ class ModifyTalk(PyDayHandler):
 class Prospectus(PyDayHandler):
     def get(self):
         result = self.user_login()
+        result['is_active'] = ' active'
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/prospectus.html")
         self.response.out.write(template.render(path, result))
