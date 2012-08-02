@@ -237,10 +237,10 @@ LEVEL = (
 
 CATEGORY = (
   "Academico",
-  "Caseo de estudio",
+  "Caso de estudio",
   "Ciencia",
   "Comunidad",
-  "Cli",
+  "CLI",
   "Core",
   "Educacion",
   "Fomento",

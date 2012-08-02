@@ -15,6 +15,9 @@ def days_left_message():
         message_text = ('Falta', days, u'día')
     elif days == 0:
         message_text = (u'Asistí', 'HOY', 'al PyDay')
+    elif days < 0:
+        days = 0
+        message_text = ('Faltan', days, u'días')
     else:
         message_text = ('Faltan', days, u'días')
 
