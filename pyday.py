@@ -19,7 +19,7 @@ providers = {
     'aol': 'aol.com',
     'openid': 'myopenid.com',
     'wordpress': 'http://wordpress.com/',
-    'flickr': 'http://wordpress.com/',
+    'flickr': 'http://flickr.com/',
 }
 
 
