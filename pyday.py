@@ -14,7 +14,7 @@ from db import db
 
 MESSAGE_REGISTER = (u'Voy a asistir al %23PyDayCba el 15 de septiembre - '
                     u'http://pydaycba.com.ar ¡Inscribite vos también!')
-MESSAGE_PROPOSE = (u'Propuse la charla {0} para el %23PyDayCba - '
+MESSAGE_PROPOSE = (u'Propuse la charla %s para el %%23PyDayCba - '
                    u'http://pydaycba.com.ar ¡Sumate!')
 FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
@@ -169,7 +169,7 @@ class Propose(PyDayHandler):
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = get_twitter_message(
-                    MESSAGE_PROPOSE.format(talk.title))
+                    MESSAGE_PROPOSE % talk.title)
                 data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
@@ -349,7 +349,7 @@ class ModifyTalk(PyDayHandler):
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = get_twitter_message(
-                    MESSAGE_PROPOSE.format(talk.title))
+                    MESSAGE_PROPOSE % talk.title)
                 data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
