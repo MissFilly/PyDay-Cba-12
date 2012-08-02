@@ -165,8 +165,8 @@ class Propose(PyDayHandler):
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
                     u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+"' + talk.title.replace(' ', '+') +
-                    u'"+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
+                    u'charla+' + talk.title.replace(' ', '+') +
+                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
@@ -354,8 +354,8 @@ class ModifyTalk(PyDayHandler):
                 data['message'] = u'Podés compartirlo en:'
                 data['share_twitter'] = (
                     u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+"' + talk.title.replace(' ', '+') +
-                    u'"+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
+                    u'charla+' + talk.title.replace(' ', '+') +
+                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
                 data['share_facebook'] = (
                     u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
