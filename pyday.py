@@ -12,15 +12,25 @@ import utils
 from db import db
 
 
+MESSAGE_REGISTER = (u'Voy a asistir al %23PyDayCba el 15 de septiembre - '
+                    u'http://pydaycba.com.ar ¡Inscribite vos también!')
+MESSAGE_PROPOSE = (u'Propuse la charla {0} para el %23PyDayCba - '
+                   u'http://pydaycba.com.ar ¡Sumate!')
+FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
+                    u'u=http://pydaycba.com.ar/')
+
+
 providers = {
     'google': 'www.google.com/accounts/o8/id',
     'yahoo': 'yahoo.com',
-    'live': 'myspace',
     'aol': 'aol.com',
     'openid': 'myopenid.com',
-    'wordpress': 'http://wordpress.com/',
-    'flickr': 'http://flickr.com/',
 }
+
+
+def get_twitter_message(message):
+    return (u'https://twitter.com/intent/tweet?text=%s' %
+        message.replace(' ', '+'))
 
 
 class PyDayHandler(webapp.RequestHandler):
@@ -102,13 +112,8 @@ class Register(PyDayHandler):
                 data['message'] = (
                     u'Podés ver <a href="/attendees">quiénes van'
                     ' a asistir</a> o compartirlo en:')
-                data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Voy+a+asistir '
-                    'al+%23PyDayCba+el+15+de+septiembre+-+'
-                    u'http://pydaycba.com.ar+¡Inscribite+vos+también!')
-                data['share_facebook'] = (
-                    u'http://www.facebook.com/sharer/sharer.php?'
-                    u'u=http://pydaycba.com.ar/')
+                data['share_twitter'] = get_twitter_message(MESSAGE_REGISTER)
+                data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
@@ -163,13 +168,9 @@ class Propose(PyDayHandler):
                 data = {}
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
-                data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+' + talk.title.replace(' ', '+') +
-                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
-                data['share_facebook'] = (
-                    u'http://www.facebook.com/sharer/sharer.php?'
-                    u'u=http://pydaycba.com.ar/')
+                data['share_twitter'] = get_twitter_message(
+                    MESSAGE_PROPOSE.format(talk.title))
+                data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
@@ -294,13 +295,8 @@ class ModifyProfile(PyDayHandler):
                 data['message'] = (
                     u'Podés ver <a href="/attendees">quiénes van'
                     ' a asistir</a> o compartirlo en:')
-                data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Voy+a+asistir'
-                    '+al+%23PyDayCba+el+15+de+septiembre+-+'
-                    u'http://pydaycba.com.ar+¡Inscribite+vos+también!')
-                data['share_facebook'] = (
-                    u'http://www.facebook.com/sharer/sharer.php?'
-                    u'u=http://pydaycba.com.ar/')
+                data['share_twitter'] = get_twitter_message(MESSAGE_REGISTER)
+                data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
@@ -352,13 +348,9 @@ class ModifyTalk(PyDayHandler):
                 data = {}
                 data['title'] = u'Tu propuesta fue cargada con éxito.'
                 data['message'] = u'Podés compartirlo en:'
-                data['share_twitter'] = (
-                    u'https://twitter.com/intent/tweet?text=Propuse+la+'
-                    u'charla+' + talk.title.replace(' ', '+') +
-                    u'+para+el+%23PyDayCba+-+http://pydaycba.com.ar ¡Sumate!')
-                data['share_facebook'] = (
-                    u'http://www.facebook.com/sharer/sharer.php?'
-                    u'u=http://pydaycba.com.ar/')
+                data['share_twitter'] = get_twitter_message(
+                    MESSAGE_PROPOSE.format(talk.title))
+                data['share_facebook'] = FACEBOOK_MESSAGE
                 data.update(result)
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
