@@ -10,6 +10,8 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import forms
 import utils
 from db import db
+from db.model import TwitterProfile
+from gaesessions import get_current_session
 
 
 MESSAGE_REGISTER = (u'Voy a asistir al %23PyDayCba el 15 de septiembre - '
@@ -34,16 +36,28 @@ def get_twitter_message(message):
 
 
 class PyDayHandler(webapp.RequestHandler):
+
     def user_login(self):
         result = {}
         user = users.get_current_user()
+        is_profile = False
+        if user is None:
+            session = get_current_session()
+            twitter_user = session.get("twitter_user")
+            if twitter_user is not None:
+                user = TwitterProfile.get_by_key_name(twitter_user)
+                is_profile = True
+
         message = utils.days_left_message()
         result['daysleft0'] = message[0]
         result['daysleft1'] = message[1]
         result['daysleft2'] = message[2]
         if user:  # signed in already
             result['user'] = user
-            result['logout'] = users.create_logout_url(self.request.uri)
+            if is_profile:
+                result['logout'] = '/oauth/signout'
+            else:
+                result['logout'] = users.create_logout_url(self.request.uri)
             result['username'] = user.nickname()
         else:  # let user choose authenticator
             result['user'] = None
@@ -103,7 +117,11 @@ class Register(PyDayHandler):
                 return
 
             attendee = values.save(commit=False)
-            attendee.userId = result['user']
+            user = result['user']
+            if isinstance(user, users.User):
+                attendee.userId = result['user']
+            else:
+                attendee.profile = result['user']
             registered = db.add_attendee(attendee)
             if registered:
                 data = {}
@@ -162,7 +180,11 @@ class Propose(PyDayHandler):
                 return
 
             talk = values.save(commit=False)
-            talk.userId = result['user']
+            user = result['user']
+            if isinstance(user, users.User):
+                talk.userId = user
+            else:
+                talk.profile = user
             saved = db.add_talk(talk)
             if saved:
                 data = {}
@@ -175,6 +197,10 @@ class Propose(PyDayHandler):
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/user/success.html")
                 self.response.out.write(template.render(path, data))
+            else:
+                #show error page
+                self.show_error("templates/others/propose.html",
+                  u'Hubo un problema al intentar registrar la charla.', result)
         else:
             #show error page
             self.show_error("templates/others/propose.html",
@@ -285,7 +311,11 @@ class ModifyProfile(PyDayHandler):
                 return
 
             attendee = values.save(commit=False)
-            attendee.userId = result['user']
+            user = result['user']
+            if isinstance(user, users.User):
+                attendee.userId = user
+            else:
+                attendee.profile = user
             registered = db.update_attendee(attendee)
             if registered:
                 data = {}
@@ -342,7 +372,11 @@ class ModifyTalk(PyDayHandler):
                 return
 
             talk = values.save(commit=False)
-            talk.userId = result['user']
+            user = result['user']
+            if isinstance(user, users.User):
+                talk.userId = user
+            else:
+                talk.profile = user
             saved = db.update_talk(key, talk)
             if saved:
                 data = {}

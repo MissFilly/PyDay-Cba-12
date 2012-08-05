@@ -11,10 +11,13 @@ from model_data import (
 )
 
 
-class Profile(db.Model):
+class TwitterProfile(db.Model):
     twitter_access_token_key = db.StringProperty()
     twitter_access_token_secret = db.StringProperty()
-    example_data = db.StringProperty()
+    nick = db.StringProperty()
+
+    def nickname(self):
+        return self.nick
 
 
 class Attendee(db.Model):
@@ -38,6 +41,7 @@ class Attendee(db.Model):
     company_page = db.StringProperty(verbose_name=u'Página web de entidad')
     biography = db.TextProperty(verbose_name=u'Biografía (resumen)')
     cv = db.StringProperty(verbose_name='Link a descarga de CV')
+    profile = db.ReferenceProperty(TwitterProfile)
 
     def __init__(self, *args, **kw):
         super(Attendee, self).__init__(*args, **kw)
@@ -47,7 +51,7 @@ class Attendee(db.Model):
                     'company_page', 'biography']
         for field in fields:
             attr = getattr(self, field)
-            if attr: # NoneTypes can't be escaped
+            if attr:  # NoneTypes can't be escaped
                 setattr(self, field, cgi.escape(attr, quote="True"))
             if field in not_req_fields and not attr:
                 setattr(self, field, '')
@@ -64,6 +68,7 @@ class Talk(db.Model):
     knowledge = db.TextProperty(
         verbose_name='Conocimientos previos requeridos')
     notes = db.TextProperty(verbose_name='Notas')
+    profile = db.ReferenceProperty(TwitterProfile)
 
     def __init__(self, *args, **kw):
         super(Talk, self).__init__(*args, **kw)

@@ -19,13 +19,11 @@
 # "Sign In With Twitter" authentication with Google App Engine.
 #
 #
-import os
 import functools
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext.webapp import template
 
-from db.model import Profile
+from db.model import TwitterProfile
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from auth import twitter
@@ -46,23 +44,17 @@ def authenticated(method):
     def wrapper(self, *args, **kwargs):
         session = get_current_session()
         twitter_user = session.get("twitter_user")
-        if twitter_user is None:
+        if twitter_user is not None:
             self.error(403)
             return
 
-        self.profile = Profile.get_by_key_name(twitter_user)
+        self.profile = TwitterProfile.get_by_key_name(twitter_user)
         if self.profile is None:
-            self.profile = Profile(key_name=twitter_user)
+            self.profile = TwitterProfile(key_name=twitter_user)
             self.profile.save()
 
         return method(self, *args, **kwargs)
     return wrapper
-
-
-class MainHandler(webapp.RequestHandler):
-    def get(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/signin.html')
-        self.response.out.write(template.render(path, None))
 
 
 class SignInWithTwitter(webapp.RequestHandler):
@@ -108,12 +100,13 @@ class TwitterAuthorized(webapp.RequestHandler):
                               cache=None)
 
         twituser = twitapi.VerifyCredentials()
-        profile = Profile.get_by_key_name(twituser.screen_name)
+        profile = TwitterProfile.get_by_key_name(twituser.screen_name)
         if profile is None:
-            profile = Profile(key_name=twituser.screen_name)
+            profile = TwitterProfile(key_name=twituser.screen_name)
 
         profile.twitter_access_token_key = key
         profile.twitter_access_token_secret = secret
+        profile.nick = twituser.screen_name
         profile.save()
         session["twitter_user"] = twituser.screen_name
         self.redirect("/")
@@ -133,8 +126,8 @@ class CleanupSessions(webapp.RequestHandler):
             pass
 
 
-application = webapp.WSGIApplication([('/oauth', MainHandler),
-                                      ('/oauth/signin', SignInWithTwitter),
+application = webapp.WSGIApplication([('/oauth/signin_twitter',
+                                          SignInWithTwitter),
                                       ('/oauth/twitter', TwitterAuthorized),
                                       ('/oauth/signout', SignOut),
                                       ('/oauth/cleanup_sessions',

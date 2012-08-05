@@ -8,7 +8,7 @@ from db.model import (Attendee, Talk)
 class AttendeeForm(djangoforms.ModelForm):
     class Meta:
         model = Attendee
-        exclude = ['userId']
+        exclude = ['userId', 'profile']
         model.country.default = 'Argentina'
         model.state.default = 'Cordoba'
         model.level.default = 'Principiante'
@@ -17,5 +17,5 @@ class AttendeeForm(djangoforms.ModelForm):
 class TalkForm(djangoforms.ModelForm):
     class Meta:
         model = Talk
-        exclude = ['userId']
+        exclude = ['userId', 'profile']
         model.level.default = 'Principiante'

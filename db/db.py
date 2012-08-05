@@ -3,12 +3,35 @@
 import model
 
 
+def check_attendee_exists(userid, profile):
+    exist = model.Attendee.all()
+    exist.filter('userId =', userid)
+    if exist.count() != 0:
+        return True, exist
+    exist = model.Attendee.all()
+    exist.filter('profile =', profile)
+    if exist.count() != 0:
+        return True, exist
+    return False, exist
+
+
+def user_talks(userid, profile):
+    talks = model.Talk.all()
+    talks.filter('userId =', userid)
+    if talks.count() != 0:
+        return talks
+    talks = model.Talk.all()
+    talks.filter('profile =', profile)
+    if talks.count() != 0:
+        return talks
+    return talks
+
+
 def add_attendee(attendee):
     """Register a new attendee in the database."""
     # Check if this user is already registered
-    exist = model.Attendee.all()
-    exist.filter('userId =', attendee.userId)
-    if exist.count() != 0:
+    exists = check_attendee_exists(attendee.userId, attendee.profile)
+    if exists[0]:
         return False
 
     if (attendee.personal_page and
@@ -24,13 +47,13 @@ def add_attendee(attendee):
 
 def update_attendee(registered_attendee):
     """Register a new attendee in the database."""
-    # Check if this user is already registered
-    attendee = model.Attendee.all()
-    attendee.filter('userId =', registered_attendee.userId)
-    if attendee.count() == 0:
+    # Check that this user is already registered
+    exists = check_attendee_exists(
+        registered_attendee.userId, registered_attendee.profile)
+    if not exists[0]:
         return False
 
-    attendee = attendee[0]
+    attendee = exists[1][0]
     attendee.name = registered_attendee.name
     attendee.surname = registered_attendee.surname
     attendee.nick = registered_attendee.nick
@@ -60,9 +83,8 @@ def update_attendee(registered_attendee):
 def add_talk(talk):
     """Register a new talk for the event."""
     # Check if this user is already registered
-    attendee = model.Attendee.all()
-    attendee.filter('userId =', talk.userId)
-    if attendee.count() == 0:
+    exists = check_attendee_exists(talk.userId, talk.profile)
+    if not exists[0]:
         return False
 
     talk.put()
@@ -72,8 +94,7 @@ def add_talk(talk):
 def update_talk(key, registered_talk):
     """Register a new talk for the event."""
     # Check if this user is already registered
-    talks = model.Talk.all()
-    talks.filter('userId =', registered_talk.userId)
+    talks = user_talks(registered_talk.userId, registered_talk.profile)
 
     talk = None
     for t in talks:
@@ -94,9 +115,8 @@ def update_talk(key, registered_talk):
 
 def user_is_attendee(user):
     """Check if the current user is already registered as an attendee."""
-    attendee = model.Attendee.all()
-    attendee.filter('userId =', user)
-    if attendee.count() != 0:
+    exists = check_attendee_exists(user, user)
+    if exists[0]:
         return True
     return False
 
@@ -107,24 +127,20 @@ def get_attendees():
 
 
 def get_profile(user):
-    attendee = model.Attendee.all()
-    attendee.filter('userId =', user)
-    if attendee.count() == 0:
-        return None
-    return attendee[0]
+    exists = check_attendee_exists(user, user)
+    if exists[0]:
+        return exists[1][0]
 
 
 def get_user_talks(user):
-    talks = model.Talk.all()
-    talks.filter('userId =', user)
+    talks = user_talks(user, user)
     if talks.count() == 0:
         return None
     return talks
 
 
 def get_talk(user, key):
-    talks = model.Talk.all()
-    talks.filter('userId =', user)
+    talks = user_talks(user, user)
     if talks.count() == 0:
         return None
     for talk in talks:
