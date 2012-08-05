@@ -1,4 +1,6 @@
 # -*- coding: utf-8 *-*
+import cgi
+
 from google.appengine.ext import db
 
 from model_data import (
@@ -33,20 +35,16 @@ class Attendee(db.Model):
 
     def __init__(self, *args, **kw):
         super(Attendee, self).__init__(*args, **kw)
-        if not self.nick:
-            self.nick = ''
-        if not self.tel:
-            self.tel = ''
-        if not self.personal_page:
-            self.personal_page = ''
-        if not self.company:
-            self.company = ''
-        if not self.company_page:
-            self.company_page = ''
-        if not self.biography:
-            self.biography = ''
-        if not self.cv:
-            self.cv = ''
+        fields = ['name', 'surname', 'nick', 'email', 'tel', 'personal_page',
+                    'company', 'company_page', 'biography']
+        not_req_fields = ['nick', 'tel', 'personal_page', 'company',
+                    'company_page', 'biography']
+        for field in fields:
+            attr = getattr(self, field)
+            if attr: # NoneTypes can't be escaped
+                setattr(self, field, cgi.escape(attr, quote="True"))
+            if field in not_req_fields and not attr:
+                setattr(self, field, '')
 
 
 class Talk(db.Model):
@@ -63,7 +61,11 @@ class Talk(db.Model):
 
     def __init__(self, *args, **kw):
         super(Talk, self).__init__(*args, **kw)
-        if not self.knowledge:
-            self.knowledge = ''
-        if not self.notes:
-            self.notes = ''
+        fields = ['title', 'abstract', 'knowledge', 'notes']
+        not_req_fields = ['knowledge', 'notes']
+        for field in fields:
+            attr = getattr(self, field)
+            if attr:
+                setattr(self, field, cgi.escape(attr, quote="True"))
+            if field in not_req_fields and not attr:
+                setattr(self, field, '')
