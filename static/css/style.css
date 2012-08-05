@@ -376,8 +376,8 @@ form textarea {
 #openid:hover { background-position: -150px -150px; }
 #twitter { background-position: 0 -200px; }
 #twitter:hover { background-position: -150px -200px; }
-#facebook { background-position: 0 -250px; }
-#facebook:hover { background-position: -150px -250px; }
+#github { background-position: 0 -250px; }
+#github:hover { background-position: -150px -250px; }
 #col1 { float: left; }
 #col2 { float: right; }
 
