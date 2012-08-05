@@ -1,5 +1,5 @@
 application: pydaycba
-version: 4
+version: 5
 runtime: python
 api_version: 1
 
@@ -10,6 +10,18 @@ handlers:
 - url: /favicon.ico
   static_files: static/img/favicon.ico
   upload: static/img/favicon.ico
+
+- url: /oauth
+  script: oauth_login.py
+
+- url: /oauth/profile
+  script: oauth_login.py
+
+- url: /oauth/signin
+  script: oauth_login.py
+
+- url: /oauth/twitter
+  script: oauth_login.py
 
 - url: /.*
   script: pyday.py

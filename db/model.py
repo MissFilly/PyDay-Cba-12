@@ -9,6 +9,12 @@ from model_data import (
 )
 
 
+class Profile(db.Model):
+    twitter_access_token_key = db.StringProperty()
+    twitter_access_token_secret = db.StringProperty()
+    example_data = db.StringProperty()
+
+
 class Attendee(db.Model):
     userId = db.UserProperty()
     name = db.StringProperty(verbose_name='Nombre*', required=True)
