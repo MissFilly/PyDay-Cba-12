@@ -374,10 +374,10 @@ form textarea {
 #aol:hover { background-position: -150px -100px; }
 #openid { background-position: 0 -150px; }
 #openid:hover { background-position: -150px -150px; }
-#wordpress { background-position: 0 -200px; }
-#wordpress:hover { background-position: -150px -200px; }
-#flickr { background-position: 0 -250px; }
-#flickr:hover { background-position: -150px -250px; }
+#twitter { background-position: 0 -200px; }
+#twitter:hover { background-position: -150px -200px; }
+#facebook { background-position: 0 -250px; }
+#facebook:hover { background-position: -150px -250px; }
 #col1 { float: left; }
 #col2 { float: right; }
 
