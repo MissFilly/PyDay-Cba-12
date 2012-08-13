@@ -6,25 +6,25 @@ import model
 def check_attendee_exists(userid, profile):
     exist = model.Attendee.all()
     exist.filter('userId =', userid)
-    if exist.count() != 0:
+    if userid is not None and exist.count() != 0:
         return True, exist
     exist = model.Attendee.all()
     exist.filter('profile =', profile)
-    if exist.count() != 0:
+    if profile is not None and exist.count() != 0:
         return True, exist
-    return False, exist
+    return False, ()
 
 
 def user_talks(userid, profile):
     talks = model.Talk.all()
     talks.filter('userId =', userid)
-    if talks.count() != 0:
-        return talks
+    if userid is not None and talks.count() != 0:
+        return True, talks
     talks = model.Talk.all()
     talks.filter('profile =', profile)
-    if talks.count() != 0:
-        return talks
-    return talks
+    if profile is not None and talks.count() != 0:
+        return True, talks
+    return False, ()
 
 
 def add_attendee(attendee):
@@ -94,7 +94,9 @@ def add_talk(talk):
 def update_talk(key, registered_talk):
     """Register a new talk for the event."""
     # Check if this user is already registered
-    talks = user_talks(registered_talk.userId, registered_talk.profile)
+    found, talks = user_talks(registered_talk.userId, registered_talk.profile)
+    if not found:
+        return False
 
     talk = None
     for t in talks:
@@ -133,15 +135,15 @@ def get_profile(user):
 
 
 def get_user_talks(user):
-    talks = user_talks(user, user)
-    if talks.count() == 0:
+    found, talks = user_talks(user, user)
+    if not found:
         return None
     return talks
 
 
 def get_talk(user, key):
-    talks = user_talks(user, user)
-    if talks.count() == 0:
+    found, talks = user_talks(user, user)
+    if not found:
         return None
     for talk in talks:
         if str(talk.key()) == key:
