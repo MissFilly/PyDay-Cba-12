@@ -71,7 +71,7 @@
                   </tr>
               {% endif %}
             </tbody>
-              </table>
+          </table>
 
               <h2>Charlas propuestas</h2>
               {% if talks %}
@@ -94,6 +94,28 @@
               {% else %}
                 <p>No se ha cargado ninguna charla.</p>
               {% endif %}
+
+              <h2 class="inline-header">Pedido Remeras</h2><a class="modify" href="tshirt">Modificar</a>
+              {% if tshirt %}
+                  <table class="personal-details">
+                      <tbody>
+                      <tr>
+                        <td class="p-col1">Color</td>
+                        <td class="p-detail">{{ tshirt.color }}</td>
+                      </tr>
+                      <tr>
+                        <td class="p-col1">Talle</td>
+                        <td class="p-detail">{{ tshirt.size }}</td>
+                      </tr>
+                      <tr>
+                        <td class="p-col1">Cantidad</td>
+                        <td class="p-detail">{{ tshirt.total }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              {% else %}
+                <p>No se ha pedido ninguna remera.</p>
+              {% endif %}
             </div>
           </div>
 
@@ -103,7 +125,7 @@
             <li><a class="menu" href="/venue">Cómo llegar</a></li>
             <li><a class="menu" href="/attendees">Asistentes</a></li>
             <li class="menu unavailable">Programa</li>
-            <li class="menu unavailable">Remeras</li>
+            <li><a class="menu" href="/tshirt">Remeras</a></li>
           </ul>
 
     {% include "../sponsors.html" %}

@@ -5,9 +5,11 @@ from google.appengine.ext import db
 
 from model_data import (
     CATEGORY,
+    COLOR,
     COUNTRIES,
     LEVEL,
     STATES,
+    SIZE,
 )
 
 
@@ -74,6 +76,25 @@ class Talk(db.Model):
         super(Talk, self).__init__(*args, **kw)
         fields = ['title', 'abstract', 'knowledge', 'notes']
         not_req_fields = ['knowledge', 'notes']
+        for field in fields:
+            attr = getattr(self, field)
+            if attr:
+                setattr(self, field, cgi.escape(attr, quote="True"))
+            if field in not_req_fields and not attr:
+                setattr(self, field, '')
+
+
+class Tshirt(db.Model):
+    userId = db.UserProperty()
+    profile = db.ReferenceProperty(TwitterProfile)
+    color = db.StringProperty(verbose_name='Color', choices=COLOR)
+    size = db.StringProperty(verbose_name='Talle*', choices=SIZE, required=True)
+    total = db.StringProperty(verbose_name=u'Cantidad*', required=True)
+
+    def __init__(self, *args, **kw):
+        super(Tshirt, self).__init__(*args, **kw)
+        fields = ['color', 'size', 'total']
+        not_req_fields = ['total']
         for field in fields:
             attr = getattr(self, field)
             if attr:

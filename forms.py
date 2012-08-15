@@ -2,7 +2,7 @@
 
 from google.appengine.ext.db import djangoforms
 
-from db.model import (Attendee, Talk)
+from db.model import (Attendee, Talk, Tshirt)
 
 
 class AttendeeForm(djangoforms.ModelForm):
@@ -19,3 +19,11 @@ class TalkForm(djangoforms.ModelForm):
         model = Talk
         exclude = ['userId', 'profile']
         model.level.default = 'Principiante'
+
+
+class TshirtForm(djangoforms.ModelForm):
+    class Meta:
+        model = Tshirt
+        exclude = ['userId', 'profile']
+        model.color.default = 'Negro'
+        model.total.default = '1'

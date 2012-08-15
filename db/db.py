@@ -27,6 +27,18 @@ def user_talks(userid, profile):
     return False, ()
 
 
+def check_tshirts(userid, profile):
+    exist = model.Tshirt.all()
+    exist.filter('userId =', userid)
+    if userid is not None and exist.count() != 0:
+        return True, exist
+    exist = model.Tshirt.all()
+    exist.filter('profile =', profile)
+    if profile is not None and exist.count() != 0:
+        return True, exist
+    return False, ()
+
+
 def add_attendee(attendee):
     """Register a new attendee in the database."""
     # Check if this user is already registered
@@ -42,6 +54,19 @@ def add_attendee(attendee):
         attendee.company_page = 'http://%s' % attendee.company_page
 
     attendee.put()
+    return True
+
+
+def request_tshirt(tshirt):
+    exists = check_tshirts(tshirt.userId, tshirt.profile)
+    if exists[0]:
+        temp = exists[1][0]
+        temp.color = tshirt.color
+        temp.size = tshirt.size
+        temp.total = tshirt.total
+        tshirt = temp
+
+    tshirt.put()
     return True
 
 
@@ -148,3 +173,10 @@ def get_talk(user, key):
     for talk in talks:
         if str(talk.key()) == key:
             return talk
+
+
+def get_tshirts_requested(user):
+    found, tshirts = check_tshirts(user, user)
+    if not found:
+        return None
+    return tshirts[0]

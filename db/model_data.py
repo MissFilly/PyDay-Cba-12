@@ -255,3 +255,18 @@ CATEGORY = (
   "Testing",
   "Web",
 )
+
+
+COLOR = (
+    "Negro",
+    "Blanco",
+)
+
+
+SIZE = (
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+)

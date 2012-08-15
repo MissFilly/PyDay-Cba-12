@@ -268,6 +268,9 @@ class Profile(PyDayHandler):
             talks = db.get_user_talks(result['user'])
             if talks:
                 result['talks'] = talks
+            tshirt = db.get_tshirts_requested(result['user'])
+            if tshirt:
+                result['tshirt'] = tshirt
             path = os.path.join(os.path.dirname(__file__),
                 "templates/user/profile.html")
             self.response.out.write(template.render(path, result))
@@ -404,6 +407,54 @@ class Prospectus(PyDayHandler):
         self.response.out.write(template.render(path, result))
 
 
+class Tshirt(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        registered = db.user_is_attendee(result.get('user', None))
+        if not registered:
+            self.redirect('/register')
+            return
+        if result.get('user', None):
+            form = forms.TshirtForm()
+            result['form'] = form
+            path = os.path.join(os.path.dirname(__file__),
+                "templates/user/tshirt.html")
+            self.response.out.write(template.render(path, result))
+        else:
+            self.redirect(result['login'])
+
+    def post(self):
+        result = self.user_login()
+        # Collect data
+        values = forms.TshirtForm(data=self.request.POST)
+        result['form'] = values
+
+        if result.get('user', None):
+            if not values.is_valid():
+                #error page
+                self.show_error("templates/user/tshirt.html",
+                    u'Falta completar alguno de los datos requeridos.', result)
+                return
+
+            tshirt = values.save(commit=False)
+            user = result['user']
+            if isinstance(user, users.User):
+                tshirt.userId = user
+            else:
+                tshirt.profile = user
+            saved = db.request_tshirt(tshirt)
+            if saved:
+                self.redirect('/profile')
+            else:
+                #show error page
+                self.show_error("templates/user/tshirt.html",
+                  u'Hubo un problema al intentar registrar la charla.', result)
+        else:
+            #show error page
+            self.show_error("templates/user/tshirt.html",
+                u'Hubo un problema al intentar registrar la charla.', result)
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/', MainPage),
@@ -417,6 +468,7 @@ def main():
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
+        ('/tshirt', Tshirt),
         ], debug=True)
     run_wsgi_app(application)
 

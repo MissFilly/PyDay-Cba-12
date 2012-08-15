@@ -21,3 +21,14 @@ function validateFormTalk()
           return false;
     }
 }
+
+
+function validateFormTshirt()
+{
+    var t = document.forms["tshirt"]["id_total"].value;
+    if (t==null || t=="")
+    {
+          alert("Debe ingresar cuantas remeras desea.");
+          return false;
+    }
+}
