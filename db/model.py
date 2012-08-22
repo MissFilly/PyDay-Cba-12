@@ -8,6 +8,7 @@ from model_data import (
     COLOR,
     COUNTRIES,
     LEVEL,
+    MODEL,
     STATES,
     SIZE,
 )
@@ -88,12 +89,14 @@ class Tshirt(db.Model):
     userId = db.UserProperty()
     profile = db.ReferenceProperty(TwitterProfile)
     color = db.StringProperty(verbose_name='Color', choices=COLOR)
+    model = db.StringProperty(verbose_name='Modelo*', choices=MODEL,
+        required=True)
     size = db.StringProperty(verbose_name='Talle*', choices=SIZE, required=True)
     total = db.StringProperty(verbose_name=u'Cantidad*', required=True)
 
     def __init__(self, *args, **kw):
         super(Tshirt, self).__init__(*args, **kw)
-        fields = ['color', 'size', 'total']
+        fields = ['color', 'size', 'total', 'model']
         not_req_fields = ['total']
         for field in fields:
             attr = getattr(self, field)

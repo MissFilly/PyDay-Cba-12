@@ -64,6 +64,7 @@ def request_tshirt(tshirt):
         temp.color = tshirt.color
         temp.size = tshirt.size
         temp.total = tshirt.total
+        temp.model = tshirt.model
         tshirt = temp
 
     tshirt.put()

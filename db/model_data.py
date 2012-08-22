@@ -270,3 +270,10 @@ SIZE = (
     "XL",
     "XXL",
 )
+
+
+MODEL = (
+    'Hombre',
+    'Mujer',
+    'Mutante del Espacio',
+)

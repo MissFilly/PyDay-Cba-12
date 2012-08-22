@@ -27,3 +27,4 @@ class TshirtForm(djangoforms.ModelForm):
         exclude = ['userId', 'profile']
         model.color.default = 'Negro'
         model.total.default = '1'
+        model.model.default = 'Hombre'
