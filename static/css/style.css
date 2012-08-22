@@ -13,6 +13,11 @@ body {
     font-weight: bold;
 }
 
+.shirts {
+    text-align: center;
+    margin-top: 5%;
+}
+
 ::selection {
     background: #FFC836;
     }
