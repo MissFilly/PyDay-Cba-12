@@ -419,7 +419,7 @@ form textarea {
 
 /* PROFILE */
 
-.personal-details {
+.personal-details, #content .personal-p {
     margin-top: 5%;
     margin-bottom: 9%;
 }
