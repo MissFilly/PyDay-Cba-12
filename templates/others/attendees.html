@@ -18,13 +18,25 @@
                   <th>Entidad</th>
                 </tr>
                 {% for attendee in attendees %}
-                    <tr>
-                      {% if attendee.nick %}
-                          <td><a href="{{ attendee.personal_page }}">{{ attendee.nick }}</a></td>
-                      {% else %}
-                          <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
-                      {% endif %}
+                  <tr>
+                    {% if attendee.nick %}
+                        {% if attendee.personal_page %}
+                            <td><a href="{{ attendee.personal_page }}">{{ attendee.nick }}</a></td>
+                        {% else %}
+                            <td>{{ attendee.nick }}</td>
+                        {% endif %}
+                    {% else %}
+                        {% if attendee.personal_page %}
+                            <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
+                        {% else %}
+                            <td>{{ attendee.name }} {{ attendee.surname }}</td>
+                        {% endif %}
+                    {% endif %}
+                    {% if attendee.company_page %}
                       <td><a href="{{ attendee.company_page }}">{{ attendee.company }}</a></td>
+                    {% else %}
+                      <td>{{ attendee.company }}</td>
+                    {% endif %}
                     </tr>
                 {% endfor %}
               </tbody>
