@@ -1,0 +1,62 @@
+{% include "../header.html" %}
+
+      <div id="page">
+        <div id="frame">
+          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+
+          <div id="content">
+              <h2>Charlas propuestas</h2>
+              {% if talks %}
+                  <table class="pr-talks">
+                    <tbody>
+                      {% for talk in talks %}
+                          <tr>
+                            <td class="p-col1">Titulo</td>
+                            <td class="p-detail">{{ talk.title }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Nivel</td>
+                            <td class="p-detail">{{ talk.level }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Descripcion</td>
+                            <td class="p-detail">{{ talk.abstract }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Categoria</td>
+                            <td class="p-detail">{{ talk.category }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Conocimientos Previos</td>
+                            <td class="p-detail">{{ talk.knowledge }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Notas</td>
+                            <td class="p-detail">{{ talk.notes }}</td>
+                          </tr>
+                          <tr>
+                            <td class="p-col1">Usuario</td>
+                            <td class="p-detail">{{ talk.userId }} - {{ talk.profile }}</td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              {% else %}
+                <p class="personal-p">No se ha cargado ninguna charla.</p>
+              {% endif %}
+          </div>
+
+        <div id="sidebar">
+          <ul>
+            <li><a class="menu" href="/about">Más info</a></li>
+            <li><a class="menu" href="/venue">Cómo llegar</a></li>
+            <li><a class="menu" href="/attendees">Asistentes</a></li>
+            <li class="menu unavailable">Programa</li>
+            <li><a class="menu" href="/tshirt">Remeras</a></li>
+          </ul>
+
+    {% include "../sponsors.html" %}
+
+      </div>
+
+  {% include "../footer.html" %}
