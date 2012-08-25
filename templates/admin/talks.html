@@ -7,13 +7,10 @@
           <div id="content">
               <h2>Charlas propuestas</h2>
               {% if talks %}
-                  <table class="pr-talks">
-                    <tbody>
-                      {% for talk in talks %}
-                          <tr>
-                            <td class="p-col1">Titulo</td>
-                            <td class="p-detail">{{ talk.title }}</td>
-                          </tr>
+                  {% for talk in talks %}
+                      <h3>{{ talk.title }}</h3>
+                      <table class="pr-talks">
+                        <tbody>
                           <tr>
                             <td class="p-col1">Nivel</td>
                             <td class="p-detail">{{ talk.level }}</td>
@@ -38,9 +35,9 @@
                             <td class="p-col1">Usuario</td>
                             <td class="p-detail">{{ talk.userId }} - {{ talk.profile }}</td>
                           </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
+                        </tbody>
+                      </table>
+                  {% endfor %}
               {% else %}
                 <p class="personal-p">No se ha cargado ninguna charla.</p>
               {% endif %}

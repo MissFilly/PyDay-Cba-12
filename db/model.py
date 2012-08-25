@@ -91,7 +91,8 @@ class Tshirt(db.Model):
     color = db.StringProperty(verbose_name='Color', choices=COLOR)
     model = db.StringProperty(verbose_name='Modelo*', choices=MODEL,
         required=True)
-    size = db.StringProperty(verbose_name='Talle*', choices=SIZE, required=True)
+    size = db.StringProperty(verbose_name='Talle*', choices=SIZE,
+        required=True)
     total = db.StringProperty(verbose_name=u'Cantidad*', required=True)
 
     def __init__(self, *args, **kw):
