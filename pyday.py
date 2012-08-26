@@ -88,6 +88,14 @@ class MainPage(PyDayHandler):
         self.response.out.write(template.render(path, result))
 
 
+class Schedule(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/schedule.html")
+        self.response.out.write(template.render(path, result))
+
+
 class Register(PyDayHandler):
     def get(self):
         result = self.user_login()
@@ -469,6 +477,7 @@ def main():
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
         ('/tshirt', Tshirt),
+        ('/schedule', Schedule),
         ], debug=True)
     run_wsgi_app(application)
 

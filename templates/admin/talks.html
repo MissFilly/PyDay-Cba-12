@@ -5,7 +5,7 @@
           <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
           <div id="content">
-              <h2>Charlas propuestas</h2>
+              <h2>Charlas propuestas</h2><br>
               {% if talks %}
                   {% for talk in talks %}
                       <h3>{{ talk.title }}</h3>
@@ -42,17 +42,6 @@
                 <p class="personal-p">No se ha cargado ninguna charla.</p>
               {% endif %}
           </div>
-
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li class="menu unavailable">Programa</li>
-            <li><a class="menu" href="/tshirt">Remeras</a></li>
-          </ul>
-
-    {% include "../sponsors.html" %}
 
       </div>
 
