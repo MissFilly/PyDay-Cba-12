@@ -45,6 +45,7 @@ class Attendee(db.Model):
     biography = db.TextProperty(verbose_name=u'Biografía (resumen)')
     cv = db.StringProperty(verbose_name='Link a descarga de CV')
     profile = db.ReferenceProperty(TwitterProfile)
+    assist_dinner = db.BooleanProperty(verbose_name='Asistir a Cena')
 
     def __init__(self, *args, **kw):
         super(Attendee, self).__init__(*args, **kw)

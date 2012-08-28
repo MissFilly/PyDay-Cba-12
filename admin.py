@@ -19,9 +19,27 @@ class Talks(pyday.PyDayHandler):
         self.response.out.write(template.render(path, result))
 
 
+class Mails(pyday.PyDayHandler):
+    def get(self):
+        mails = model.Attendee.all()
+        result = self.user_login()
+        emails = 'contacto@pydaycba.com.ar'
+        for user in mails:
+            email = user.email
+            if '@' not in email:
+                email = '%s@gmail.com' % email
+            emails = '%s, %s' % (emails, email)
+        result['mails'] = emails
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/admin/mails.html")
+
+        self.response.out.write(template.render(path, result))
+
+
 def main():
     application = webapp.WSGIApplication([
         ('/talks', Talks),
+        ('/mails', Mails),
         ], debug=True)
     run_wsgi_app(application)
 

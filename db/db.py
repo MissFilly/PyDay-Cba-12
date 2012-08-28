@@ -90,6 +90,7 @@ def update_attendee(registered_attendee):
     attendee.tel = registered_attendee.tel
     attendee.in_attendees = registered_attendee.in_attendees
     attendee.allow_contact = registered_attendee.allow_contact
+    attendee.assist_dinner = registered_attendee.assist_dinner
     if (registered_attendee.personal_page and
        not registered_attendee.personal_page.startswith('http://')):
         attendee.personal_page = ('http://%s' %

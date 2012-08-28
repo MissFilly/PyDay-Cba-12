@@ -254,6 +254,7 @@ class Profile(PyDayHandler):
                 return
             in_attendees = u'Sí' if attendee.in_attendees else 'No'
             allow_contact = u'Sí' if attendee.allow_contact else 'No'
+            assist_dinner = u'Sí' if attendee.assist_dinner else 'No'
             data = {
                 'name': attendee.name,
                 'surname': attendee.surname,
@@ -269,6 +270,7 @@ class Profile(PyDayHandler):
                 'in_attendees': in_attendees,
                 'allow_contact': allow_contact,
                 'biography': attendee.biography,
+                'assist_dinner': assist_dinner,
             }
             if attendee.cv:
                 data['cv'] = attendee.cv
@@ -476,7 +478,7 @@ def main():
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
-        ('/tshirt', Tshirt),
+        #('/tshirt', Tshirt),
         ('/schedule', Schedule),
         ], debug=True)
     run_wsgi_app(application)
