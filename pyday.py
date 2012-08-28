@@ -479,7 +479,7 @@ def main():
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
         #('/tshirt', Tshirt),
-        ('/schedule', Schedule),
+        #('/schedule', Schedule),
         ], debug=True)
     run_wsgi_app(application)
 
