@@ -80,6 +80,13 @@ class PyDayHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), page_base)
         self.response.out.write(template.render(path, data))
 
+class NotFoundPageHandler(PyDayHandler):
+    def get(self):
+        result = self.user_login()
+        path = os.path.join(os.path.dirname(__file__),
+            "templates/others/404.html")
+        self.response.out.write(template.render(path, result))
+
 
 class MainPage(PyDayHandler):
     def get(self):
@@ -480,6 +487,7 @@ def main():
         ('/prospectus', Prospectus),
         #('/tshirt', Tshirt),
         #('/schedule', Schedule),
+        ('/.*', NotFoundPageHandler),
         ], debug=True)
     run_wsgi_app(application)
 
