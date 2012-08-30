@@ -99,7 +99,7 @@ class Schedule(PyDayHandler):
     def get(self):
         result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
-            "templates/schedule.html")
+            "templates/conference/schedule.html")
         self.response.out.write(template.render(path, result))
 
 
@@ -486,7 +486,7 @@ def main():
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
         #('/tshirt', Tshirt),
-        #('/schedule', Schedule),
+        ('/schedule', Schedule),
         ('/.*', NotFoundPageHandler),
         ], debug=True)
     run_wsgi_app(application)

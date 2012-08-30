@@ -1,32 +1,77 @@
-
-  {% include "header.html" %}
+{% include "../header.html" %}
 
       <div id="page">
         <div id="frame">
-            <div id="logo">
-              <img src="static/img/logo.png" alt="PyDay Córdoba 2012" />
-            </div>
+          <p><a class="backtohome" href="/">Volver al inicio</a></p>
 
           <div id="content">
-            <h2>¿Qué?</h2>
-            <div class="text">
-              <p>El Python Day es un evento organizado por <a href="http://python.org.ar/pyar/" target="_blank">PyAr</a> y dura un día donde se dan pequeños cursos y charlas relacionadas a este lenguaje de programación.</p>
-            </div>
-
-            <h2>¿Cuándo?</h2>
-            <div class="text">
-              <p>El sábado <span class="strong">15 de septiembre</span>, a partir de las 8 hs.</p>
-            </div>
-
-            <h2>¿Dónde?</h2>
-            <div class="text">
-              <p>En la Facultad de Matemática, Astronomía y Física (FaMAF) de la Universidad Nacional de Córdoba.</p>
-            </div>
-
-            <h2>Propuestas de charlas</h2>
-            <div class="text">
-              <p>Las propuestas de charlas se recibirán hasta el día viernes <span class="strong">24 de agosto</span> a última hora. Las charlas aceptadas se anunciarán el lunes <span class="strong">27 de agosto</span>.</p>
-            </div>
+            <h2>Programa</h2>
+             <table class="schedule">
+              <tbody>
+                <tr>
+                  <th width="90px"></th>
+                  <th><span class="hall-name">Sala de Google</span> <span class="hall-desc">(track principiante)</span></th>
+                  <th><span class="hall-name">Sala de Machinalis</span> <span class="hall-desc">(track intermedio/avanzado)</span></th>
+                </tr>
+                <tr>
+                  <td>08:00 - 09:30</td>
+                  <td colspan="2">Registración</td>
+                </tr>
+                <tr>
+                  <td>09:30 - 10:10</td>
+                  <td>En el primer día del origen del mundo se hicieron los tests... y se vio que era bueno <span class="sch-author">(Emiliano Dalla Verde Marcozzi)</span></td>
+                  <td>Python como lenguaje para el procesamiento de imágenes satelitales <span class="sch-author">(Matías Herranz)</span></td>
+                </tr>
+                <tr>
+                  <td>10:20 - 11:00</td>
+                  <td>__doc__ """para todos y todas""" <span class="sch-author">(Martín Gaitán)</span></td>
+                  <td>Virtualenvwrapper <span class="sch-author">(Emilio Ramirez)</span></td>
+                </tr>
+                <tr>
+                  <td>11:10 - 11:50</td>
+                  <td>De cero a Django en 45 minutos <span class="sch-author">(Matías Herranz)</span></td>
+                  <td>No rehusarse a reusar C <span class="sch-author">(Matias Bordese)</span></td>
+                </tr>
+                <tr>
+                  <td>12:00 - 12:40</td>
+                  <td>Django South <span class="sch-author">(Emilio Ramirez)</span></td>
+                  <td>Programación asíncrona de servidores y clientes de red
+usando Twisted <span class="sch-author">(Emiliano Dalla Verde Marcozzi)</span></td>
+                </tr>
+                <tr>
+                  <td>12:40 - 14:00</td>
+                  <td colspan="2">Almuerzo</td>
+                </tr>
+                <tr>
+                  <td>14:00 - 14:40</td>
+                  <td>Controlando Python desde Arduino <span class="sch-author">(Alejandro J. Cura)</span></td>
+                  <td>Python 3000 <span class="sch-author">(Facundo Batista)</span></td>
+                </tr>
+                <tr>
+                  <td>14:50 - 15:30</td>
+                  <td>Haciendo juegos e interfaces copadas con QML <span class="sch-author">(Diego Sarmentero)</span></td>
+                  <td>Me voy a hacer PyPy <span class="sch-author">(Natalia Bidart)</span></td>
+                </tr>
+                <tr>
+                  <td>15:40 - 16:20</td>
+                  <td>Python en la escuela <span class="sch-author">(Pablo Cánepa)</span></td>
+                  <td>Haciendo colas para esperar menos | Django y Celery <span class="sch-author">(Matías Iturburu)</span></td>
+                </tr>
+                <tr>
+                  <td>16:30 - 17:10</td>
+                  <td>Cómo los logs me salvaron el alma <span class="sch-author">(Facundo Batista)</span></td>
+                  <td>RESTful APIs con Tastypie <span class="sch-author">(Santiago Basulto)</span></td>
+                </tr>
+                <tr>
+                  <td>17:20 - 18:00</td>
+                  <td>Charlas relámpago</td>
+                </tr>
+                <tr>
+                  <td>18:00</td>
+                  <td>Charla plenaria: Las constantes fundamentales de la programación</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -35,12 +80,12 @@
             <li><a class="menu" href="/about">Más info</a></li>
             <li><a class="menu" href="/venue">Cómo llegar</a></li>
             <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu unavailable" href="/schedule">Programa</a></li>
+            <li><a class="menu active" href="/schedule">Programa</a></li>
             <!--li><a class="menu" href="/tshirt">Remeras</a></li-->
           </ul>
 
-    {% include "sponsors.html" %}
+    {% include "../sponsors.html" %}
 
       </div>
 
-  {% include "footer.html" %}
+  {% include "../footer.html" %}

@@ -184,6 +184,45 @@ h3 {
     margin-top: 5%;
 }
 
+/*
+ * SCHEDULE TABLE
+ */
+
+.schedule {
+    font-family: 'Helvetica',sans-serif;
+    font-size: 15px;
+    text-align: center;
+    margin-top: 8%;
+    line-height: 20px;
+}
+
+.hall-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.schedule tr {
+    height: 75px;
+}
+
+.hall-desc, .sch-author {
+    color: #939393;
+    display: block;
+    margin-top: 4px;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.schedule th:first-child {
+    border: medium none;
+}
+
+.schedule td, .schedule th {
+    padding: 15px;
+    border: 1px solid #E0DFDF;
+    vertical-align: middle;
+}
+
 .attendees-table th, .pr-talks th {
     font-family: 'Helvetica', sans-serif;
     font-weight: bold;
