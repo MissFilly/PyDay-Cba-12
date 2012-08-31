@@ -272,6 +272,14 @@ h3 {
 .popover.right { margin-left: 10px; }
 .popover.left { margin-right: 10px; }
 
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.2s linear;
+     -moz-transition: opacity 0.2s linear;
+       -o-transition: opacity 0.2s linear;
+          transition: opacity 0.2s linear;
+}
+
 .fade.in { opacity: 1; }
 
 .popover-title {
