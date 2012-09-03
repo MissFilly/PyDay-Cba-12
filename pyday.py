@@ -59,6 +59,7 @@ class PyDayHandler(webapp.RequestHandler):
             else:
                 result['logout'] = users.create_logout_url(self.request.uri)
             result['username'] = user.nickname()
+            result['is_attendee'] = db.user_is_attendee(result.get('user', None))
         else:  # let user choose authenticator
             result['user'] = None
             result['login'] = '/login'

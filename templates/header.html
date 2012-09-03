@@ -38,7 +38,9 @@
               {% endif %}
             </ul>
             <ul id="relevant">
-              <li><a href="/register" {{ register_selected }}>¡Inscribite!</a></li>
+              {% if not is_attendee %}
+                <li><a href="/register" {{ register_selected }}>¡Inscribite!</a></li>
+              {% endif %}
               <!--li><a href="/propose" {{ propose_selected }}>Proponé tu charla</a></li-->
             </ul>
           </div>
