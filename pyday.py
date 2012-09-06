@@ -25,7 +25,6 @@ FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
 OFFSET = datetime.timedelta(hours=3)
 NOW = datetime.datetime.utcnow() - OFFSET
 PROPOSE_ENDED = datetime.datetime(2012, 8, 25) < NOW
-CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) < NOW
 TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) < NOW
 REGISTER_ENDED = datetime.datetime(2012, 9, 14) < NOW
 
@@ -454,6 +453,7 @@ class Prospectus(PyDayHandler):
     def get(self):
         result = self.user_login()
         result['is_active'] = ' active'
+        result['call_sponsors_ended'] = datetime.datetime(2012, 9, 3) < NOW
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/prospectus.html")
         self.response.out.write(template.render(path, result))

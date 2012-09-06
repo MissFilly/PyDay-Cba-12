@@ -7,8 +7,12 @@
           <div id="content">
             <h2>Ser sponsor</h2>
             <div class="description">
-              <p>El PyDay va a realizarse el 15 de septiembre del 2012 en Córdoba, de 8 a 19 hs. en la Facultad de Matemática, Astronomía y Física (FaMAF) de la Universidad Nacional de Córdoba. El evento tiene el objetivo de reunir a desarrolladores, entusiastas y empresarios del lenguaje de programación Python para contribuir con su crecimiento y con su divulgación.</p>
-              <p>Puede contactar a los organizadores en <a href="mailto:contacto@pydaycba.com.ar">contacto@pydaycba.com.ar</a> si su compañía está interesada en apoyar este evento, ya sea con merchandising y/o una donación para patrocinar el evento, de la forma que prefiera de las enumeradas a continuación:</p>
+              {% if call_sponsors_ended %}
+                <p>Ya no es posible auspiciar este evento.</p>
+              {% else %}
+                <p>El PyDay va a realizarse el 15 de septiembre del 2012 en Córdoba, de 8 a 19 hs. en la Facultad de Matemática, Astronomía y Física (FaMAF) de la Universidad Nacional de Córdoba. El evento tiene el objetivo de reunir a desarrolladores, entusiastas y empresarios del lenguaje de programación Python para contribuir con su crecimiento y con su divulgación.</p>
+                <p>Puede contactar a los organizadores en <a href="mailto:contacto@pydaycba.com.ar">contacto@pydaycba.com.ar</a> si su compañía está interesada en apoyar este evento, ya sea con merchandising y/o una donación para patrocinar el evento, de la forma que prefiera de las enumeradas a continuación:</p>
+              {% endif %}
             </div>
 
             <h3>Sponsor diamante (uno, $1000) <span class="full">(Agotado)</span></h3>
