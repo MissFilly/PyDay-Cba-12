@@ -23,11 +23,11 @@ FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
 # Must change dates for the ones correspondent for your event:
 OFFSET = datetime.timedelta(hours=3)
-NOW = datetime.datetime.now() - OFFSET
-PROPOSE_ENDED = datetime.datetime(2012, 8, 25) - OFFSET < NOW
-CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) - OFFSET < NOW
-TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) - OFFSET < NOW
-REGISTER_ENDED = datetime.datetime(2012, 9, 14) - OFFSET < NOW
+NOW = datetime.datetime.utcnow() - OFFSET
+PROPOSE_ENDED = datetime.datetime(2012, 8, 25) < NOW
+CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) < NOW
+TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) < NOW
+REGISTER_ENDED = datetime.datetime(2012, 9, 14) < NOW
 
 
 providers = {
