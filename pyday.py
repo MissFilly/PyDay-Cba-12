@@ -129,7 +129,6 @@ class Register(PyDayHandler):
         else:
             if result.get('user', None):
                 result['showerror'] = 'none'
-                result['register_selected'] = 'class="active"'
                 form = forms.AttendeeForm()
                 form.initial = {'allow_contact': True,
                     'in_attendees': True}
@@ -201,7 +200,6 @@ class Propose(PyDayHandler):
             if result.get('user', None):
                 form = forms.TalkForm()
                 result['form'] = form
-                result['propose_selected'] = 'class="active"'
                 path = os.path.join(os.path.dirname(__file__),
                     "templates/others/propose.html")
                 self.response.out.write(template.render(path, result))
@@ -347,7 +345,6 @@ class ModifyProfile(PyDayHandler):
             if attendee is None:
                 self.redirect('/register')
                 return
-            result['register_selected'] = 'class="active"'
             result['form'] = forms.AttendeeForm(instance=attendee)
         path = os.path.join(os.path.dirname(__file__),
             "templates/user/register.html")
@@ -404,7 +401,6 @@ class ModifyTalk(PyDayHandler):
         talk = db.get_talk(result['user'], key)
         if result.get('user', None) and talk:
             result['form'] = forms.TalkForm(instance=talk)
-            result['propose_selected'] = 'class="active"'
             path = os.path.join(os.path.dirname(__file__),
                 "templates/others/propose.html")
             self.response.out.write(template.render(path, result))
@@ -453,7 +449,6 @@ class ModifyTalk(PyDayHandler):
 class Prospectus(PyDayHandler):
     def get(self):
         result = self.user_login()
-        result['is_active'] = ' active'
         result['call_sponsors_ended'] = datetime.datetime(2012, 9, 3) < NOW
         path = os.path.join(os.path.dirname(__file__),
             "templates/others/prospectus.html")
