@@ -1,43 +1,24 @@
+{% extends "base.html" %}
 
-  {% include "header.html" %}
+{% block above_content %}
+<div id="logo">
+  <img src="static/img/logo.png" alt="PyDay Córdoba 2012" />
+</div>
+{% endblock %}
 
-      <div id="page">
-        <div id="frame">
-            <div id="logo">
-              <img src="static/img/logo.png" alt="PyDay Córdoba 2012" />
-            </div>
+{% block content %}
+<h2>¿Qué?</h2>
+<div class="text">
+  <p>El Python Day es un evento organizado por <a href="http://python.org.ar/pyar/" target="_blank">PyAr</a> y dura un día donde se dan pequeños cursos y charlas relacionadas a este lenguaje de programación.</p>
+</div>
 
-          <div id="content">
-            <h2>¿Qué?</h2>
-            <div class="text">
-              <p>El Python Day es un evento organizado por <a href="http://python.org.ar/pyar/" target="_blank">PyAr</a> y dura un día donde se dan pequeños cursos y charlas relacionadas a este lenguaje de programación.</p>
-            </div>
+<h2>¿Cuándo?</h2>
+<div class="text">
+  <p>El sábado <span class="strong">15 de septiembre</span>, a partir de las 8 hs.</p>
+</div>
 
-            <h2>¿Cuándo?</h2>
-            <div class="text">
-              <p>El sábado <span class="strong">15 de septiembre</span>, a partir de las 8 hs.</p>
-            </div>
-
-            <h2>¿Dónde?</h2>
-            <div class="text">
-              <p>En la Facultad de Matemática, Astronomía y Física (FaMAF) de la Universidad Nacional de Córdoba.</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "sponsors.html" %}
-
-      </div>
-
-  {% include "footer.html" %}
+<h2>¿Dónde?</h2>
+<div class="text">
+  <p>En la Facultad de Matemática, Astronomía y Física (FaMAF) de la Universidad Nacional de Córdoba.</p>
+</div>
+{% endblock %}

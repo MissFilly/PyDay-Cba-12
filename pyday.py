@@ -14,6 +14,7 @@ from db import db
 from db.model import TwitterProfile
 from gaesessions import get_current_session
 
+template.register_template_library('customtags.tags')
 
 MESSAGE_REGISTER = (u'Voy a asistir al %23PyDayCba el 15 de septiembre - '
                     u'http://pydaycba.com.ar ¡Inscribite vos también!')
@@ -95,7 +96,7 @@ class NotFoundPageHandler(PyDayHandler):
     def get(self):
         result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
-            "templates/base.html")
+            "templates/error_base.html")
         result['title'] = 'Error 404'
         result['message'] = 'La página a la que intentó acceder no existe.'
         self.response.out.write(template.render(path, result))
@@ -121,7 +122,7 @@ class Register(PyDayHandler):
         result = self.user_login()
         if REGISTER_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                                "templates/base.html")
+                                "templates/error_base.html")
             result['title'] = 'Error'
             result['message'] = u'Ya finalizó el período de inscripción.'
             self.response.out.write(template.render(path, result))
@@ -188,7 +189,7 @@ class Propose(PyDayHandler):
         result = self.user_login()
         if PROPOSE_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                                "templates/base.html")
+                                "templates/error_base.html")
             result['title'] = 'Error'
             result['message'] = 'Ya no se reciben propuestas de charlas.'
             self.response.out.write(template.render(path, result))
@@ -327,7 +328,7 @@ class Login(PyDayHandler):
         result = self.user_login()
         if REGISTER_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                                "templates/base.html")
+                                "templates/error_base.html")
             result['title'] = 'Error'
             result['message'] = u'Ya finalizó el período de inscripción.'
             self.response.out.write(template.render(path, result))
@@ -464,7 +465,7 @@ class Tshirt(PyDayHandler):
         result = self.user_login()
         if TSHIRT_REQ_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                                "templates/base.html")
+                                "templates/error_base.html")
             result['title'] = 'Error'
             result['message'] = 'Ya no se reciben solicitudes de remeras.'
             self.response.out.write(template.render(path, result))

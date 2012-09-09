@@ -1,35 +1,111 @@
-{% include "header.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
 
-          <div id="content">
-            <h2>{{ title }}</h2>
-            <div class="description">
-              <p>{{ message }}</p>
-            </div>
-          </div>
-        </div>
+  <head>
+    <title>{% block page_title %}PyDay Córdoba 2012{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="python, pyday, cordoba, 2012, software libre" />
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:400" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand:700" />
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css' />
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4650617-16']);
+      _gaq.push(['_trackPageview']);
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    {% block extrahead %}{% endblock %}
+  </head>
 
+  <body>
+    <div id="header">
+      <div id="header-wrapper">
+        {% if not register_ended %}
+	        <div id="nav">
+	          <ul id="user">
+	            {% if username %}
+	                <li><a href="/profile">Perfil</a></li>
+	                <li><a href="{{ logout }}">Cerrar sesión</a></li>
+	            {% else %}
+	                <li><a href="{{ login }}">Iniciar sesión</a></li>
+	            {% endif %}
+	          </ul>
+	          
+	          <ul id="relevant">
+	            {% if not is_attendee %}
+	              <li><a href="/register" class="{% active '^/register' %}">¡Inscribite!</a></li>
+	            {% endif %}
+	            {% if not propose_ended %}
+	              <li><a href="/propose" class="{% active '^/propose' %}">Proponé tu charla</a></li>
+	            {% endif %}
+	          </ul>
+	        </div>
+	    {% endif %}
 
-    {% include "sponsors.html" %}
-
+        <p id="days-left">{{ daysleft0 }} <span>{{ daysleft1 }}</span> {{ daysleft2 }}</p>
       </div>
     </div>
+      
+    <div id="page">
+      <div id="frame">
+        {% block above_content %}{% endblock %}
+        <div id="content">
+        {% block content %}{% endblock %}
+        </div>
+      </div>
+      
+      <div id="sidebar">
+        <ul>
+          <li><a class="menu {% active '^/about' %}" href="/about">Más info</a></li>
+          <li><a class="menu {% active '^/venue' %}" href="/venue">Cómo llegar</a></li>
+          <li><a class="menu {% active '^/attendees' %}" href="/attendees">Asistentes</a></li>
+          <li><a class="menu {% active '^/schedule' %}" href="/schedule">Programa</a></li>
+          {% if not tshirt_req_ended %}
+            <li><a class="menu {% active '^/tshirt' %}" href="/tshirt">Remeras</a></li>
+          {% endif %}
+        </ul>
 
-  {% include "footer.html" %}
+        <div id="sponsors">
+          <h2>Sponsors</h2>
 
-
-
+          <h4>Diamante</h4>
+          <ul><li><img src="static/img/googlelogo.png" alt="Google"/></li></ul>
+          <h4>Platino</h4>
+          <ul>
+            <li><a class="sponsor" href="http://www.machinalis.com" target="_blank"><img src="static/img/machinalislogo.png" alt="Machinalis" /></a></li>
+            <li><a class="sponsor" href="http://ninja-ide.org" target="_blank"><img src="static/img/ninjaidelogo.png" alt="NINJA IDE" /></a></li>
+          </ul>
+          <h4>Oro</h4>
+          <ul>
+            <li><a class="sponsor" href="http://www.glubatec.com" target="_blank"><img src="static/img/glubateclogo.png" alt="Glubatec" /></a></li>
+            <li><a class="sponsor" href="http://www.immunityinc.com" target="_blank"><img src="static/img/immunitylogo.png" alt="IMMUNITY" /></a></li>
+            <li><a class="sponsor" href="http://www.intel.com/opensource" target="_blank"><img src="static/img/intellogo.png" alt="Intel" /></a></li>
+            <li><a class="sponsor" href="http://www.tallertechnologies.com/" target="_blank"><img src="static/img/tallertechnologieslogo.png" alt="Taller Technologies" /></a></li>
+            <li><a class="sponsor" href="http://proveyourworth.net" target="_blank"><img src="static/img/verkkostadilogo.png" alt="VerkkoStadi" /></a></li>
+            <li><a class="sponsor" href="http://www.harriague.com" target="_blank"><img src="static/img/harriaguelogo.png" alt="harriague + asociados" /></a></li>
+          </ul>
+          <ul>
+            <li><a class="menu {% active '^/prospectus' %}" href="/prospectus">Ser sponsor</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+      
+    <div id="footer">
+      <div id="footer-wrapper">
+        <p><span>El <a href="https://github.com/MissFilly/PyDay-Cba-12">código del sitio</a> se encuentra bajo licencia GNU GPLv3.</span> | <span><a href="mailto:contacto@pydaycba.com.ar" target="_blank">contacto@pydaycba.com.ar</a></span> | <span>Más Información: <a href="http://python.org.ar/pyar/Eventos/Conferencias" target="_blank">http://python.org.ar/</a></span></p>
+      </div>
+    </div>
+  </body>
+  
+</html>

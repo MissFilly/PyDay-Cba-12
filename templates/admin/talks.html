@@ -1,48 +1,48 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Charlas propuestas{% endblock %}
 
-          <div id="content">
-              <h2>Charlas propuestas</h2><br>
-              {% if talks %}
-                  {% for talk in talks %}
-                      <h3>{{ talk.title }}</h3>
-                      <table class="pr-talks">
-                        <tbody>
-                          <tr>
-                            <td class="p-col1">Nivel</td>
-                            <td class="p-detail">{{ talk.level }}</td>
-                          </tr>
-                          <tr>
-                            <td class="p-col1">Descripcion</td>
-                            <td class="p-detail">{{ talk.abstract }}</td>
-                          </tr>
-                          <tr>
-                            <td class="p-col1">Categoria</td>
-                            <td class="p-detail">{{ talk.category }}</td>
-                          </tr>
-                          <tr>
-                            <td class="p-col1">Conocimientos Previos</td>
-                            <td class="p-detail">{{ talk.knowledge }}</td>
-                          </tr>
-                          <tr>
-                            <td class="p-col1">Notas</td>
-                            <td class="p-detail">{{ talk.notes }}</td>
-                          </tr>
-                          <tr>
-                            <td class="p-col1">Usuario</td>
-                            <td class="p-detail">{{ talk.userId }} - {{ talk.profile }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                  {% endfor %}
-              {% else %}
-                <p class="personal-p">No se ha cargado ninguna charla.</p>
-              {% endif %}
-          </div>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-      </div>
-
-  {% include "../footer.html" %}
+{% block content %}
+<h2>Charlas propuestas</h2><br>
+{% if talks %}
+  {% for talk in talks %}
+    <h3>{{ talk.title }}</h3>
+    <table class="pr-talks">
+      <tbody>
+        <tr>
+          <td class="p-col1">Nivel</td>
+          <td class="p-detail">{{ talk.level }}</td>
+        </tr>
+        <tr>
+          <td class="p-col1">Descripcion</td>
+          <td class="p-detail">{{ talk.abstract }}</td>
+        </tr>
+        <tr>
+          <td class="p-col1">Categoria</td>
+          <td class="p-detail">{{ talk.category }}</td>
+        </tr>
+        <tr>
+          <td class="p-col1">Conocimientos Previos</td>
+          <td class="p-detail">{{ talk.knowledge }}</td>
+        </tr>
+        <tr>
+          <td class="p-col1">Notas</td>
+          <td class="p-detail">{{ talk.notes }}</td>
+        </tr>
+        <tr>
+          <td class="p-col1">Usuario</td>
+          <td class="p-detail">{{ talk.userId }} - {{ talk.profile }}</td>
+        </tr>
+      </tbody>
+    </table>
+  {% endfor %}
+{% else %}
+<div class="description">
+  <p class="personal-p">No se ha cargado ninguna charla.</p>
+</div>
+{% endif %}
+{% endblock %}

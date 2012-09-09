@@ -1,14 +1,12 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Mails de asistentes{% endblock %}
 
-          <div id="content">
-              <h2>Mails de Asistentes</h2><br>
-              <p>{{ mails }}</p>
-          </div>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-      </div>
-
-  {% include "../footer.html" %}
+{% block content %}
+<h2>Mails de asistentes</h2><br>
+<p>{{ mails }}</p>
+{% endblock %}

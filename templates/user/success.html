@@ -1,40 +1,22 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Éxito{% endblock %}
 
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-          <div id="content">
-            <h2>¡Éxito!</h2>
+{% block content %}
+<h2>¡Éxito!</h2>
+<div class="description">
+  <p>{{ title }}</p>
+  <p>{{ message }}</p>
 
-            <div class="description">
-              <p>{{ title }}</p>
-              <p>{{ message }}</p>
+  <ul id="share-buttons">
+    <a href="{{ share_twitter }}"><li class="share" id="share-tw"></li></a>
+    <a href="{{ share_facebook }}"><li class="share" id="share-fb"></li></a>
+  </ul>
 
-            <ul id="share-buttons">
-              <a href="{{ share_twitter }}"><li class="share" id="share-tw"></li></a>
-              <a href="{{ share_facebook }}"><li class="share" id="share-fb"></li></a>
-            </ul>
-
-            <div class="visualclear"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
+  <div class="visualclear"></div>
+</div>
+{% endblock %}

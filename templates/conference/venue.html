@@ -1,46 +1,30 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Cómo llegar{% endblock %}
 
-          <div id="content">
-            <h2 class="long-title">Colectivos desde el centro hacia la Ciudad Universitaria:</h2>
-            <div class="text">
-              <p>En general, los podés tomar en Av. Colón, Av. General Paz, Bv. San Juan y calle Ituzaingó. También hay líneas frecuentes desde el barrio Nueva Córdoba.</p>
-              <p>Las líneas que podés tomar son: C3, C7, E1, E5, N3, N6, A, A2, A6, A10, R2, R5 y R6.</p>
-            </div>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-            <h2 class="long-title">Colectivos hacia el centro:</h2>
-            <div class="text">
-              <p>La mayoría de los colectivos te dejarán en la plaza principal del centro, la Plaza San Martín, el viaje dura entre 10’ y 15’.</p>
-              <p>Las líneas que podés tomar son: A, A2, A5, A6 (va a Orfeo Superdomo y al Dinosaurio Mall), A10, A11, E1 (Argüello), E5, N3 (Saldán), N6, C3 (B° Alta Cba. y Gral. Paz) y C7. También pasan, con menor frecuencia, el V y el T1 y R5.</p>
-              <p>Debés prestar atención con las líneas 600, 601 y 500, ya que realizan recorridos rodeando la ciudad, no ingresan al centro y demoran demasiado en hacer trayectos cortos.</p>
-            </div>
+{% block content %}
+<h2 class="long-title">Colectivos desde el centro hacia la Ciudad Universitaria:</h2>
+<div class="text">
+  <p>En general, los podés tomar en Av. Colón, Av. General Paz, Bv. San Juan y calle Ituzaingó. También hay líneas frecuentes desde el barrio Nueva Córdoba.</p>
+  <p>Las líneas que podés tomar son: C3, C7, E1, E5, N3, N6, A, A2, A6, A10, R2, R5 y R6.</p>
+</div>
 
-            <h2 class="long-title">Más información:</h2>
-            <div class="text">
-              <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/Recorridos%20TUP.pdf">Recorrido del transporte urbano</a></p>
-              <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/PANTALLA%20CENTRO%20MAYO%202010%201X1.pdf">Plano de paradas en la zona del centro</a></p>
-              <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/MAPA%20TUP.pdf">Plano del transporte de la ciudad</a></p>
-              <p><a href="http://www.red-bus.com.ar/home.html">Centros de expendio de cospeles autorizados</a></p>
-            </div>
-          </div>
-        </div>
+<h2 class="long-title">Colectivos hacia el centro:</h2>
+<div class="text">
+  <p>La mayoría de los colectivos te dejarán en la plaza principal del centro, la Plaza San Martín, el viaje dura entre 10’ y 15’.</p>
+  <p>Las líneas que podés tomar son: A, A2, A5, A6 (va a Orfeo Superdomo y al Dinosaurio Mall), A10, A11, E1 (Argüello), E5, N3 (Saldán), N6, C3 (B° Alta Cba. y Gral. Paz) y C7. También pasan, con menor frecuencia, el V y el T1 y R5.</p>
+  <p>Debés prestar atención con las líneas 600, 601 y 500, ya que realizan recorridos rodeando la ciudad, no ingresan al centro y demoran demasiado en hacer trayectos cortos.</p>
+</div>
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu active" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
+<h2 class="long-title">Más información:</h2>
+<div class="text">
+  <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/Recorridos%20TUP.pdf">Recorrido del transporte urbano</a></p>
+  <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/PANTALLA%20CENTRO%20MAYO%202010%201X1.pdf">Plano de paradas en la zona del centro</a></p>
+  <p><a href="http://www.cordoba.gov.ar/cordobaciudad/principal2/docs/transporte/MAPA%20TUP.pdf">Plano del transporte de la ciudad</a></p>
+  <p><a href="http://www.red-bus.com.ar/home.html">Centros de expendio de cospeles autorizados</a></p>
+</div>
+{% endblock %}

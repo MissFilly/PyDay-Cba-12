@@ -1,45 +1,29 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <script type="text/javascript" src="static/js/utils.js"></script>
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Remeras{% endblock %}
 
-          <div id="error-message" style="display: {{ showerror }};">
-            <p class="error">{{ errormessage }}</p>
-          </div>
+{% block above_content %}
+<script type="text/javascript" src="static/js/utils.js"></script>
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
 
-          <div id="content">
-            <h2>Remeras</h2>
-            <div class="description">
-              <p>Las remeras se entregarán durante el evento (en el mismo se recibirá el pago por ellas) y el costo de cada una es de <span class="strong">$80</span>.</p>
-              <p class="shirts"><img src="static/img/shirts.png" alt="Remera blanca / Remera negra"></p>
-              <p>Nota: El tamaño y la posición del logo pueden variar ligeramente.
-            </div>
+<div id="error-message" style="display: {{ showerror }};">
+  <p class="error">{{ errormessage }}</p>
+</div>
+{% endblock %}
 
-            <form name="tshirt" action="" method="post" enctype="multipart/form-data" onsubmit="return validateFormTshirt()">
-              {{ form.as_p }}
+{% block content %}
+<h2>Remeras</h2>
+<div class="description">
+  <p>Las remeras se entregarán durante el evento (en el mismo se recibirá el pago por ellas) y el costo de cada una es de <span class="strong">$80</span>.</p>
+  <p class="shirts"><img src="static/img/shirts.png" alt="Remera blanca / Remera negra"></p>
+  <p>Nota: El tamaño y la posición del logo pueden variar ligeramente.
+</div>
 
-              <p>
-                <input type="submit" class="submit" value="Enviar datos">
-              </p>
-            </form>
-          </div>
-        </div>
+<form name="tshirt" action="" method="post" enctype="multipart/form-data" onsubmit="return validateFormTshirt()">
+  {{ form.as_p }}
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu active" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
+  <p>
+    <input type="submit" class="submit" value="Enviar datos">
+  </p>
+</form>
+{% endblock %}

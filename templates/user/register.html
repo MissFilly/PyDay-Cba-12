@@ -1,3 +1,21 @@
+{% extends "../base.html" %}
+
+{% block page_title %}PyDay Córdoba 2012 - Inscripción{% endblock %}
+
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
+
+{% block content %}
+<h2>Inscripción</h2>
+<form name="register" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+  {{ form.as_p }}
+  <p>
+    <input type="submit" class="submit" value="Enviar datos">
+  </p>
+</form>
+{% endblock %}
+
 {% include "../header.html" %}
 
       <div id="page">
@@ -10,13 +28,7 @@
           </div>
 
           <div id="content">
-            <h2>Inscripción</h2>
-            <form name="register" action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-              {{ form.as_p }}
-              <p>
-                <input type="submit" class="submit" value="Enviar datos">
-              </p>
-            </form>
+
           </div>
         </div>
 

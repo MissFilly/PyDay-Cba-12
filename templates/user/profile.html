@@ -1,145 +1,129 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Perfil{% endblock %}
 
-          <div id="content">
-            <h2 class="inline-header">Perfil</h2><a class="modify" href="modify_profile">Modificar</a>
-            <table class="personal-details">
-              <tbody>
-              <tr>
-                <td class="p-col1">Nombre</td>
-                <td class="p-detail">{{ name }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Apellido</td>
-                <td class="p-detail">{{ surname }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Apodo</td>
-                <td class="p-detail">{{ nick }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Email</td>
-                <td class="p-detail">{{ email }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">País</td>
-                <td class="p-detail">{{ country }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Provincia</td>
-                <td class="p-detail">{{ state }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Teléfono</td>
-                <td class="p-detail">{{ tel }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Web personal</td>
-                <td class="p-detail">{{ personal_page }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Entidad</td>
-                <td class="p-detail">{{ company }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Web de entidad</td>
-                <td class="p-detail">{{ company_page }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Biografía</td>
-                <td class="p-detail">{{ biography }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Conocimiento de Python</td>
-                <td class="p-detail">{{ level }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">En lista de participantes</td>
-                <td class="p-detail">{{ in_attendees }}</td>
-              </tr>
-              <tr>
-                <td class="p-col1">Contacto con auspiciantes</td>
-                <td class="p-detail">{{ allow_contact }}</td>
-              </tr>
-              {% if cv %}
-                  <tr>
-                    <td class="p-col1">CV</td>
-                    <td class="p-detail"><a href="/{{ cv }}">Descargar</a></td>
-                  </tr>
-              {% endif %}
-              <tr>
-                <td class="p-col1">Asistir a cena</td>
-                <td class="p-detail">{{ assist_dinner }}</td>
-              </tr>
-            </tbody>
-          </table>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-              <h2>Charlas propuestas</h2>
-              {% if talks %}
-                  <table class="pr-talks">
-                    <tbody>
-                      <tr>
-                        <th width="150px">Título</th>
-                        <th>Descripción</th>
-                        <th></th>
-                      </tr>
-                      {% for talk in talks %}
-                          <tr>
-                            <td>{{ talk.title }}</td>
-                            <td>{{ talk.abstract }}</td>
-                            <td><a class="modify" href="/modify_talk?talk={{ talk.key }}">Modificar</a></td>
-                          </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-              {% else %}
-                <p class="personal-p">No se ha cargado ninguna charla.</p>
-              {% endif %}
+{% block content %}
+<h2 class="inline-header">Perfil</h2><a class="modify" href="modify_profile">Modificar</a>
+<table class="personal-details">
+  <tbody>
+  <tr>
+    <td class="p-col1">Nombre</td>
+    <td class="p-detail">{{ name }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Apellido</td>
+    <td class="p-detail">{{ surname }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Apodo</td>
+    <td class="p-detail">{{ nick }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Email</td>
+    <td class="p-detail">{{ email }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">País</td>
+    <td class="p-detail">{{ country }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Provincia</td>
+    <td class="p-detail">{{ state }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Teléfono</td>
+    <td class="p-detail">{{ tel }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Web personal</td>
+    <td class="p-detail">{{ personal_page }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Entidad</td>
+    <td class="p-detail">{{ company }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Web de entidad</td>
+    <td class="p-detail">{{ company_page }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Biografía</td>
+    <td class="p-detail">{{ biography }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Conocimiento de Python</td>
+    <td class="p-detail">{{ level }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">En lista de participantes</td>
+    <td class="p-detail">{{ in_attendees }}</td>
+  </tr>
+  <tr>
+    <td class="p-col1">Contacto con auspiciantes</td>
+    <td class="p-detail">{{ allow_contact }}</td>
+  </tr>
+  {% if cv %}
+    <tr>
+      <td class="p-col1">CV</td>
+      <td class="p-detail"><a href="/{{ cv }}">Descargar</a></td>
+    </tr>
+  {% endif %}
+  <tr>
+    <td class="p-col1">Asistir a cena</td>
+    <td class="p-detail">{{ assist_dinner }}</td>
+  </tr>
+  </tbody>
+</table>
 
-              <h2 class="inline-header">Pedido remeras</h2><a class="modify" href="tshirt">Modificar</a>
-              {% if tshirt %}
-                  <table class="personal-details">
-                      <tbody>
-                      <tr>
-                        <td class="p-col1">Color</td>
-                        <td class="p-detail">{{ tshirt.color }}</td>
-                      </tr>
-                      <tr>
-                        <td class="p-col1">Modelo</td>
-                        <td class="p-detail">{{ tshirt.model }}</td>
-                      </tr>
-                      <tr>
-                        <td class="p-col1">Talle</td>
-                        <td class="p-detail">{{ tshirt.size }}</td>
-                      </tr>
-                      <tr>
-                        <td class="p-col1">Cantidad</td>
-                        <td class="p-detail">{{ tshirt.total }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              {% else %}
-                <p class="personal-p">No se ha pedido ninguna remera.</p>
-              {% endif %}
-            </div>
-          </div>
+<h2>Charlas propuestas</h2>
+{% if talks %}
+<table class="pr-talks">
+  <tbody>
+    <tr>
+      <th width="150px">Título</th>
+      <th>Descripción</th>
+      <th></th>
+    </tr>
+    {% for talk in talks %}
+    <tr>
+      <td>{{ talk.title }}</td>
+      <td>{{ talk.abstract }}</td>
+      <td><a class="modify" href="/modify_talk?talk={{ talk.key }}">Modificar</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="personal-p">No se ha cargado ninguna charla.</p>
+{% endif %}
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
+<h2 class="inline-header">Pedido remeras</h2><a class="modify" href="tshirt">Modificar</a>
+{% if tshirt %}
+<table class="personal-details">
+  <tbody>
+    <tr>
+      <td class="p-col1">Color</td>
+      <td class="p-detail">{{ tshirt.color }}</td>
+    </tr>
+    <tr>
+      <td class="p-col1">Modelo</td>
+      <td class="p-detail">{{ tshirt.model }}</td>
+    </tr>
+    <tr>
+      <td class="p-col1">Talle</td>
+      <td class="p-detail">{{ tshirt.size }}</td>
+    </tr>
+    <tr>
+      <td class="p-col1">Cantidad</td>
+      <td class="p-detail">{{ tshirt.total }}</td>
+    </tr>
+  </tbody>
+</table>
+{% else %}
+<p class="personal-p">No se ha pedido ninguna remera.</p>
+{% endif %}
+{% endblock %}

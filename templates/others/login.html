@@ -1,49 +1,29 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Iniciar sesión{% endblock %}
 
-          <div id="content">
-            <h2>Iniciar sesión</h2>
-            <div class="description">
-              <p>Conectate con tu cuenta de:</p>
-            </div>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-          <div id="providers">
-            <ul id="col1">
-              <a href="{{ google }}"><li class="provider" id="google"></li></a>
-              <a href="{{ openid }}"><li class="provider" id="openid"></li></a>
-              <a href="{{ yahoo }}"><li class="provider" id="yahoo"></li></a>
-            </ul>
-            <ul id="col2">
-              <a href="/oauth/signin_twitter"><li class="provider" id="twitter"></li><a>
-<!--              <a href="{{ github }}"><li class="provider" id="github"></li></a>-->
-              <a href="{{ aol }}"><li class="provider" id="aol"></li></a>
-            </ul>
-          </div>
-          <div class="visualclear"></div>
-          </div>
-        </div>
+{% block content %}
+<h2>Iniciar sesión</h2>
+<div class="description">
+  <p>Conectate con tu cuenta de:</p>
+</div>
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-
-    {% include "../sponsors.html" %}
-
-      </div>
-    </div>
-
-  {% include "../footer.html" %}
-
+<div id="providers">
+  <ul id="col1">
+    <a href="{{ google }}"><li class="provider" id="google"></li></a>
+    <a href="{{ openid }}"><li class="provider" id="openid"></li></a>
+    <a href="{{ yahoo }}"><li class="provider" id="yahoo"></li></a>
+  </ul>
+  <ul id="col2">
+    <a href="/oauth/signin_twitter"><li class="provider" id="twitter"></li><a>
+    <a href="{{ aol }}"><li class="provider" id="aol"></li></a>
+  </ul>
+</div>
+<div class="visualclear"></div>
+{% endblock %}
 
 

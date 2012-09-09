@@ -1,62 +1,46 @@
-{% include "../header.html" %}
+{% extends "../base.html" %}
 
-      <div id="page">
-        <div id="frame">
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% block page_title %}PyDay Córdoba 2012 - Participantes{% endblock %}
 
-          <div id="content">
-            <h2>Participantes</h2>
-            <div class="description">
-              <p>Hay <span class="attendees-total">{{ len_attendees }}</span> personas inscriptas a la conferencia.</p>
-              <p>A continuación, una lista parcial de los asistentes al PyDay, mostrando a todos aquellos que desearon hacer pública su participación.</p>
-            </div>
+{% block above_content %}
+<p><a class="backtohome" href="/">Volver al inicio</a></p>
+{% endblock %}
 
-            <table class="attendees-table">
-              <tbody>
-                <tr>
-                  <th width="300px">Nombre</th>
-                  <th>Entidad</th>
-                </tr>
-                {% for attendee in attendees %}
-                  <tr>
-                    {% if attendee.nick %}
-                        {% if attendee.personal_page %}
-                            <td><a href="{{ attendee.personal_page }}">{{ attendee.nick }}</a></td>
-                        {% else %}
-                            <td>{{ attendee.nick }}</td>
-                        {% endif %}
-                    {% else %}
-                        {% if attendee.personal_page %}
-                            <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
-                        {% else %}
-                            <td>{{ attendee.name }} {{ attendee.surname }}</td>
-                        {% endif %}
-                    {% endif %}
-                    {% if attendee.company_page %}
-                      <td><a href="{{ attendee.company_page }}">{{ attendee.company }}</a></td>
-                    {% else %}
-                      <td>{{ attendee.company }}</td>
-                    {% endif %}
-                    </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
+{% block content %}
+<h2>Participantes</h2>
+<div class="description">
+  <p>Hay <span class="attendees-total">{{ len_attendees }}</span> personas inscriptas a la conferencia.</p>
+  <p>A continuación, una lista parcial de los asistentes al PyDay, mostrando a todos aquellos que desearon hacer pública su participación.</p>
+</div>
 
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu active" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
+<table class="attendees-table">
+  <tbody>
+    <tr>
+      <th width="300px">Nombre</th>
+      <th>Entidad</th>
+    </tr>
+    {% for attendee in attendees %}
+      <tr>
+        {% if attendee.nick %}
+          {% if attendee.personal_page %}
+              <td><a href="{{ attendee.personal_page }}">{{ attendee.nick }}</a></td>
+          {% else %}
+              <td>{{ attendee.nick }}</td>
+          {% endif %}
+        {% else %}
+          {% if attendee.personal_page %}
+              <td><a href="{{ attendee.personal_page }}">{{ attendee.name }} {{ attendee.surname }}</a></td>
+          {% else %}
+              <td>{{ attendee.name }} {{ attendee.surname }}</td>
+          {% endif %}
+        {% endif %}
+        {% if attendee.company_page %}
+          <td><a href="{{ attendee.company_page }}">{{ attendee.company }}</a></td>
+        {% else %}
+          <td>{{ attendee.company }}</td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
