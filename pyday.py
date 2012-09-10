@@ -22,12 +22,7 @@ MESSAGE_PROPOSE = (u'Propuse la charla %s para el %%23PyDayCba - '
                    u'http://pydaycba.com.ar ¡Sumate!')
 FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
-# Must change dates for the ones correspondent for your event:
-OFFSET = datetime.timedelta(hours=3)
-NOW = datetime.datetime.utcnow() - OFFSET
-PROPOSE_ENDED = datetime.datetime(2012, 8, 25) < NOW
-TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) < NOW
-REGISTER_ENDED = datetime.datetime(2012, 9, 14) < NOW
+NOW = datetime.datetime.utcnow() - datetime.timedelta(hours=3)
 
 
 providers = {
@@ -60,9 +55,9 @@ class PyDayHandler(webapp.RequestHandler):
         result['daysleft0'] = message[0]
         result['daysleft1'] = message[1]
         result['daysleft2'] = message[2]
-        result['propose_ended'] = PROPOSE_ENDED
-        result['register_ended'] = REGISTER_ENDED
-        result['tshirt_req_ended'] = TSHIRT_REQ_ENDED
+        result['propose_ended'] = datetime.datetime(2012, 8, 25) < NOW
+        result['register_ended'] = datetime.datetime(2012, 9, 14) < NOW
+        result['tshirt_req_ended'] = datetime.datetime(2012, 8, 27) < NOW
         if user:  # signed in already
             result['user'] = user
             if is_profile:
@@ -120,7 +115,7 @@ class Schedule(PyDayHandler):
 class Register(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if REGISTER_ENDED:
+        if result['register_ended']:
             path = os.path.join(os.path.dirname(__file__),
                                 "templates/error_base.html")
             result['title'] = 'Error'
@@ -186,7 +181,7 @@ class Register(PyDayHandler):
 class Propose(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if PROPOSE_ENDED:
+        if result['propose_ended']:
             path = os.path.join(os.path.dirname(__file__),
                                 "templates/error_base.html")
             result['title'] = 'Error'
@@ -324,7 +319,7 @@ class Profile(PyDayHandler):
 class Login(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if REGISTER_ENDED:
+        if result['register_ended']:
             path = os.path.join(os.path.dirname(__file__),
                                 "templates/error_base.html")
             result['title'] = 'Error'
@@ -458,7 +453,7 @@ class Prospectus(PyDayHandler):
 class Tshirt(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if TSHIRT_REQ_ENDED:
+        if result['tshirt_req_ended']:
             path = os.path.join(os.path.dirname(__file__),
                                 "templates/error_base.html")
             result['title'] = 'Error'
