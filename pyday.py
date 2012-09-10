@@ -65,7 +65,8 @@ class PyDayHandler(webapp.RequestHandler):
             else:
                 result['logout'] = users.create_logout_url(self.request.uri)
             result['username'] = user.nickname()
-            result['is_attendee'] = db.user_is_attendee(result.get('user', None))
+            result['is_attendee'] = db.user_is_attendee(
+                result.get('user', None))
         else:  # let user choose authenticator
             result['user'] = None
             result['login'] = '/login'
@@ -86,6 +87,7 @@ class PyDayHandler(webapp.RequestHandler):
             data['form'].errors.clear()
         path = os.path.join(os.path.dirname(__file__), page_base)
         self.response.out.write(template.render(path, data))
+
 
 class NotFoundPageHandler(PyDayHandler):
     def get(self):
