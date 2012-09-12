@@ -15,36 +15,3 @@
   </p>
 </form>
 {% endblock %}
-
-{% include "../header.html" %}
-
-      <div id="page">
-        <div id="frame">
-          <script type="text/javascript" src="static/js/utils.js"></script>
-          <p><a class="backtohome" href="/">Volver al inicio</a></p>
-
-          <div id="error-message" style="display: {{ showerror }};">
-            <p class="error">{{ errormessage }}</p>
-          </div>
-
-          <div id="content">
-
-          </div>
-        </div>
-
-        <div id="sidebar">
-          <ul>
-            <li><a class="menu" href="/about">Más info</a></li>
-            <li><a class="menu" href="/venue">Cómo llegar</a></li>
-            <li><a class="menu" href="/attendees">Asistentes</a></li>
-            <li><a class="menu" href="/schedule">Programa</a></li>
-            {% if not tshirt_req_ended %}
-              <li><a class="menu" href="/tshirt">Remeras</a></li>
-            {% endif %}
-          </ul>
-
-    {% include "../sponsors.html" %}
-
-      </div>
-
-  {% include "../footer.html" %}
