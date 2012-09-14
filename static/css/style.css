@@ -113,8 +113,7 @@ h3 {
     margin-top: 49px;
 }
 
-#relevant a {
-    background-color: #EA7949;
+#relevant a, #relevant .unavailable {
     border-radius: 7px;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
@@ -123,6 +122,10 @@ h3 {
     font-weight: bold;
     padding: 14px;
     color: #FFF;
+}
+
+#relevant a {
+    background-color: #EA7949;
 }
 
 #days-left {
@@ -178,10 +181,6 @@ h3 {
 .description {
     line-height: 30px;
     margin: 5% 0 8%;
-}
-
-.pr-talks {
-    margin-top: 5%;
 }
 
 /*
@@ -587,7 +586,7 @@ form textarea {
 
 /* PROFILE */
 
-.personal-details, #content .personal-p {
+.personal-details, #content .personal-p, .pr-talks {
     margin-top: 5%;
     margin-bottom: 9%;
 }

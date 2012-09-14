@@ -22,11 +22,12 @@ MESSAGE_PROPOSE = (u'Propuse la charla %s para el %%23PyDayCba - '
 FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
 # Must change dates for the ones correspondent for your event:
-NOW = datetime.datetime.now()
-PROPOSE_ENDED = datetime.datetime(2012, 8, 25) < NOW
-CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) < NOW
-TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) < NOW
-REGISTER_ENDED = datetime.datetime(2012, 9, 14) < NOW
+OFFSET = datetime.timedelta(hours=3)
+NOW = datetime.datetime.now() - OFFSET
+PROPOSE_ENDED = datetime.datetime(2012, 8, 25) - OFFSET < NOW
+CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) - OFFSET < NOW
+TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) - OFFSET < NOW
+REGISTER_ENDED = datetime.datetime(2012, 9, 14) - OFFSET < NOW
 
 
 providers = {
@@ -59,6 +60,9 @@ class PyDayHandler(webapp.RequestHandler):
         result['daysleft0'] = message[0]
         result['daysleft1'] = message[1]
         result['daysleft2'] = message[2]
+        result['propose_ended'] = PROPOSE_ENDED
+        result['register_ended'] = REGISTER_ENDED
+        result['tshirt_req_ended'] = TSHIRT_REQ_ENDED
         if user:  # signed in already
             result['user'] = user
             if is_profile:

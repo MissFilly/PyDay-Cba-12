@@ -27,23 +27,26 @@
   <body>
       <div id="header">
         <div id="header-wrapper">
-
-          <div id="nav">
-            <ul id="user">
-              {% if username %}
-                  <li><a href="/profile">Perfil</a></li>
-                  <li><a href="{{ logout }}">Cerrar sesión</a></li>
-              {% else %}
-                  <li><a href="{{ login }}">Iniciar sesión</a></li>
-              {% endif %}
-            </ul>
-            <ul id="relevant">
-              {% if not is_attendee %}
-                <li><a href="/register" {{ register_selected }}>¡Inscribite!</a></li>
-              {% endif %}
-              <!--li><a href="/propose" {{ propose_selected }}>Proponé tu charla</a></li-->
-            </ul>
-          </div>
+          {% if not register_ended %}
+	          <div id="nav">
+	            <ul id="user">
+	              {% if username %}
+	                  <li><a href="/profile">Perfil</a></li>
+	                  <li><a href="{{ logout }}">Cerrar sesión</a></li>
+	              {% else %}
+	                  <li><a href="{{ login }}">Iniciar sesión</a></li>
+	              {% endif %}
+	            </ul>
+	            <ul id="relevant">
+	              {% if not is_attendee %}
+	                <li><a href="/register" {{ register_selected }}>¡Inscribite!</a></li>
+	              {% endif %}
+	              {% if not propose_ended %}
+	                <li><a href="/propose" {{ propose_selected }}>Proponé tu charla</a></li>
+	              {% endif %}
+	            </ul>
+	          </div>
+	      {% endif %}
 
           <p id="days-left">{{ daysleft0 }} <span>{{ daysleft1 }}</span> {{ daysleft2 }}</p>
         </div>

@@ -3,7 +3,8 @@ import datetime
 
 
 def days_left():
-    date = datetime.datetime(2012, 9, 15)
+    date = datetime.datetime(2012, 9, 15) - datetime.timedelta(hours=3)
+    today = datetime.datetime.now() - datetime.timedelta(hours=3)
     delta = date - date.now()
     return delta.days + 1
 

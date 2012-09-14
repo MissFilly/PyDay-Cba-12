@@ -34,7 +34,9 @@
             <li><a class="menu active" href="/venue">Cómo llegar</a></li>
             <li><a class="menu" href="/attendees">Asistentes</a></li>
             <li><a class="menu" href="/schedule">Programa</a></li>
-            <!--li><a class="menu" href="/tshirt">Remeras</a></li-->
+            {% if not tshirt_req_ended %}
+              <li><a class="menu" href="/tshirt">Remeras</a></li>
+            {% endif %}
           </ul>
 
     {% include "../sponsors.html" %}
