@@ -1,6 +1,7 @@
 # -*- coding: utf-8 *-*
 import os
 import cgi
+import datetime
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -20,6 +21,12 @@ MESSAGE_PROPOSE = (u'Propuse la charla %s para el %%23PyDayCba - '
                    u'http://pydaycba.com.ar ¡Sumate!')
 FACEBOOK_MESSAGE = (u'http://www.facebook.com/sharer/sharer.php?'
                     u'u=http://pydaycba.com.ar/')
+# Must change dates for the ones correspondent for your event:
+NOW = datetime.datetime.now()
+PROPOSE_ENDED = datetime.datetime(2012, 8, 25) < NOW
+CALL_SPONSORS_ENDED = datetime.datetime(2012, 9, 3) < NOW
+TSHIRT_REQ_ENDED = datetime.datetime(2012, 8, 27) < NOW
+REGISTER_ENDED = datetime.datetime(2012, 9, 14) < NOW
 
 
 providers = {
@@ -85,7 +92,9 @@ class NotFoundPageHandler(PyDayHandler):
     def get(self):
         result = self.user_login()
         path = os.path.join(os.path.dirname(__file__),
-            "templates/others/404.html")
+            "templates/base.html")
+        result['title'] = 'Error 404'
+        result['message'] = 'La página a la que intentó acceder no existe.'
         self.response.out.write(template.render(path, result))
 
 
@@ -107,18 +116,25 @@ class Schedule(PyDayHandler):
 class Register(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if result.get('user', None):
-            result['showerror'] = 'none'
-            result['register_selected'] = 'class="active"'
-            form = forms.AttendeeForm()
-            form.initial = {'allow_contact': True,
-                'in_attendees': True}
-            result['form'] = form
+        if REGISTER_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                "templates/user/register.html")
+                                "templates/base.html")
+            result['title'] = 'Error'
+            result['message'] = u'Ya finalizó el período de inscripción.'
             self.response.out.write(template.render(path, result))
         else:
-            self.go_to_login(result)
+            if result.get('user', None):
+                result['showerror'] = 'none'
+                result['register_selected'] = 'class="active"'
+                form = forms.AttendeeForm()
+                form.initial = {'allow_contact': True,
+                    'in_attendees': True}
+                result['form'] = form
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/register.html")
+                self.response.out.write(template.render(path, result))
+            else:
+                self.go_to_login(result)
 
     def post(self):
         result = self.user_login()
@@ -167,19 +183,26 @@ class Register(PyDayHandler):
 class Propose(PyDayHandler):
     def get(self):
         result = self.user_login()
-        registered = db.user_is_attendee(result.get('user', None))
-        if not registered:
-            self.redirect('/register')
-            return
-        if result.get('user', None):
-            form = forms.TalkForm()
-            result['form'] = form
-            result['propose_selected'] = 'class="active"'
+        if PROPOSE_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                "templates/others/propose.html")
+                                "templates/base.html")
+            result['title'] = 'Error'
+            result['message'] = 'Ya no se reciben propuestas de charlas.'
             self.response.out.write(template.render(path, result))
         else:
-            self.redirect(result['login'])
+            registered = db.user_is_attendee(result.get('user', None))
+            if not registered:
+                self.redirect('/register')
+                return
+            if result.get('user', None):
+                form = forms.TalkForm()
+                result['form'] = form
+                result['propose_selected'] = 'class="active"'
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/others/propose.html")
+                self.response.out.write(template.render(path, result))
+            else:
+                self.redirect(result['login'])
 
     def post(self):
         result = self.user_login()
@@ -299,10 +322,17 @@ class Profile(PyDayHandler):
 class Login(PyDayHandler):
     def get(self):
         result = self.user_login()
-        if result.get('user', None):
-            self.redirect('/')
-            return
-        self.go_to_login(result)
+        if REGISTER_ENDED:
+            path = os.path.join(os.path.dirname(__file__),
+                                "templates/base.html")
+            result['title'] = 'Error'
+            result['message'] = u'Ya finalizó el período de inscripción.'
+            self.response.out.write(template.render(path, result))
+        else:
+            if result.get('user', None):
+                self.redirect('/')
+                return
+            self.go_to_login(result)
 
 
 class ModifyProfile(PyDayHandler):
@@ -428,18 +458,25 @@ class Prospectus(PyDayHandler):
 class Tshirt(PyDayHandler):
     def get(self):
         result = self.user_login()
-        registered = db.user_is_attendee(result.get('user', None))
-        if not registered:
-            self.redirect('/register')
-            return
-        if result.get('user', None):
-            form = forms.TshirtForm()
-            result['form'] = form
+        if TSHIRT_REQ_ENDED:
             path = os.path.join(os.path.dirname(__file__),
-                "templates/user/tshirt.html")
+                                "templates/base.html")
+            result['title'] = 'Error'
+            result['message'] = 'Ya no se reciben solicitudes de remeras.'
             self.response.out.write(template.render(path, result))
         else:
-            self.redirect(result['login'])
+            registered = db.user_is_attendee(result.get('user', None))
+            if not registered:
+                self.redirect('/register')
+                return
+            if result.get('user', None):
+                form = forms.TshirtForm()
+                result['form'] = form
+                path = os.path.join(os.path.dirname(__file__),
+                    "templates/user/tshirt.html")
+                self.response.out.write(template.render(path, result))
+            else:
+                self.redirect(result['login'])
 
     def post(self):
         result = self.user_login()
@@ -486,7 +523,7 @@ def main():
         ('/modify_profile', ModifyProfile),
         ('/modify_talk', ModifyTalk),
         ('/prospectus', Prospectus),
-        #('/tshirt', Tshirt),
+        ('/tshirt', Tshirt),
         ('/schedule', Schedule),
         ('/.*', NotFoundPageHandler),
         ], debug=True)

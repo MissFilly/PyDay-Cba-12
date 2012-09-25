@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+      <div id="page">
+        <div id="frame">
+          <p><a class="backtohome" href="/">Volver al inicio</a></p>
+
+          <div id="content">
+            <h2>{{ title }}</h2>
+            <div class="description">
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="sidebar">
+          <ul>
+            <li><a class="menu" href="/about">Más info</a></li>
+            <li><a class="menu" href="/venue">Cómo llegar</a></li>
+            <li><a class="menu" href="/attendees">Asistentes</a></li>
+            <li><a class="menu" href="/schedule">Programa</a></li>
+            <!--li><a class="menu" href="/tshirt">Remeras</a></li-->
+          </ul>
+
+
+    {% include "sponsors.html" %}
+
+      </div>
+    </div>
+
+  {% include "footer.html" %}
+
+
+
